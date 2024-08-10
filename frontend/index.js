@@ -55,4 +55,20 @@ $(document).ready(() => {
             }
         }
     })
+
+    // MetaMask connection
+    $('#connectButton').click(async () => {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                console.log('Connected account:', accounts[0]);
+                alert('Connected account: ' + accounts[0]);
+            } catch (error) {
+                console.error('Error connecting to MetaMask:', error.message);
+            }
+        } else {
+            console.error('MetaMask is not installed!');
+            alert('Please install MetaMask!');
+        }
+    });
 })
