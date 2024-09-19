@@ -58,42 +58,67 @@ $(document).ready(() => {
 
 
     // MetaMask connection
-    $('#connectButton').click(async (event) => {
-        event.preventDefault();
-        if (typeof window.ethereum !== 'undefined') {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                console.log('Connected account:', accounts[0]);
-                $('#connectButton span:first-child').text(''); // Remove "Connect Wallet" text
-                $('#userAddress').text(accounts[0]); // Update the user address display
-            } catch (error) {
-                console.error('Error connecting to MetaMask:', error.message);
-            }
-        } else {
-            console.error('MetaMask is not installed!');
-            alert('Please install MetaMask!');
+   $('#connectButton').click(async (event) => {
+    event.preventDefault();
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            console.log('Connected account:', accounts[0]);
+            $('#connectButton span:first-child').text(''); // Remove "Connect Wallet" text
+            $('#userAddress').text(accounts[0]); // Update the user address display
+            localStorage.setItem('userAddress', accounts[0]); // Store the user address in local storage
+        } catch (error) {
+            console.error('Error connecting to MetaMask:', error.message);
         }
+    } else {
+        console.error('MetaMask is not installed!');
+        alert('Please install MetaMask!');
+    }
+});
+
+// Show dropdown when clicking on user address
+$('#userAddress').click((event) => {
+    event.preventDefault();
+    $('#walletDropdown').toggle(); // Toggle the dropdown menu
+});
+
+// Disconnect Wallet
+$('#disconnectButton').click((event) => {
+    event.preventDefault();
+    $('#connectButton span:first-child').text('Connect Wallet'); // Restore "Connect Wallet" text
+    $('#userAddress').text(''); // Clear the user address display
+    $('#walletDropdown').hide(); // Hide the dropdown menu
+    localStorage.removeItem('userAddress'); // Remove the user address from local storage
+    console.log('Wallet disconnected');
+});
+
+    // Copy Address
+    $('#copyAddressButton').click(() => {
+        const userAddress = localStorage.getItem('userAddress');
+        navigator.clipboard.writeText(userAddress).then(() => {
+            alert('Address copied to clipboard.');
+        }).catch(err => {
+            console.error('Failed to copy address:', err);
+        });
     });
 
-    // Show dropdown when clicking on user address
-    $('#userAddress').click((event) => {
-        event.preventDefault();
-        $('#walletDropdown').toggle(); // Toggle the dropdown menu
-    });
+// Hide dropdown when clicking outside
+$(document).click((event) => {
+    if (!$(event.target).closest('#connectButton').length && !$(event.target).closest('#userAddress').length) {
+        $('#walletDropdown').hide();
+    }
+});
 
-    // Disconnect Wallet
-    $('#disconnectButton').click((event) => {
-        event.preventDefault();
-        $('#connectButton span:first-child').text('Connect Wallet'); // Restore "Connect Wallet" text
-        $('#userAddress').text(''); // Clear the user address display
-        $('#walletDropdown').hide(); // Hide the dropdown menu
-        console.log('Wallet disconnected');
-    });
-
-    // Hide dropdown when clicking outside
-    $(document).click((event) => {
-        if (!$(event.target).closest('#connectButton').length && !$(event.target).closest('#userAddress').length) {
-            $('#walletDropdown').hide();
-        }
-    });
+// Check if user is already connected
+const storedUserAddress = localStorage.getItem('userAddress');
+    if (storedUserAddress) {
+        $('#userAddress').text(storedUserAddress);
+        $('#connectButton span:first-child').text(''); // Remove "Connect Wallet" text
+        $('#connectButton').css({
+            'width': '200px',
+            'overflow': 'hidden',
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap'
+        });
+    }
 })

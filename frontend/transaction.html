@@ -30,11 +30,10 @@
         <div class="nav">
             <a href="#" class="logo">
                 <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
-                <a href="login.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
-                    <span>Login</span> <!-- This will change dynamically based on login state -->
+                <a href="register.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
+                    <span>Register</span> <!-- This will change dynamically based on login state -->
                 </a>
             </a>
-           
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#">Content</a></li>
@@ -43,11 +42,13 @@
                 <li><a href="transaction.html">Payment</a></li>
                 <li>
                     <a href="#" class="btn btn-hover" id="connectButton">
-                        <span>Connect Wallet</span>
+                        <!-- <span>Connect Wallet</span> -->
                         <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
                     </a>
                     <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
+                        <li><a href="#" id="copyAddressButton" style="color: #fff;">Copy Address</a></li>
                         <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
+                        <li><a href="#" id="cancelSubscriptionButton" style="color: #fff;">Cancel Subscription</a></li>
                     </ul>
                 </li>
             </ul>
@@ -148,6 +149,12 @@
     <input type="hidden" id="selectedAmount">
     <button type="submit" style="display: none;"></button>
 </form>
+
+<div id="transactionCountdown" style="display: none; color: #fff; font-size: 18px; margin-top: 10px;">
+    Time left for transaction execution: <span id="timeLeft" style = "font-size: 2em; margin-left : 10px"></span>
+    <button id="doneButton" style="display: block;">Done</button>
+</div>
+
 
 <!-- FOOTER SECTION -->
 <footer class="section">

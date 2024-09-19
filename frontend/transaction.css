@@ -24,3 +24,42 @@
 #customPlanButton:hover {
     background-color: #dcb43b;
 }
+
+#transactionCountdown {
+    font-size: 20px;
+    color: #fff;
+    background-color: #333;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#doneButton {
+    padding: 10px 20px;
+    background-color: #c2c2c2;
+    border: none;
+    border-radius: 5px;
+    color: #000000;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+
+#doneButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left : 750px;
+    margin-top : 50px;
+    text-align: center;
+}
+
+.transaction-history-container h2 {
+    margin-top: 100px;
+    margin-left : 50px;
+    display: flex;
+    justify-content: center; /* Horizontally centers the content */
+    align-items: center; /* Vertically centers the content (if required) */
+    text-align: center; /* Ensures the text inside is centered */
+}

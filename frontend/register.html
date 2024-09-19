@@ -23,18 +23,19 @@
                     <i class='bx bxs-envelope'></i>
                     <input type="email" id="email" placeholder="Email" required>
                 </div>
+                
                 <button type="submit" class="btn btn-hover">
                     <span>Register</span>
                 </button>
             </form>
-            <div class="already-member">
+            <!-- <div class="already-member">
                 Already have an account? <a href="login.html">Login here</a>
-            </div>
+            </div> -->
 
             <!-- MetaMask Integration Button -->
-            <button id="connectMetaMask" class="btn btn-hover">
+            <!-- <button id="connectMetaMask" class="btn btn-hover">
                 <span>Connect with MetaMask</span>
-            </button>
+            </button> -->
         </div>
     </div>
 
@@ -135,39 +136,39 @@
     </style>
 
     <script>
-        const contractAddress = '0xfbbAE41Cf48fcDC270BfA83aFC63BED8183bA0D7'; // Replace with your deployed contract address
+        // const contractAddress = '0xfbbAE41Cf48fcDC270BfA83aFC63BED8183bA0D7'; // Replace with your deployed contract address
 
-        let web3;
-        let userManager;
+        // let web3;
+        // let userManager;
 
-        window.addEventListener('load', async () => {
-            if (window.ethereum) {
-                web3 = new Web3(window.ethereum);
-                const response = await fetch('UserManagerABI.json');
-                const { abi } = await response.json();
-                userManager = new web3.eth.Contract(abi, contractAddress);
-                document.getElementById('connectMetaMask').disabled = false;
+        // window.addEventListener('load', async () => {
+        //     if (window.ethereum) {
+        //         web3 = new Web3(window.ethereum);
+        //         const response = await fetch('UserManagerABI.json');
+        //         const { abi } = await response.json();
+        //         userManager = new web3.eth.Contract(abi, contractAddress);
+        //         document.getElementById('connectMetaMask').disabled = false;
 
-                const accounts = await web3.eth.getAccounts();
-                if (accounts.length === 0) {
-                    alert("MetaMask not connected. Please connect to MetaMask.");
-                }
-            } else {
-                alert('MetaMask is not installed. Please install MetaMask and try again.');
-                document.getElementById('connectMetaMask').disabled = true;
-            }
-        });
+        //         const accounts = await web3.eth.getAccounts();
+        //         if (accounts.length === 0) {
+        //             alert("MetaMask not connected. Please connect to MetaMask.");
+        //         }
+        //     } else {
+        //         alert('MetaMask is not installed. Please install MetaMask and try again.');
+        //         document.getElementById('connectMetaMask').disabled = true;
+        //     }
+        // });
 
-        document.getElementById('connectMetaMask').addEventListener('click', async () => {
-            try {
-                await ethereum.request({ method: 'eth_requestAccounts' });
-                const accounts = await web3.eth.getAccounts();
-                alert("Connected to MetaMask account: " + accounts[0]);
-            } catch (error) {
-                console.error(error);
-                alert("Failed to connect MetaMask");
-            }
-        });
+        // document.getElementById('connectMetaMask').addEventListener('click', async () => {
+        //     try {
+        //         await ethereum.request({ method: 'eth_requestAccounts' });
+        //         const accounts = await web3.eth.getAccounts();
+        //         alert("Connected to MetaMask account: " + accounts[0]);
+        //     } catch (error) {
+        //         console.error(error);
+        //         alert("Failed to connect MetaMask");
+        //     }
+        // });
 
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -187,7 +188,7 @@
                 return;
             }
 
-            userManager.methods.registerUser(username, email)
+            userManager.methods.registerUser(username, email, wallet)
                 .send({ from: accounts[0] })
                 .on('transactionHash', function (hash) {
                     console.log("Transaction sent, waiting for confirmation. Hash: ", hash);
