@@ -39,11 +39,15 @@
                 <li><a href="#">Genre</a></li>
                 <li><a href="#">Movies</a></li>
                 <li><a href="#">Series</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="transaction.html">Payment</a></li>
                 <li>
                     <a href="#" class="btn btn-hover" id="connectButton">
                         <span>Connect Wallet</span>
+                        <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
                     </a>
+                    <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
+                        <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
+                    </ul>
                 </li>
             </ul>
             
@@ -344,96 +348,9 @@
     </div>
     <!-- END HERO SECTION -->
 
-    <!-- PRICING SECTION -->
-    <div class="section">
-        <div class="container">
-            <div class="pricing">
-                <div class="pricing-header">
-                    Fl<span class="main-color">i</span>x pricing
-                </div>
-                <div class="pricing-list">
-                    <div class="row">
-                        <div class="col-4 col-md-12 col-sm-12">
-                            <div class="pricing-box">
-                                <div class="pricing-box-header">
-                                    <div class="pricing-name">
-                                        Basic
-                                    </div>
-                                    <div class="pricing-price">
-                                        Free
-                                    </div>
-                                </div>
-                                <div class="pricing-box-content">
-                                    <p>Originals</p>
-                                    <p>Swich plans anytime</p>
-                                    <p><del>65+ top Live</del></p>
-                                    <p><del>TV Channels</del></p>
-                                    <p><del>4K Video Quality</del></p>
-                                </div>
-                                <div class="pricing-box-action">
-                                    <a href="#" class="btn btn-hover">
-                                        <span>Transaction Queue/span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 col-md-12 col-sm-12">
-                            <div class="pricing-box hightlight">
-                                <div class="pricing-box-header">
-                                    <div class="pricing-name">
-                                        Premium
-                                    </div>
-                                    <div class="pricing-price">
-                                        $15.99 <span>/month</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-box-content">
-                                    <p>Originals</p>
-                                    <p>Swich plans anytime</p>
-                                    <p>Full HD Video Quality</p>
-                                    <p>65+ top Live</p>
-                                    <p><del>TV Channels</del></p>         
-                                </div>
-                                <div class="pricing-box-action">
-                                    <a href="#" class="btn btn-hover">
-                                        <span>Transaction Queue</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 col-md-12 col-sm-12">
-                            <div class="pricing-box">
-                                <div class="pricing-box-header">
-                                    <div class="pricing-name">
-                                        VIP
-                                    </div>
-                                    <div class="pricing-price">
-                                        $35.99 <span>/month</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-box-content">
-                                    <p>Originals</p>
-                                    <p>Swich plans anytime</p>
-                                    <p>65+ top Live</p>
-                                    <p>TV Channels</p>
-                                    <p>4K Video Quality</p>
-                                </div>
-                                <div class="pricing-box-action">
-                                    <a href="#" class="btn btn-hover">
-                                        <span>Transaction Queue</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END PRICING SECTION -->
 
     
-    <button id="connectButton">Connect Wallet</button>
+    <!-- <button id="connectButton">Connect Wallet</button>
 
     <form id="queueTransactionForm">
       <input type="text" id="contractAddress" placeholder="Contract Address" required>
@@ -469,15 +386,15 @@
     <div class="queued-transactions">
         <h2>Queued Transactions</h2>
         <ul id="transactionList">
-            <!-- List items will be dynamically added here -->
-        </ul>
-    </div>
+            List items will be dynamically added here -->
+        <!-- </ul>
+    </div> -->
 
-    <div class="queued-transactions">
+    <!-- <div class="queued-transactions">
     <h2>Queued Transactions</h2>
-    <ul id="transactionList">
+    <ul id="transactionList"> -->
         <!-- List items will be dynamically added here -->
-    </ul>
+    <!-- </ul>
 </div>
 
 <li>
@@ -487,12 +404,12 @@
     <span>Execution Date: ...</span>
     <button class="cancel-transaction">Cancel</button>
     <button class="adjust-transaction">Adjust</button>
-</li>
+</li> -->
 
-<div class="execute-transactions">
+<!-- <div class="execute-transactions">
     <h2>Execute Transactions</h2>
     <button id="executeTransactionsButton">Execute Due Transactions</button>
-</div>
+</div> --> 
 
     <!-- FOOTER SECTION -->
     <footer class="section">

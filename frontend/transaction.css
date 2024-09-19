@@ -1,0 +1,26 @@
+/* Ensure the text is white */
+.white-text {
+    color: #fff;
+}
+
+/* Additional styles for the custom plan input and button */
+#customDays {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 70px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#customPlanButton {
+    padding: 10px 20px;
+    background-color: #e1ac19;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#customPlanButton:hover {
+    background-color: #dcb43b;
+}

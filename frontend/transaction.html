@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="./images/movie logo.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Flix - Transactions
+    </title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- OWL CAROUSEL -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+    <!-- BOX ICONS -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!-- APP CSS -->
+    <link rel="stylesheet" href="grid.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="transaction.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+<div class="nav-wrapper">
+    <div class="container">
+        <div class="nav">
+            <a href="#" class="logo">
+                <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                <a href="login.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
+                    <span>Login</span> <!-- This will change dynamically based on login state -->
+                </a>
+            </a>
+           
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Content</a></li>
+                <li><a href="#">Vote</a></li>
+                <li><a href="#">Notification</a></li>
+                <li><a href="transaction.html">Payment</a></li>
+                <li>
+                    <a href="#" class="btn btn-hover" id="connectButton">
+                        <span>Connect Wallet</span>
+                        <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
+                        <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <!-- MOBILE MENU TOGGLE -->
+            <div class="hamburger-menu" id="hamburger-menu">
+                <div class="hamburger"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END NAV -->
+
+<!-- PRICING SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="pricing">
+            <div class="pricing-header">
+                Fl<span class="main-color">i</span>x pricing
+            </div>
+            <div class="pricing-list">
+                <div class="row">
+                    <div class="col-4 col-md-12 col-sm-12">
+                        <div class="pricing-box">
+                            <div class="pricing-box-header">
+                                <div class="pricing-name">
+                                    Monthly
+                                </div>
+                                <div class="pricing-price">
+                                    15 ETH
+                                </div>
+                            </div>
+                            <div class="pricing-box-content">
+                                <p> HD and 4K video quality</p>
+                                <p>Ad-free viewing </p>
+                                <p> Monthly cost: 15 ETH/month</p>
+                                <p> Flexible to unsubscribe for subscription</p>
+                            </div>
+                            <div class="pricing-box-action">
+                                <a href="#" class=" plan-button" data-plan="Monthly" data-amount="15">
+                                    <span>1 month trial</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-12 col-sm-12">
+                        <div class="pricing-box hightlight">
+                            <div class="pricing-box-header">
+                                <div class="pricing-name">
+                                    Yearly
+                                </div>
+                                <div class="pricing-price">
+                                    30 ETH 
+                                </div>
+                            </div>
+                            <div class="pricing-box-content">
+                                <p> HD and 4K video quality</p>
+                                <p> Ad-free viewing </p>
+                                <p> Monthly cost: 30 ETH/month</p>
+                                <p> Flexible to unsubscribe for subscription</p>        
+                            </div>
+                            <div class="pricing-box-action">
+                                <a href="#" class="plan-button" data-plan="Yearly" data-amount="30">
+                                    <span>Year Plan</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-12 col-sm-12">
+                        <div class="pricing-box">
+                            <div class="pricing-box-header">
+                                <div class="pricing-name">
+                                    Customized
+                                </div>
+                            </div>
+                            <div class="pricing-box-content">
+                                <input type="number" id="customDays" placeholder="Number of Days" min="1">
+                                <button id="customPlanButton">Calculate</button>
+                                <div id="customPlanAmount" class="white-text"></div> <!-- Apply white-text class here -->
+                            </div>
+                            <div class="pricing-box-action">
+                                <a href="#" class="btn btn-hover plan-button" data-plan="Custom" data-amount="">
+                                    <span>Subscribe</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PRICING SECTION -->
+
+<!-- Hidden form to store selected plan and amount -->
+<form id="subscribeForm">
+    <input type="hidden" id="selectedPlan">
+    <input type="hidden" id="selectedAmount">
+    <button type="submit" style="display: none;"></button>
+</form>
+
+<!-- FOOTER SECTION -->
+<footer class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-md-6 col-sm-12">
+                <div class="content">
+
+
+
+                </div>
+            </div>
+            <div class="col-8 col-md-6 col-sm-12">
+                <div class="row">
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END FOOTER SECTION -->
+
+<!-- COPYRIGHT SECTION -->
+<div class="copyright">
+    Winnie 
+</div>
+<!-- END COPYRIGHT SECTION -->
+
+<!-- SCRIPT -->
+<!-- JQUERY -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!-- OWL CAROUSEL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+<!-- APP SCRIPT -->
+<script src="index.js"></script>
+<!-- Web3 SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+<script type="module" src="transaction.js"></script>
+
+</body>
+
+</html>
