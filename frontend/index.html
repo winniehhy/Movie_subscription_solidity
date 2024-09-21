@@ -17,8 +17,8 @@
     <!-- BOX ICONS -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <!-- APP CSS -->
-    <link rel="stylesheet" href="grid.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./css/grid.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
         <div class="nav">
             <a href="#" class="logo">
                 <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
-                <a href="register.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
+                <a href="/pages/register.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
                     <span>Register</span> <!-- This will change dynamically based on login state -->
                 </a>
             </a>
@@ -39,7 +39,7 @@
                 <li><a href="#">Content</a></li>
                 <li><a href="#">Vote</a></li>
                 <li><a href="#">Notification</a></li>
-                <li><a href="transaction.html">Payment</a></li>
+                <li><a href="/pages/transaction.html">Payment</a></li>
                 <li>
                     <a href="#" class="btn btn-hover" id="connectButton">
                         <span>Connect Wallet</span>
@@ -512,62 +512,61 @@
     <!-- Web3 SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 
-    <script src="blockchain.js"></script>
 
  <script>
-    let web3;
-    let userManager;
-    const authButton = document.getElementById('authButton');
-    const connectButton = document.getElementById('connectButton');
+//     let web3;
+//     let userManager;
+//     const authButton = document.getElementById('authButton');
+//     const connectButton = document.getElementById('connectButton');
 
-    window.addEventListener('load', async () => {
-        if (window.ethereum) {
-            web3 = new Web3(window.ethereum);
+//     window.addEventListener('load', async () => {
+//         if (window.ethereum) {
+//             web3 = new Web3(window.ethereum);
 
-            try {
-                await ethereum.request({ method: 'eth_requestAccounts' });
-                const accounts = await web3.eth.getAccounts();
+//             try {
+//                 await ethereum.request({ method: 'eth_requestAccounts' });
+//                 const accounts = await web3.eth.getAccounts();
 
-                // Fetch ABI and set up contract
-                const response = await fetch('UserManagerABI.json');
-                const { abi } = await response.json();
-                const contractAddress = '0xa41C93c7728D8FD8452354f0621e7A003a9d274e'; // Replace with your contract address
-                userManager = new web3.eth.Contract(abi, contractAddress);
+//                 // Fetch ABI and set up contract
+//                 const response = await fetch('UserManagerABI.json');
+//                 const { abi } = await response.json();
+//                 const contractAddress = '0xa41C93c7728D8FD8452354f0621e7A003a9d274e'; // Replace with your contract address
+//                 userManager = new web3.eth.Contract(abi, contractAddress);
 
-                if (accounts.length > 0) {
-                    const userAddress = accounts[0];
-                    const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
+//                 if (accounts.length > 0) {
+//                     const userAddress = accounts[0];
+//                     const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
 
-                    // Update button based on registration status
-                    if (isRegistered) {
-                        authButton.href = 'profile.html';
-                        authButton.innerHTML = '<span>Profile</span>';
-                    } else {
-                        authButton.href = 'login.html';
-                        authButton.innerHTML = '<span>Login</span>';
-                    }
-                } else {
-                    authButton.href = 'login.html';
-                    authButton.innerHTML = '<span>Login</span>';
-                }
-            } catch (error) {
-                console.error('Error occurred:', error);
-                alert('Please connect to MetaMask.');
-            }
-        } else {
-            alert('MetaMask is not installed. Please install MetaMask to continue.');
-        }
-    });
+//                     // Update button based on registration status
+//                     if (isRegistered) {
+//                         authButton.href = 'profile.html';
+//                         authButton.innerHTML = '<span>Profile</span>';
+//                     } else {
+//                         authButton.href = 'login.html';
+//                         authButton.innerHTML = '<span>Login</span>';
+//                     }
+//                 } else {
+//                     authButton.href = 'login.html';
+//                     authButton.innerHTML = '<span>Login</span>';
+//                 }
+//             } catch (error) {
+//                 console.error('Error occurred:', error);
+//                 alert('Please connect to MetaMask.');
+//             }
+//         } else {
+//             alert('MetaMask is not installed. Please install MetaMask to continue.');
+//         }
+//     });
 
-    connectButton.addEventListener('click', async () => {
-        try {
-            await ethereum.request({ method: 'eth_requestAccounts' });
-            alert('Wallet connected.');
-        } catch (error) {
-            alert('Failed to connect wallet.');
-        }
-    });
-</script>
+//     connectButton.addEventListener('click', async () => {
+//         try {
+//             await ethereum.request({ method: 'eth_requestAccounts' });
+//             alert('Wallet connected.');
+//         } catch (error) {
+//             alert('Failed to connect wallet.');
+//         }
+//     });
+// </script>
     
 </body>
 

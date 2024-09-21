@@ -1,4 +1,4 @@
-import contractData from '../smart_contract/build/contracts/TransactionPayment.json'; // Import the contract data
+import contractData from '../../smart_contract/build/contracts/TransactionPayment.json'; // Import the contract data
 
 const contractAddress = '0x8E4d7e9fAC0DD369Dfc5f21A51565591593f9B18';
 const contractABI = contractData.abi;
