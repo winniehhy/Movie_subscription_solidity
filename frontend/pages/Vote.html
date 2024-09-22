@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" type="x-icon" href="./images/movie logo.png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Flix - Vote
+        </title>
+        <!-- GOOGLE FONTS -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+        <!-- OWL CAROUSEL -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+        <!-- BOX ICONS -->
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <!-- APP CSS -->
+        <link rel="stylesheet" href="../css/grid.css">
+        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="../css/vote.css">
+    </head>
+    
+    <body>
+    
+      <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Content</a></li>
+                    <li><a href="../pages/Vote.html">Vote</a></li>
+                    <li><a href="#">Notification</a></li>
+                    <li><a href="../pages/transaction.html">Payment</a></li>
+                    <li>
+                        <a href="#" class="btn btn-hover" id="connectButton">
+                            <span>Connect Wallet</span>
+                            <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; ">
+                            <li><a href="#" id="copyAddressButton" style="color: #fff; font-size: large; float: left;padding: 10px;">Copy Address</a></li>
+                            <li><a href="#" id="disconnectButton" style="color: #fff; font-size: large; float: left; padding: 10px;">Disconnect Wallet</a></li>
+                        </ul>
+                        
+                    </li>
+                </ul>
+                
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END NAV -->
+    <!--Vote page-->
+    <div class="Votecontainer">
+        <h1>Vote For Movie</h1>
+        <div class="form-section">
+            <div>
+                <h2>Submit Your Vote</h2>
+                <label for="category">Category:</label>
+                <select name="category" id="category">
+                <option value="Best Movie in September 2024">Best Movie in September 2024</option>
+                <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
+                <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
+                </select>
+                <label for="movie">Movie:</label>
+                <select name="movieName" id="movieName">
+                <option value="Inside Out 2">Inside Out 2</option>
+                <option value="Deadpool & Wolverine">Deadpool & Wolverine</option>
+                <option value="Beetlejuice Beetlejuice">Beetlejuice Beetlejuice</option>
+                <option value="Longlegs">Longlegs</option>
+                <option value="Sonic the Hedgehog 3">Sonic the Hedgehog 3</option>
+                <option value="The Lord of the Rings: The Rings of Power">The Lord of the Rings: The Rings of Power</option>
+                <option value="Transformers One">Transformers One</option>
+                <option value="Despicable Me 4">Despicable Me 4</option>
+                <option value="His Three Daughters">His Three Daughters</option>
+                </select>
+                <button id="submitVoteButton">Submit Vote</button>
+            </div>
+            <div>
+                <h2>Cancel Your Vote</h2>
+                <label for="category">Category:</label>
+                <select name="category" id="cancelcategory">
+                <option value="Best Movie in September 2024">Best Movie in September 2024</option>
+                <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
+                <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
+                </select>
+                <button id="cancelVoteButton">Cancel Vote</button>
+            </div>
+        </div>
+
+        <h1>Display vote For Movie</h1>
+        <div class="form-section2">
+            <div>
+                <h2 style="padding-top: 20px;">Display vote results</h2>
+                <label for="category">Category:</label>
+                <select name="category" id="viewCategoryResult">
+                <option value="Best Movie in September 2024">Best Movie in September 2024</option>
+                <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
+                <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
+                </select>
+                <button id="DisplayVoteButton">Display vote in category</button>
+            </div>
+            <div class="displayTable">
+                <h2>Voting Results</h2>
+                <div id="results"></div>
+            </div>                
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="#" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut veniam ex quos hic id nobis beatae earum sapiente! Quod ipsa exercitationem officiis non error illum minima iusto et. Dolores, quibusdam?
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Pricing plans</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Pricing plans</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Pricing plans</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="./images/app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
+
+<!-- COPYRIGHT SECTION -->
+<div class="copyright">
+    Kellvin 
+</div>
+<!-- END COPYRIGHT SECTION -->
+
+
+
+    <style>
+    
+    </style>
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="../index.js"></script>
+    <!-- Web3 SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+    <script type="module" src="../js/vote.js"></script>
+</body>
+</html>
