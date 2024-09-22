@@ -97,7 +97,7 @@ async function queueSubscription(amount, planType, customDays) {
         if (tx.events && tx.events.SubscriptionQueued) {
             // Get the subscription ID from the event logs
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
-            subscriptionId = subscriptionId.slice(-5); // Show only the last 5 characters
+            //subscriptionId = subscriptionId.slice(-5); // Show only the last 5 characters
             alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
             // Store the subscription ID in local storage
