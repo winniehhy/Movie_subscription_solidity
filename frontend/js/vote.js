@@ -1,10 +1,9 @@
 import contractData from '/../smart_contract/build/contracts/MovieVoting.json';
-        const contractAddress = "0x7A7263ad3C5B2f0A8A7dE2bDEFA76834a28c80cf";  // Replace with your contract address
-        const contractABI = contractData.abi; // Replace with your contract's ABI
+        const contractAddress = contractData.networks[5777]?.address;  // smart contract address
+        const contractABI = contractData.abi; // smart contract's ABI
         let movieVotingContract;
         let web3;
         let userAddress;
-        let countdownInterval;
         document.getElementById('submitVoteButton').addEventListener('click', submitVoteFunc);
         document.getElementById('cancelVoteButton').addEventListener('click', CancelVoteFunc);
         document.getElementById('DisplayVoteButton').addEventListener('click', displayVotingResults);
@@ -15,7 +14,7 @@ import contractData from '/../smart_contract/build/contracts/MovieVoting.json';
     async function initialize() {
     if (typeof window.ethereum !== 'undefined') {
         userAddress = localStorage.getItem('userAddress');
-        console.log('User Address from Local Storage:'+userAddress);
+        console.log('User Address from Local Storage:' + userAddress);
 
         if (userAddress) {
             document.getElementById('userAddress').textContent = userAddress;
@@ -39,7 +38,7 @@ import contractData from '/../smart_contract/build/contracts/MovieVoting.json';
             alert('Vote submitted successfully!'+'\nUserAdress: ' + userAddress + '\nCategory: '+ category + '\nMovie: ' + movie);
         } catch (error) {
             console.error("Error submitting vote:", error);
-            alert('Failed to submit vote. You already Voted.' +'\nUserAdress: ' + userAddress + '\nCategory: '+ category + '\nMovie: ' + movie);
+            alert('Failed to submit vote. Probably Vote did not start,Vote is over or You already vote' +'\nUserAdress: ' + userAddress + '\nCategory: '+ category + '\nMovie: ' + movie);
         }
     }
     //Handle cancel vote
@@ -51,7 +50,7 @@ import contractData from '/../smart_contract/build/contracts/MovieVoting.json';
         alert('Vote cancelled successfully!');
     } catch (error) {
         console.error("Error cancelling vote:", error);
-        alert('Failed to cancel vote. Because did not voted for this category');
+        alert('Failed to cancel vote. Because you did not voted for this category');
     }
     }
     //Handle display vote
@@ -98,7 +97,7 @@ import contractData from '/../smart_contract/build/contracts/MovieVoting.json';
         resultsDiv.appendChild(table); // Append the table to the results div
     } catch (error) {
         console.error("Error retrieving voting results:", error);
-        alert('Failed to retrieve voting results.');
+        alert('Failed to retrieve voting results, Probably Vote did not start or over');
     }
 }
 
