@@ -1,6 +1,6 @@
 import contractData from '../../smart_contract/build/contracts/TransactionPayment.json'; // Import the contract data
 
-const contractAddress = '0x8E4d7e9fAC0DD369Dfc5f21A51565591593f9B18';
+const contractAddress = '0x325e323E353ca4a100982Fa8681baD1b3DDD2496';
 const contractABI = contractData.abi;
 
 let web3;
@@ -19,8 +19,35 @@ async function initialize() {
             userAddressElement.textContent = userAddress;
             console.log('Using connected MetaMask account:', userAddress);
 
-            // Initialize contract
-            transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
+            try {
+                // Initialize contract
+                transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
+
+                // Listen for events
+                transactionPayment.events.SubscriptionQueued({ filter: { subscriber: userAddress } })
+                    .on('data', event => {
+                        console.log('Subscription queued:', event);
+                        updateStatus('queued');
+                    })
+                    .on('error', console.error);
+
+                transactionPayment.events.SubscriptionExecuted({ filter: { subscriber: userAddress } })
+                    .on('data', event => {
+                        console.log('Subscription executed:', event);
+                        updateStatus('executed');
+                    })
+                    .on('error', console.error);
+
+                transactionPayment.events.SubscriptionCancelled({ filter: { subscriber: userAddress } })
+                    .on('data', event => {
+                        console.log('Subscription cancelled:', event);
+                        updateStatus('cancelled');
+                    })
+                    .on('error', console.error);
+            } catch (error) {
+                console.error('Error initializing contract:', error);
+                alert('Failed to initialize contract. Please try again.');
+            }
         } else {
             userAddressElement.textContent = 'Please connect your wallet on the main page.';
             connectButton.style.display = 'none'; // Hide the connect button if the user is not connected
@@ -30,8 +57,10 @@ async function initialize() {
     }
 }
 
-async function queueTransaction(contract, recipient, amount, planType, customDays) {
+async function queueSubscription(amount, planType, customDays) {
     let durationInSeconds;
+
+    // Calculate the duration based on the plan type
     if (planType === 'Monthly') {
         durationInSeconds = 30 * 24 * 60 * 60; // 30 days in seconds
     } else if (planType === 'Yearly') {
@@ -39,39 +68,60 @@ async function queueTransaction(contract, recipient, amount, planType, customDay
     } else if (planType === 'Custom') {
         durationInSeconds = customDays * 24 * 60 * 60; // Custom days in seconds
     } else {
-        console.error('Invalid plan type.');
-        return;
+        throw new Error('Invalid plan type');
     }
 
-    const executionTime = Math.floor(Date.now() / 1000) + durationInSeconds; // Set execution time based on the plan duration
+    const unlockTime = Math.floor(Date.now() / 1000) + durationInSeconds; // Set unlock time
     let isQueued = false;
+
     try {
-        console.log('Queueing transaction with recipient:', recipient, 'amount:', amount);
-        const tx = await contract.methods.queueTransaction(recipient, web3.utils.toWei(amount.toString(), 'ether'), executionTime).send({
+        console.log('Queueing subscription with amount:', amount);
+        const tx = await transactionPayment.methods.queueSubscription(unlockTime).send({
             from: userAddress,
             value: web3.utils.toWei(amount.toString(), 'ether')
         });
-        console.log('Transaction queued:', tx);
 
-        // Generate a random 5-digit transaction ID
-        const transactionId = Math.floor(10000 + Math.random() * 90000);
-        alert(`Transaction queued successfully! Your transaction ID is: ${transactionId}`);
+        // Log the entire transaction receipt
+        console.log('Transaction receipt:', JSON.stringify(tx, null, 2));
 
-        // Store the transaction ID in local storage
-        localStorage.setItem('transactionId', transactionId);
+        // Checking for a successful transaction
+        if (tx.status) {
+            console.log('Transaction successful');
+        } else {
+            console.error('Transaction failed');
+            alert('Transaction failed.');
+            return;
+        }
 
-        // Start countdown timer
-        startCountdown(planType, customDays, tx.transactionHash);
+        // Check for events in the transaction receipt
+        if (tx.events && tx.events.SubscriptionQueued) {
+            // Get the subscription ID from the event logs
+            let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
+            subscriptionId = subscriptionId.slice(-5); // Show only the last 5 characters
+            alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
-        isQueued = true;
+            // Store the subscription ID in local storage
+            localStorage.setItem('subscriptionId', subscriptionId);
+
+            // Start countdown timer
+            startCountdown(planType, customDays, subscriptionId);
+
+            isQueued = true;
+        } else {
+            // Fallback: Log the transaction logs to inspect manually if no events are found
+            console.error('No SubscriptionQueued event found in transaction receipt.');
+            console.log('Transaction logs:', tx.logs);  // Log tx.logs for further inspection
+            alert('Failed to queue subscription. Event not found.');
+        }
     } catch (error) {
-        console.error('Error queuing transaction:', error);
-        alert('Failed to queue transaction. Error: ' + error.message);
+        console.error('Error queuing subscription:', error);
+        alert('Failed to queue subscription. Error: ' + error.message);
     }
+
     return isQueued;
 }
 
-function startCountdown(planType, customDays, transactionId) {
+function startCountdown(planType, customDays, subscriptionId) {
     const countdownElement = document.getElementById('transactionCountdown');
     const timeLeftElement = document.getElementById('timeLeft');
     const doneButton = document.getElementById('doneButton');
@@ -83,27 +133,29 @@ function startCountdown(planType, customDays, transactionId) {
 
     countdownElement.style.display = 'block'; // Show the countdown element
 
-    let executionTime;
+    let unlockTime;
     const now = Math.floor(Date.now() / 1000);
 
     if (planType === 'Monthly') {
-        executionTime = now + (30 * 24 * 60 * 60); // 30 days in seconds
+        unlockTime = now + (30 * 24 * 60 * 60); // 30 days in seconds
     } else if (planType === 'Yearly') {
-        executionTime = now + (365 * 24 * 60 * 60); // 365 days in seconds
+        unlockTime = now + (365 * 24 * 60 * 60); // 365 days in seconds
     } else if (planType === 'Custom') {
-        executionTime = now + (customDays * 24 * 60 * 60); // Custom days in seconds
+        unlockTime = now + (customDays * 24 * 60 * 60); // Custom days in seconds
     } else {
         console.error('Invalid plan type.');
         return;
     }
 
+    console.log(`Starting countdown for subscription ID: ${subscriptionId}, unlock time: ${unlockTime}`);
+
     countdownInterval = setInterval(() => {
         const currentTime = Math.floor(Date.now() / 1000);
-        const timeLeft = executionTime - currentTime;
+        const timeLeft = unlockTime - currentTime;
 
         if (timeLeft <= 0) {
             clearInterval(countdownInterval);
-            timeLeftElement.textContent = 'Transaction executed!';
+            timeLeftElement.textContent = 'Subscription executed!';
             return;
         }
 
@@ -116,45 +168,125 @@ function startCountdown(planType, customDays, transactionId) {
     }, 1000);
 
     doneButton.onclick = async () => {
-        clearInterval(countdownInterval);
-        timeLeftElement.textContent = 'Transaction executed!';
-        countdownElement.style.display = 'none'; // Hide the countdown element
-        await executeTransaction(transactionId);
-        alert('Executed transaction: Your plan had expired');
+        const userConfirmed = confirm('You will be cancelling your plan, are you sure to proceed?');
+        if (userConfirmed) {
+            const subscriptionId = prompt('Please enter your subscription ID:');
+            if (!subscriptionId) {
+                alert('Subscription ID is required to cancel the plan.');
+                return;
+            }
+    
+            try {
+                clearInterval(countdownInterval);
+                timeLeftElement.textContent = 'Subscription cancelled!';
+                countdownElement.style.display = 'none'; // Hide the countdown element
+                await cancelSubscription(subscriptionId);
+                alert('Subscription cancelled and funds refunded.');
+            } catch (error) {
+                console.error('Error cancelling subscription:', error);
+                alert('Failed to cancel subscription. Error: ' + error.message);
+            }
+        }
     };
 }
 
-async function executeTransaction(transactionId) {
-    try {
-        const tx = await transactionPayment.methods.executeTransaction(transactionId).send({ from: userAddress });
-        console.log('Transaction executed:', tx);
-    } catch (error) {
-        console.error('Error executing transaction:', error);
-        alert('Failed to execute transaction. Error: ' + error.message);
+function updateStatus(status) {
+    const statusElement = document.getElementById('subscriptionStatus');
+    if (!statusElement) {
+        console.error('Status element not found in the DOM.');
+        return;
+    }
+
+    switch (status) {
+        case 'queued':
+            statusElement.textContent = 'Subscription queued successfully!';
+            statusElement.className = 'status-queued';
+            break;
+        case 'executed':
+            statusElement.textContent = 'Subscription executed!';
+            statusElement.className = 'status-executed';
+            break;
+        case 'cancelled':
+            statusElement.textContent = 'Subscription cancelled!';
+            statusElement.className = 'status-cancelled';
+            break;
+        default:
+            statusElement.textContent = 'Unknown status';
+            statusElement.className = 'status-unknown';
+            break;
     }
 }
 
-async function cancelTransaction(transactionId) {
+async function executeSubscription(subscriptionId) {
     try {
-        const storedTransactionId = localStorage.getItem('transactionId');
-
-        if (transactionId !== storedTransactionId) {
-            alert('Invalid transaction ID.');
-            return;
-        }
-
-        const tx = await transactionPayment.methods.cancelTransaction(transactionId).send({ from: userAddress });
-        console.log('Transaction canceled:', tx);
-        alert('Transaction canceled successfully! The amount has been refunded to your wallet.');
-        localStorage.removeItem('transactionId'); // Remove the transaction ID from local storage
+        console.log(`Executing subscription with ID: ${subscriptionId} for user: ${userAddress}`);
+        const tx = await transactionPayment.methods.executeSubscription(subscriptionId, userAddress).send({ from: userAddress });
+        console.log('Subscription executed:', tx);
     } catch (error) {
-        console.error('Error canceling transaction:', error);
-        alert('Failed to cancel transaction. Error: ' + error.message);
+        console.error('Error executing subscription:', error);
+        alert('Failed to execute subscription. Error: ' + error.message);
+    }
+}
+
+async function cancelSubscription(subscriptionId) {
+    try {
+        const formattedSubscriptionId = web3.utils.padLeft(subscriptionId, 64); // Ensure the subscription ID is correctly formatted
+
+        const tx = await transactionPayment.methods.cancelSubscription(formattedSubscriptionId).send({
+            from: userAddress
+        });
+
+        // Log the entire transaction receipt
+        console.log('Transaction receipt:', JSON.stringify(tx, null, 2));
+
+        // Checking for a successful transaction
+        if (tx.status) {
+            console.log('Subscription cancelled successfully');
+            localStorage.removeItem('subscriptionId'); // Remove the subscription ID from local storage
+
+            // Fetch and display the updated balance
+            const updatedBalance = await web3.eth.getBalance(userAddress);
+            const userBalanceElement = document.getElementById('userBalance');
+            if (userBalanceElement) {
+                userBalanceElement.textContent = web3.utils.fromWei(updatedBalance, 'ether') + ' ETH';
+            } else {
+                console.error('User balance element not found in the DOM.');
+            }
+        } else {
+            console.error('Transaction failed');
+            throw new Error('Transaction failed.');
+        }
+    } catch (error) {
+        console.error('Error cancelling subscription:', error);
+        throw error;
+    }
+}
+
+async function getSubscriptionStatus(subscriptionId) {
+    try {
+        const status = await transactionPayment.methods.getSubscriptionStatus(subscriptionId).call();
+        console.log('Subscription status:', status);
+        updateStatus(status);
+    } catch (error) {
+        console.error('Error getting subscription status:', error);
+        alert('Failed to get subscription status. Error: ' + error.message);
     }
 }
 
 $(document).ready(async () => {
     await initialize();
+
+    // Toggle dropdown menu
+    const userAddressElement = document.getElementById('userAddress');
+    const walletDropdown = document.getElementById('walletDropdown');
+
+    userAddressElement.addEventListener('click', () => {
+        if (walletDropdown.style.display === 'none' || walletDropdown.style.display === '') {
+            walletDropdown.style.display = 'block';
+        } else {
+            walletDropdown.style.display = 'none';
+        }
+    });
 
     // Function to calculate custom amount
     function calculateCustomAmount(days) {
@@ -224,23 +356,43 @@ $(document).ready(async () => {
 
         console.log(`Form submitted with planType: ${planType}, amount: ${amount}, customDays: ${customDays}`);
 
-        const isQueued = await queueTransaction(transactionPayment, userAddress, amount, planType, customDays);
+        const isQueued = await queueSubscription(amount, planType, customDays);
         if (isQueued) {
-            console.log('Transaction successfully added to the queue.');
+            console.log('Subscription successfully added to the queue.');
         } else {
-            console.log('Failed to add transaction to the queue.');
+            console.log('Failed to add subscription to the queue.');
         }
     });
 
-// Handle cancel subscription
-$('#cancelSubscriptionButton').click(async () => {
-    const transactionId = prompt('Please enter your transaction ID:');
-    if (transactionId) {
-        await cancelTransaction(transactionId);
-    } else {
-        alert('Please enter a valid transaction ID.');
-    }
-});
+    // Disconnect Wallet
+    $('#disconnectButton').click(() => {
+        localStorage.removeItem('userAddress');
+        alert('Wallet disconnected.');
+        location.reload(); // Reload the page to reflect the disconnected state
+    });
+
+    // Cancel Subscription
+    $('#cancelSubscriptionButton').click(async () => {
+        const subscriptionId = prompt('Please enter your subscription ID:');
+        if (!subscriptionId) {
+            alert('Subscription ID is required to cancel the plan.');
+            return;
+        }
+
+        try {
+            const status = await transactionPayment.methods.getSubscriptionStatus(subscriptionId).call();
+            if (status === 'executed') {
+                alert('Subscription has already been executed.');
+            } else {
+                await cancelSubscription(subscriptionId);
+                alert('Subscription cancelled and funds refunded.');
+            }
+        } catch (error) {
+            console.error('Error cancelling subscription:', error);
+            alert('Failed to cancel subscription. Error: ' + error.message);
+        }
+    });
+
 
     // Copy Address
     $('#copyAddressButton').click(() => {

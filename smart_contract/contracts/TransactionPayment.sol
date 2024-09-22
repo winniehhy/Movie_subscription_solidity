@@ -1,61 +1,91 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract TransactionPayment {
-    struct Transaction {
-        address payable recipient;
-        uint256 amount;
-        uint256 executionTime;
+    struct Subscription {
+        address payable subscriber;
+        uint amount;
+        uint unlockTime;
+        bool cancelled;
         bool executed;
-        bool canceled;
     }
 
-    mapping(uint256 => Transaction) public transactions;
-    uint256 public transactionCount;
+    mapping(bytes32 => Subscription) public subscriptions;
 
-    event TransactionQueued(uint256 transactionId, address indexed recipient, uint256 amount, uint256 executionTime);
-    event TransactionExecuted(uint256 transactionId, address indexed recipient, uint256 amount);
-    event TransactionCanceled(uint256 transactionId);
+    // Events
+    event SubscriptionQueued(bytes32 indexed subscriptionId, address indexed subscriber, uint256 unlockTime);
+    event SubscriptionCancelled(bytes32 indexed subscriptionId);
+    event SubscriptionExecuted(bytes32 indexed subscriptionId, address indexed beneficiary, uint amount);
 
-    // Queue a transaction to be executed in the future
-    function queueTransaction(address payable _recipient, uint256 _amount, uint256 _executionTime) external payable {
-        require(_amount == msg.value, "The amount of ether sent must match the transaction amount.");
-        require(_executionTime > block.timestamp, "Execution time must be in the future.");
+    // Queue a subscription payment
+function queueSubscription(uint _unlockTime) external payable returns (uint) {
+    require(msg.value > 0, "No ETH sent for subscription");
+    require(_unlockTime > block.timestamp, "Unlock time must be in the future");
 
-        transactionCount++;
-        transactions[transactionCount] = Transaction({
-            recipient: _recipient,
-            amount: _amount,
-            executionTime: _executionTime,
-            executed: false,
-            canceled: false
-        });
+    // Generate a 5-digit random subscription ID
+    uint subscriptionId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100000;
 
-        emit TransactionQueued(transactionCount, _recipient, _amount, _executionTime);
+    // Ensure the subscription ID is unique
+    while (subscriptions[bytes32(subscriptionId)].subscriber != address(0)) {
+        subscriptionId = (subscriptionId + 1) % 100000;
     }
 
-    // Execute a transaction once the execution time has passed
-    function executeTransaction(uint256 _transactionId) external {
-        Transaction storage txn = transactions[_transactionId];
-        require(!txn.executed, "Transaction has already been executed.");
-        require(!txn.canceled, "Transaction has been canceled.");
-        require(block.timestamp >= txn.executionTime, "Transaction cannot be executed yet.");
+    // Create the subscription record
+    subscriptions[bytes32(subscriptionId)] = Subscription({
+        subscriber: payable(msg.sender),
+        amount: msg.value,
+        unlockTime: _unlockTime,
+        cancelled: false,
+        executed: false
+    });
 
-        txn.executed = true;
-        txn.recipient.transfer(txn.amount);
+    // Emit the SubscriptionQueued event
+    emit SubscriptionQueued(bytes32(subscriptionId), msg.sender, _unlockTime);
 
-        emit TransactionExecuted(_transactionId, txn.recipient, txn.amount);
-    }
+    return subscriptionId;
+}
 
-    // Cancel a queued transaction before execution
-    function cancelTransaction(uint256 _transactionId) external {
-        Transaction storage txn = transactions[_transactionId];
-        require(!txn.executed, "Cannot cancel an already executed transaction.");
-        require(!txn.canceled, "Transaction is already canceled.");
+      // Cancel the subscription and refund the money to the subscriber
+    function cancelSubscription(bytes32 _subscriptionId) external {
+        Subscription storage sub = subscriptions[_subscriptionId];
+        require(msg.sender == sub.subscriber, "Only the subscriber can cancel");
+        require(!sub.cancelled, "Subscription already cancelled");
+        require(!sub.executed, "Subscription already executed");
+
+        // Mark the subscription as cancelled
+        sub.cancelled = true;
         
-        txn.canceled = true;
-        payable(msg.sender).transfer(txn.amount); // Refund the amount to the sender
+        // Refund the money to the subscriber
+        sub.subscriber.transfer(sub.amount);
+        // Emit the SubscriptionCancelled event
+        emit SubscriptionCancelled(_subscriptionId);
+    }
 
-        emit TransactionCanceled(_transactionId);
+
+    // Execute the subscription payment when the unlock time has passed
+    function executeSubscription(bytes32 _subscriptionId, address payable _beneficiary) external {
+        Subscription storage sub = subscriptions[_subscriptionId];
+        require(block.timestamp >= sub.unlockTime, "Unlock time not reached");
+        require(!sub.cancelled, "Subscription has been cancelled");
+        require(!sub.executed, "Subscription already executed");
+
+        // Mark the subscription as executed
+        sub.executed = true;
+
+        // Transfer the locked funds to the beneficiary (e.g., movie platform)
+        _beneficiary.transfer(sub.amount);
+
+        emit SubscriptionExecuted(_subscriptionId, _beneficiary, sub.amount);
+    }
+
+    // Check the status of a subscription (queued, executed, or cancelled)
+    function getSubscriptionStatus(bytes32 _subscriptionId) external view returns (string memory) {
+        Subscription memory sub = subscriptions[_subscriptionId];
+        if (sub.cancelled) {
+            return "Cancelled";
+        } else if (sub.executed) {
+            return "Executed";
+        } else {
+            return "Queued";
+        }
     }
 }
