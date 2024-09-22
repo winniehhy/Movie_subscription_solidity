@@ -35,9 +35,17 @@ contract MovieVoting {
 
     // Function to add movie category
     constructor(){
+        addCategory("Best Movie in august 2024", 1722384000, 1725062400);
+        addCategory("Best Comedy Movie in august 2024", 1722384000, 1725062400);
+        addCategory("Best Horror Movie in august 2024", 1722384000, 1725062400);
+        addCategory("Best Movie in october 2024", 1727654400, 1730332800);
+        addCategory("Best Comedy Movie in october 2024", 1727654400, 1730332800);
+        addCategory("Best Horror Movie in october 2024", 1727654400, 1730332800);
         addCategory("Best Movie in September 2024", 1725062400, 1727654400);
         addCategory("Best Comedy Movie in September 2024", 1725062400, 1727654400);
         addCategory("Best Horror Movie in September 2024", 1725062400, 1727654400);
+        addMovieToCategory("Best Movie in august 2024", "Inside Out 2");
+        addMovieToCategory("Best Movie in october 2024", "Inside Out 2");
         addMovieToCategory("Best Movie in September 2024", "Inside Out 2");
         addMovieToCategory("Best Movie in September 2024", "Deadpool & Wolverine");
         addMovieToCategory("Best Movie in September 2024", "Beetlejuice Beetlejuice");
@@ -89,7 +97,7 @@ contract MovieVoting {
     }
 
     // Function to view voting results
-    function viewVotingResults(string memory categoryName) public view returns (string[] memory movieNames, uint256[] memory voteCounts) {
+    function viewVotingResults(string memory categoryName) public view votingOpen(categoryName) returns (string[] memory movieNames, uint256[] memory voteCounts) {
         Category storage category = categories[categoryName];
         uint256 movieCount = category.movieList.length;
 
