@@ -18,7 +18,6 @@
                 <p><strong>Email:</strong> <span id="email"></span></p>
                 <p><strong>Address:</strong> <span id="address"></span></p>
                 <p><strong>Last Updated:</strong> <span id="lastUpdated"></span></p>
-                <p><strong>Password:</strong> <span id="password"></span></p> <!-- Added Password Field -->
             </div>
             <button id="disconnectMetaMask" class="btn btn-hover">
                 <span>Disconnect MetaMask</span>
@@ -92,7 +91,7 @@
 
 <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 <script>
-    const contractAddress = '0xfbbAE41Cf48fcDC270BfA83aFC63BED8183bA0D7'; // Replace with your deployed contract address
+    const contractAddress = '0x456513F05b8f4DC4b1324DC9Cf5b17b87f61a47b'; // Replace with your deployed contract address
     let web3;
     let userManager;
 
@@ -128,22 +127,26 @@ function formatAddress(address) {
 async function loadProfile(account) {
     try {
         // Log contract instance and method
-        console.log("Contract Instance:", userManager);
-        console.log("Calling getProfile...");
+        const isRegistered = await userManager.methods.isUserRegistered(account).call();
+        if (isRegistered) {
 
         // Call getProfile and log results
         const profile = await userManager.methods.getProfile().call({ from: account });
-        console.log("Profile data:", profile);
 
         // Display profile data on the page (assumes you have elements for this)
         document.getElementById('username').innerText = profile[0];
         document.getElementById('email').innerText = profile[1];
         document.getElementById('address').innerText = formatAddress(profile[2]);
         document.getElementById('lastUpdated').innerText = new Date(profile[3] * 1000).toLocaleString();
-        document.getElementById('password').innerText = "Password is not stored on-chain"; // Placeholder as password is not stored on-chain
+
+    } else {
+            throw new Error("User not registered");
+        }
 
     } catch (error) {
         console.error("Error loading profile:", error);
+        alert("You are not registered. Please register before accessing this page.");
+        window.location.href = "register.html"; // Redirect to the registration page
     }
 }
     document.getElementById('disconnectMetaMask').addEventListener('click', () => {

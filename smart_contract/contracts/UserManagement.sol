@@ -2,11 +2,14 @@
 pragma solidity ^0.8.0;
 
 contract UserManager {
+    address public owner;
+
     struct User {
         string username;
         string email;
         address userAddress;
         uint lastUpdated; // Tracks the last time the profile was updated
+        bool isActive;
     }
 
     struct Subscription {
@@ -21,6 +24,17 @@ contract UserManager {
     event ProfileUpdated(address indexed userAddress, string username, string email);
     event SubscriptionAdded(address indexed userAddress, string movieTitle, uint256 subscriptionDate);
 
+        // Constructor: Set the deployer as the owner
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Modifier to restrict access to only the owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can perform this action");
+        _;
+    }
+
     // Register the user
     function registerUser(string memory username, string memory email) public {
         require(bytes(users[msg.sender].username).length == 0, "User already registered");
@@ -28,12 +42,25 @@ contract UserManager {
             username: username,
             email: email,
             userAddress: msg.sender,
-            lastUpdated: block.timestamp
+            lastUpdated: block.timestamp,
+            isActive: true 
         });
 
         // Emit event after successful registration
         emit UserRegistered(msg.sender, username, email);
     }
+
+        function getOwner() public view returns (address) {
+        return owner;
+    }
+
+//     // Deactivate a user account (owner only)
+// function deactivateUser(address userAddress) public onlyOwner {
+//     require(bytes(users[userAddress].username).length != 0, "User not registered");
+//     require(users[userAddress].isActive, "User is already deactivated");
+
+//     users[userAddress].isActive = false;
+// }
 
     // Update profile details with 24-hour restriction
     function updateProfile(string memory _newUsername, string memory _newEmail) public {
@@ -68,4 +95,14 @@ contract UserManager {
         require(bytes(users[msg.sender].username).length != 0, "User not registered");
         return subscriptionHistory[msg.sender];
     }
+
+    function isUserRegistered(address userAddress) public view returns (bool) {
+        return bytes(users[userAddress].username).length != 0;
+    }
+
+        // Function that can only be performed by the owner (for example, adding movies)
+    function ownerOnlyFunction() public onlyOwner {
+        // Logic for owner-specific functionality
+    }
+
 }

@@ -15,13 +15,6 @@
         <div class="profile-container">
             <h2>Update Your Profile</h2>
             <form class="profile-form" action="#" method="POST" enctype="multipart/form-data">
-                <div class="profile-picture">
-                    <img src="./images/default-avatar.png" alt="Profile Picture" id="profileImage">
-                    <input type="file" id="profilePicInput" accept="image/*" onchange="loadProfilePic(event)">
-                    <label for="profilePicInput" class="btn btn-hover">
-                        <span>Change Profile Picture</span>
-                    </label>
-                </div>
 
                 <div class="input-box">
                     <i class='bx bxs-user'></i>
@@ -175,7 +168,7 @@
                 try {
                     web3 = new Web3(window.ethereum);
                     accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                    const contractAddress = '0xfbbAE41Cf48fcDC270BfA83aFC63BED8183bA0D7'; // Your contract address
+                    const contractAddress = '0x456513F05b8f4DC4b1324DC9Cf5b17b87f61a47b'; // Your contract address
                     const response = await fetch('UserManagerABI.json'); // Fetch ABI
                 const data = await response.json();
                 userManager = new web3.eth.Contract(data.abi, contractAddress); // Initialize the contract

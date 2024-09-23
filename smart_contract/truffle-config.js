@@ -53,11 +53,6 @@ module.exports = {
       port: 7545, // Port Ganache CLI is running on
       network_id: "*", // Match any network id
     },
-    development: {
-      host: "127.0.0.1",
-      port: 9545, // Use this for Truffle Develop
-      network_id: "*", // Match any network id
-    },
   },
   compilers: {
     solc: {

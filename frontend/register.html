@@ -1,209 +1,231 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flix Registration</title>
-    <link rel="stylesheet" href="register.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Flix Registration</title>
+        <link rel="stylesheet" href="register.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+    </head>
 
-<body>
-    <div class="register-wrapper">
-        <div class="register-container">
-            <h2>Register for Fl<span class="main-color">i</span>x</h2>
-            <form class="register-form" id="registerForm">
-                <div class="input-box">
-                    <i class='bx bxs-user'></i>
-                    <input type="text" id="username" placeholder="Username" required>
+    <body>
+        <div class="register-wrapper">
+            <div class="register-container">
+                <h2>Register for Fl<span class="main-color">i</span>x</h2>
+                <form class="register-form" id="registerForm">
+                    <div class="input-box">
+                        <i class='bx bxs-user'></i>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-box">
+                        <i class='bx bxs-envelope'></i>
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <button type="submit" class="btn btn-hover">
+                        <span>Register</span>
+                    </button>
+                </form>
+                <div class="already-member">
+                    Already have an account? <a href="login.html">Login here</a>
                 </div>
-                <div class="input-box">
-                    <i class='bx bxs-envelope'></i>
-                    <input type="email" id="email" placeholder="Email" required>
-                </div>
-                <button type="submit" class="btn btn-hover">
-                    <span>Register</span>
+                <!-- MetaMask Integration Button -->
+                <button id="connectMetaMask" class="btn btn-hover">
+                    <span>Connect with MetaMask</span>
                 </button>
-            </form>
-            <div class="already-member">
-                Already have an account? <a href="login.html">Login here</a>
             </div>
-
-            <!-- MetaMask Integration Button -->
-            <button id="connectMetaMask" class="btn btn-hover">
-                <span>Connect with MetaMask</span>
-            </button>
         </div>
-    </div>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Cairo', sans-serif;
+            }
 
-        body {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #fff;
-        }
+            body {
+                background: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                color: #fff;
+            }
 
-        .register-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+            .register-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
 
-        .register-container {
-            background: #1b1b1b;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
+            .register-container {
+                background: #1b1b1b;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                text-align: center;
+                width: 100%;
+                max-width: 400px;
+            }
 
-        h2 {
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+            h2 {
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
 
-        .main-color {
-            color: #fcb800;
-        }
+            .main-color {
+                color: #fcb800;
+            }
 
-        .register-form .input-box {
-            position: relative;
-            margin-bottom: 20px;
-        }
+            .register-form .input-box {
+                position: relative;
+                margin-bottom: 20px;
+            }
 
-        .register-form .input-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fcb800;
-        }
+            .register-form .input-box i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #fcb800;
+            }
 
-        .register-form .input-box input {
-            width: 100%;
-            padding: 12px 40px;
-            background: #333;
-            border: none;
-            outline: none;
-            color: #fff;
-            border-radius: 5px;
-        }
+            .register-form .input-box input {
+                width: 100%;
+                padding: 12px 40px;
+                background: #333;
+                border: none;
+                outline: none;
+                color: #fff;
+                border-radius: 5px;
+            }
 
-        .btn-hover {
-            display: inline-block;
-            background: #fcb800;
-            color: #000;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
-        }
+            .btn-hover {
+                display: inline-block;
+                background: #fcb800;
+                color: #000;
+                padding: 12px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                width: 100%;
+                margin-top: 10px;
+            }
 
-        .btn-hover:hover {
-            background: #e5a700;
-        }
+            .btn-hover:hover {
+                background: #e5a700;
+            }
 
-        .already-member {
-            margin-top: 15px;
-        }
+            .already-member {
+                margin-top: 15px;
+            }
 
-        .already-member a {
-            color: #fcb800;
-            text-decoration: none;
-        }
+            .already-member a {
+                color: #fcb800;
+                text-decoration: none;
+            }
 
-        .already-member a:hover {
-            text-decoration: underline;
-        }
-    </style>
+            .already-member a:hover {
+                text-decoration: underline;
+            }
+        </style>
 
-    <script>
-        const contractAddress = '0xfbbAE41Cf48fcDC270BfA83aFC63BED8183bA0D7'; // Replace with your deployed contract address
+<script>
+    const contractAddress = '0x456513F05b8f4DC4b1324DC9Cf5b17b87f61a47b'; // Replace with your deployed contract address
 
-        let web3;
-        let userManager;
+    let web3;
+    let userManager;
 
-        window.addEventListener('load', async () => {
+    window.addEventListener('load', async () => {
+        try {
             if (window.ethereum) {
                 web3 = new Web3(window.ethereum);
                 const response = await fetch('UserManagerABI.json');
                 const { abi } = await response.json();
+
                 userManager = new web3.eth.Contract(abi, contractAddress);
                 document.getElementById('connectMetaMask').disabled = false;
 
                 const accounts = await web3.eth.getAccounts();
                 if (accounts.length === 0) {
                     alert("MetaMask not connected. Please connect to MetaMask.");
+                } else {
+                    // Fetch and display the owner address
+                    await fetchOwnerAddress();
                 }
             } else {
                 alert('MetaMask is not installed. Please install MetaMask and try again.');
                 document.getElementById('connectMetaMask').disabled = true;
             }
-        });
+        } catch (error) {
+            console.error("Error during initialization: ", error);
+        }
+    });
 
-        document.getElementById('connectMetaMask').addEventListener('click', async () => {
-            try {
-                await ethereum.request({ method: 'eth_requestAccounts' });
-                const accounts = await web3.eth.getAccounts();
-                alert("Connected to MetaMask account: " + accounts[0]);
-            } catch (error) {
-                console.error(error);
-                alert("Failed to connect MetaMask");
-            }
-        });
+    const fetchOwnerAddress = async () => {
+        try {
+            console.log("Fetching owner address...");
+            //const ownerAddress = await userManager.methods.getOwner().call();
+            const ownerAddress = '0xC7D4bD8A9A11FfDf2D38424049A60fef8aDECD80'; 
+            console.log("Owner Address: ", ownerAddress); // Log the owner address
+            document.getElementById('ownerAddress').innerText = `Contract Owner: ${ownerAddress}`;
+        } catch (error) {
+            console.error("Error fetching owner address: ", error);
+            alert("Failed to fetch owner address: " + error.message);
+        }
+    };
 
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-
+    document.getElementById('connectMetaMask').addEventListener('click', async () => {
+        try {
+            await ethereum.request({ method: 'eth_requestAccounts' });
             const accounts = await web3.eth.getAccounts();
-            if (accounts.length === 0) {
-                alert("MetaMask not connected. Please connect to MetaMask.");
-                return;
-            }
+            alert("Connected to MetaMask account: " + accounts[0]);
+        } catch (error) {
+            console.error("Error connecting MetaMask: ", error);
+            alert("Failed to connect MetaMask");
+        }
+    });
 
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length === 0) {
+            alert("MetaMask not connected. Please connect to MetaMask.");
+            return;
+        }
+
+        try {
             const isRegistered = await userManager.methods.isUserRegistered(accounts[0]).call();
             if (isRegistered) {
                 alert("This account is already registered.");
                 return;
             }
 
-            userManager.methods.registerUser(username, email)
-                .send({ from: accounts[0] })
+            await userManager.methods.registerUser(username, email)
+                .send({ from: accounts[0], gas: 3000000 })
                 .on('transactionHash', function (hash) {
                     console.log("Transaction sent, waiting for confirmation. Hash: ", hash);
                 })
                 .on('receipt', function (receipt) {
                     console.log("Transaction confirmed. Receipt: ", receipt);
-                    // Redirect to profile page after successful registration
-                    window.location.href = "userProfile.html";
-                })
-                .on('error', function (error) {
-                    console.log("Transaction failed: ", error);
+                    window.location.href = "userProfile.html"; // Redirect after registration
                 });
-        });
-    </script>
+        } catch (error) {
+            console.log("Transaction failed: ", error);
+            alert("Registration failed: " + error.message);
+        }
+    });
+</script>
 
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-</body>
 
-</html>
+        <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    </body>
+
+    </html>

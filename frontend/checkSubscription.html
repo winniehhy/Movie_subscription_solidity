@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Subscription - Flix</title>
+    <link rel="stylesheet" href="subscription.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="subscription-wrapper">
+        <div class="subscription-container">
+            <h2>Check Your Subscription Status</h2>
+            <div class="subscription-info">
+                <p><strong>Subscription Plan:</strong> <span id="subscriptionPlan"></span></p>
+                <p><strong>Status:</strong> <span id="subscriptionStatus"></span></p>
+                <p><strong>Expires On:</strong> <span id="expiresOn"></span></p>
+            </div>
+            <button id="checkSubscription" class="btn btn-hover">Check Subscription</button>
+            <button id="goToMainPage" class="btn btn-hover" onclick="window.location.href='index.html';">Go to Main Page</button>
+        </div>
+    </div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .subscription-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .subscription-container {
+            background: #1b1b1b;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .subscription-info {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .btn-hover {
+            display: inline-block;
+            background: #fcb800;
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-hover:hover {
+            background: #e5a700;
+        }
+    </style>
+
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script>
+    const contractAddress = '0x456513F05b8f4DC4b1324DC9Cf5b17b87f61a47b'; // Replace with your deployed contract address
+    let web3;
+    let subscriptionManager;
+
+    window.addEventListener('load', async () => {
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            await window.ethereum.enable(); // Request MetaMask access
+
+            try {
+                const response = await fetch('SubscriptionManagerABI.json'); // Fetch ABI
+                const data = await response.json();
+                subscriptionManager = new web3.eth.Contract(data.abi, contractAddress); // Initialize contract
+
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length > 0) {
+                    document.getElementById('checkSubscription').addEventListener('click', () => {
+                        checkSubscription(accounts[0]);
+                    });
+                } else {
+                    alert('No MetaMask account found.');
+                }
+            } catch (error) {
+                console.error('Error fetching ABI or initializing contract:', error);
+                alert('Failed to check subscription. Please try again.');
+            }
+        } else {
+            alert('MetaMask is not installed. Please install MetaMask and try again.');
+        }
+    });
+
+    // Helper function to format the Ethereum address
+    function formatAddress(address) {
+        return address.slice(0, 6) + "..." + address.slice(-4);
+    }
+
+    async function checkSubscription(account) {
+        try {
+            const isSubscribed = await subscriptionManager.methods.isUserSubscribed(account).call();
+            if (isSubscribed) {
+                const subscription = await subscriptionManager.methods.getSubscriptionDetails(account).call();
+                document.getElementById('subscriptionPlan').innerText = subscription.plan;
+                document.getElementById('subscriptionStatus').innerText = subscription.active ? "Active" : "Inactive";
+                document.getElementById('expiresOn').innerText = new Date(subscription.expires * 1000).toLocaleString();
+            } else {
+                document.getElementById('subscriptionStatus').innerText = "Not Subscribed";
+                document.getElementById('subscriptionPlan').innerText = "N/A";
+                document.getElementById('expiresOn').innerText = "N/A";
+            }
+        } catch (error) {
+            console.error("Error checking subscription:", error);
+            alert("Error fetching subscription status.");
+        }
+    }
+</script>
+
+</body>
+
+</html>
