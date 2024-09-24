@@ -11,6 +11,7 @@ contract UserManager {
         uint lastUpdated; // Tracks the last time the profile was updated
         uint nextUpdateTime; // Tracks the next time the profile can be updated
         bool isUpdated; // New flag to track if the profile has been updated
+        // bool hasActiveSubscription;  
     }
 
     struct Subscription {
@@ -21,6 +22,7 @@ contract UserManager {
     mapping(address => User) public users;
     mapping(string => bool) private usernames; // Mapping to prevent duplicate usernames
     mapping(string => bool) private emails; // Mapping to prevent duplicate emails
+    mapping(address => bool) public hasActiveSubscription; // Tracks active subscriptions
     mapping(address => Subscription[]) public subscriptionHistory; // Track subscription history
 
     event UserRegistered(
@@ -49,6 +51,11 @@ contract UserManager {
         _;
     }
 
+//     modifier onlySubscribed() {
+//     require(users[msg.sender].hasActiveSubscription, "You must have an active subscription to perform this action");
+//     _;
+// }
+
     function registerUser(string memory username, string memory email) public {
         require(
             bytes(users[msg.sender].username).length == 0,
@@ -71,6 +78,12 @@ contract UserManager {
 
         emit UserRegistered(msg.sender, username, email);
     }
+
+//     // Function to update subscription status, callable by TransactionPayment.sol
+// function setSubscriptionStatus(address _user, bool _status) external {
+//     require(msg.sender == addressOfTransactionPaymentContract, "Only TransactionPayment can call this");
+//     hasActiveSubscription[_user] = _status;
+// }
 
     function isUsernameTaken(string memory username) public view returns (bool) {
     return usernames[username];
@@ -163,4 +176,10 @@ function isEmailTaken(string memory email) public view returns (bool) {
     function addMovie(string memory title, string memory genre) public onlyOwner {
         emit MovieAdded(title, genre);
     }
+
+//     function getSubscriptionHistory() public view onlySubscribed returns (Subscription[] memory) {
+//     // Ensure user is registered and return subscription history
+//     require(bytes(users[msg.sender].username).length != 0, "User not registered");
+//     return subscriptionHistory[msg.sender];
+// }
 }
