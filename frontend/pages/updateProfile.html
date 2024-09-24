@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flix - Update Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Cairo", sans-serif;
+      }
+
+      body {
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+      }
+
+      .register-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .register-container {
+        background: #1b1b1b;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      h2 {
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .main-color {
+        color: #fcb800;
+      }
+
+      .input-box {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fcb800;
+      }
+
+      .input-box input {
+        width: 100%;
+        padding: 12px 40px;
+        background: #333;
+        border: none;
+        outline: none;
+        color: #fff;
+        border-radius: 5px;
+      }
+
+      .btn-hover {
+        display: inline-block;
+        background: #fcb800;
+        color: #000;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .btn-hover:hover {
+        background: #e5a700;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #1b1b1b;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        color: #fff;
+        text-align: center;
+        border-radius: 10px;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #fcb800;
+        text-decoration: none;
+        cursor: pointer;
+      }
+        </style>
+</head>
+<body>
+    <div class="register-wrapper">
+        <div class="register-container">
+            <h2>Update Your Fl<span class="main-color">i</span>x Profile</h2>
+            <form id="updateProfileForm">
+                <div class="input-box">
+                    <i class="bx bxs-user"></i>
+                    <input type="text" id="username" placeholder="New Username" required />
+                </div>
+                <div class="input-box">
+                    <i class="bx bxs-envelope"></i>
+                    <input type="email" id="email" placeholder="New Email" required />
+                </div>
+                <button type="button" id="showProfileModal" class="btn-hover">
+                    <span>Show Current Profile</span>
+                </button>
+                <button type="submit" class="btn-hover">
+                    <span>Update Profile</span>
+                </button>
+            </form>
+            <button id="connectMetaMask" class="btn-hover">
+                <span>Connect with MetaMask</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="currentProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCurrentModal">&times;</span>
+            <h3>Current Profile</h3>
+            <p><strong>Username:</strong> <span id="currentUsername"></span></p>
+            <p><strong>Email:</strong> <span id="currentEmail"></span></p>
+            <p><strong>Next Update Time:</strong> <span id="nextUpdateTime"></span></p>
+        </div>
+    </div>
+
+    <div id="modifiedProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModifiedModal">&times;</span>
+            <h3>Modified Profile</h3>
+            <p><strong>New Username:</strong> <span id="modifiedUsername"></span></p>
+            <p><strong>New Email:</strong> <span id="modifiedEmail"></span></p>
+            <button id="confirmUpdate" class="btn-hover">Confirm Update</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+        const contractAddress = "0xB403DCD3A35814df33BFb5faf7AA6F4D608912eF"; // Replace with your contract address
+        let web3;
+        let userManager;
+
+        window.addEventListener("load", async () => {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                const response = await fetch("../UserManagerABI.json");
+                const { abi } = await response.json();
+                userManager = new web3.eth.Contract(abi, contractAddress);
+                document.getElementById("connectMetaMask").disabled = false;
+
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length === 0) {
+                    alert("MetaMask not connected. Please connect to MetaMask.");
+                }
+            } else {
+                alert("MetaMask is not installed. Please install MetaMask and try again.");
+                document.getElementById("connectMetaMask").disabled = true;
+            }
+        });
+
+        document.getElementById("connectMetaMask").addEventListener("click", async () => {
+            try {
+                await ethereum.request({ method: "eth_requestAccounts" });
+                const accounts = await web3.eth.getAccounts();
+                alert("Connected to MetaMask account: " + accounts[0]);
+                loadProfile(accounts[0]);
+            } catch (error) {
+                console.error("Error connecting MetaMask: ", error);
+                alert("Failed to connect MetaMask");
+            }
+        });
+
+        async function loadProfile(account) {
+            try {
+                const isRegistered = await userManager.methods.isUserRegistered(account).call();
+                if (isRegistered) {
+                    const profile = await userManager.methods.getProfile().call({ from: account });
+
+                    document.getElementById('currentUsername').innerText = profile[0];
+                    document.getElementById('currentEmail').innerText = profile[1];
+
+                    const nextUpdateTime = parseInt(profile[4]);
+                    if (nextUpdateTime > 0) {
+                        document.getElementById('nextUpdateTime').innerText = new Date(nextUpdateTime * 1000).toLocaleString();
+                    } else {
+                        document.getElementById('nextUpdateTime').innerText = "Not yet updated";
+                    }
+                } else {
+                    throw new Error("User not registered");
+                }
+            } catch (error) {
+                console.error("Error loading profile:", error);
+                alert("You are not registered. Please register before accessing this page.");
+                window.location.href = "register.html"; // Redirect to the registration page
+            }
+        }
+
+        document.getElementById("showProfileModal").addEventListener("click", async () => {
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length > 0) {
+                loadProfile(accounts[0]);
+                document.getElementById("currentProfileModal").style.display = "block";
+            } else {
+                alert("Please connect MetaMask first.");
+            }
+        });
+
+        document.getElementById("closeCurrentModal").addEventListener("click", () => {
+            document.getElementById("currentProfileModal").style.display = "none";
+        });
+
+        document.getElementById("closeModifiedModal").addEventListener("click", () => {
+            document.getElementById("modifiedProfileModal").style.display = "none";
+        });
+
+        document.getElementById("updateProfileForm").addEventListener("submit", async (event) => {
+            event.preventDefault(); // Prevent form submission
+            const accounts = await web3.eth.getAccounts(); // Get MetaMask accounts
+
+            if (accounts.length === 0) {
+                alert("Please connect MetaMask first.");
+                return;
+            }
+
+            const account = accounts[0];
+            const newUsername = document.getElementById("username").value;
+            const newEmail = document.getElementById("email").value;
+
+            try {
+                
+                // Get current profile
+                const profile = await userManager.methods.getProfile().call({ from: account });
+                const nextUpdateTime = parseInt(profile[4]); // Next allowed update time
+                const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+
+                // Allow profile update if the next allowed time has passed
+                if (nextUpdateTime === 0 || currentTime >= nextUpdateTime) {
+                    // Show confirmation modal before updating
+                    document.getElementById("modifiedProfileModal").style.display = "block";
+                    document.getElementById("modifiedUsername").textContent = newUsername;
+                    document.getElementById("modifiedEmail").textContent = newEmail;
+
+                    document.getElementById("confirmUpdate").onclick = async () => {
+                        try {
+                            
+                            // Perform the update on the blockchain
+                            await userManager.methods.updateProfile(newUsername, newEmail).send({ from: account });
+                            alert("Profile updated successfully.");
+                            document.getElementById("modifiedProfileModal").style.display = "none";
+                        } catch (error) {
+                            console.error("Error updating profile:", error);
+                            alert("Profile update failed.");
+                        }
+                    };
+                } else {
+                    const nextUpdateDate = new Date(nextUpdateTime * 1000).toLocaleString();
+                    alert("You cannot update your profile until: " + nextUpdateDate);
+                }
+            } catch (error) {
+                console.error("Error updating profile:", error);
+            }
+        });
+    </script>
+</body>
+</html>

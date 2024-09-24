@@ -9,7 +9,8 @@ contract UserManager {
         string email;
         address userAddress;
         uint lastUpdated; // Tracks the last time the profile was updated
-        bool isActive;
+        uint nextUpdateTime; // Tracks the next time the profile can be updated
+        bool isUpdated; // New flag to track if the profile has been updated
     }
 
     struct Subscription {
@@ -18,81 +19,140 @@ contract UserManager {
     }
 
     mapping(address => User) public users;
+    mapping(string => bool) private usernames; // Mapping to prevent duplicate usernames
+    mapping(string => bool) private emails; // Mapping to prevent duplicate emails
     mapping(address => Subscription[]) public subscriptionHistory; // Track subscription history
 
-    event UserRegistered(address indexed userAddress, string username, string email);
-    event ProfileUpdated(address indexed userAddress, string username, string email);
-    event SubscriptionAdded(address indexed userAddress, string movieTitle, uint256 subscriptionDate);
+    event UserRegistered(
+        address indexed userAddress,
+        string username,
+        string email
+    );
+    event ProfileUpdated(
+        address indexed userAddress,
+        string username,
+        string email
+    );
+    event SubscriptionAdded(
+        address indexed userAddress,
+        string movieTitle,
+        uint256 subscriptionDate
+    );
+    event MovieAdded(string title, string genre);
 
-        // Constructor: Set the deployer as the owner
     constructor() {
         owner = msg.sender;
     }
 
-    // Modifier to restrict access to only the owner
     modifier onlyOwner() {
         require(msg.sender == owner, "Only the owner can perform this action");
         _;
     }
 
-    // Register the user
     function registerUser(string memory username, string memory email) public {
-        require(bytes(users[msg.sender].username).length == 0, "User already registered");
+        require(
+            bytes(users[msg.sender].username).length == 0,
+            "User already registered"
+        );
+        require(!usernames[username], "Username is already taken");
+        require(!emails[email], "Email is already taken");
+
         users[msg.sender] = User({
             username: username,
             email: email,
             userAddress: msg.sender,
-            lastUpdated: block.timestamp,
-            isActive: true 
+            lastUpdated: 0,
+            nextUpdateTime: 0,
+            isUpdated: false
         });
 
-        // Emit event after successful registration
+        usernames[username] = true; // Mark username as taken
+        emails[email] = true; // Mark email as taken
+
         emit UserRegistered(msg.sender, username, email);
     }
 
-        function getOwner() public view returns (address) {
-        return owner;
-    }
+    function isUsernameTaken(string memory username) public view returns (bool) {
+    return usernames[username];
+}
 
-//     // Deactivate a user account (owner only)
-// function deactivateUser(address userAddress) public onlyOwner {
-//     require(bytes(users[userAddress].username).length != 0, "User not registered");
-//     require(users[userAddress].isActive, "User is already deactivated");
+// Check if the email is taken
+function isEmailTaken(string memory email) public view returns (bool) {
+    return emails[email];
+}
 
-//     users[userAddress].isActive = false;
-// }
-
-    // Update profile details with 24-hour restriction
     function updateProfile(string memory _newUsername, string memory _newEmail) public {
-        require(bytes(users[msg.sender].username).length > 0, "User not registered");
-        require(block.timestamp >= users[msg.sender].lastUpdated + 24 hours, "Profile can only be updated once every 24 hours");
+        require(
+            bytes(users[msg.sender].username).length > 0,
+            "User not registered"
+        );
 
+        // Prevent profile update if the username or email is already taken by someone else
+        require(!usernames[_newUsername] || keccak256(bytes(_newUsername)) == keccak256(bytes(users[msg.sender].username)),
+            "Username is already taken");
+        require(!emails[_newEmail] || keccak256(bytes(_newEmail)) == keccak256(bytes(users[msg.sender].email)),
+            "Email is already taken");
+
+        // Profile update logic
+        if (!users[msg.sender].isUpdated) {
+            // Allow update if profile has not been updated before
+            users[msg.sender].isUpdated = true;
+        } else {
+            // Allow profile update only if 24 hours have passed
+            require(
+                block.timestamp >= users[msg.sender].nextUpdateTime,
+                "Profile can only be updated once every 24 hours"
+            );
+        }
+
+        // Update the profile details
         users[msg.sender].username = _newUsername;
         users[msg.sender].email = _newEmail;
-        users[msg.sender].lastUpdated = block.timestamp; // Update the timestamp
+        users[msg.sender].lastUpdated = block.timestamp;
+        users[msg.sender].nextUpdateTime = block.timestamp + 1 days;
+        users[msg.sender].isUpdated = true;
 
         emit ProfileUpdated(msg.sender, _newUsername, _newEmail);
     }
 
-    // Add a subscription to the user's history
     function addSubscription(string memory _movieTitle) public {
-        require(bytes(users[msg.sender].username).length > 0, "User not registered");
+        require(
+            bytes(users[msg.sender].username).length > 0,
+            "User not registered"
+        );
 
-        subscriptionHistory[msg.sender].push(Subscription(_movieTitle, block.timestamp));
+        subscriptionHistory[msg.sender].push(
+            Subscription(_movieTitle, block.timestamp)
+        );
 
         emit SubscriptionAdded(msg.sender, _movieTitle, block.timestamp);
     }
 
-    // Get user profile
-    function getProfile() public view returns (string memory, string memory, address, uint) {
-        require(bytes(users[msg.sender].username).length != 0, "User not registered");
-        User memory user = users[msg.sender];
-        return (user.username, user.email, user.userAddress, user.lastUpdated);
+    function getOwner() public view returns (address) {
+        return owner;
     }
 
-    // Get subscription history for the user
+    function getProfile() public view returns (string memory, string memory, address, uint, uint) {
+        require(
+            bytes(users[msg.sender].username).length != 0,
+            "User not registered"
+        );
+        User memory user = users[msg.sender];
+
+        return (
+            user.username,
+            user.email,
+            user.userAddress,
+            user.lastUpdated,
+            user.nextUpdateTime
+        );
+    }
+
     function getSubscriptionHistory() public view returns (Subscription[] memory) {
-        require(bytes(users[msg.sender].username).length != 0, "User not registered");
+        require(
+            bytes(users[msg.sender].username).length != 0,
+            "User not registered"
+        );
         return subscriptionHistory[msg.sender];
     }
 
@@ -100,9 +160,7 @@ contract UserManager {
         return bytes(users[userAddress].username).length != 0;
     }
 
-        // Function that can only be performed by the owner (for example, adding movies)
-    function ownerOnlyFunction() public onlyOwner {
-        // Logic for owner-specific functionality
+    function addMovie(string memory title, string memory genre) public onlyOwner {
+        emit MovieAdded(title, genre);
     }
-
 }

@@ -1,7 +1,7 @@
 const express = require('express');
 const { getSubscriptions } = require('./blockchainService');
 const { Web3 } = require('web3');
-const userManagerABI = require('./UserManagerABI.json');
+const userManagerABI = require('../frontend/UserManagerABI.json');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

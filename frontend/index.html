@@ -17,8 +17,8 @@
     <!-- BOX ICONS -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <!-- APP CSS -->
-    <link rel="stylesheet" href="grid.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./css/grid.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
@@ -32,6 +32,35 @@
                 <a href="userProfile.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
                     <span>User Profile</span> <!-- This will change dynamically based on login state -->
                 </a>
+            </a>
+           
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Content</a></li>
+                <li><a href="/pages/Vote.html">Vote</a></li>
+                <li><a href="#">Notification</a></li>
+                <li><a href="/pages/transaction.html">Payment</a></li>
+                <li>
+                    <a href="#" class="btn btn-hover" id="connectButton">
+                        <span>Connect Wallet</span>
+                        <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
+                        <li><a href="#" id="copyAddressButton" style="color: #fff;">Copy Address</a></li>
+                        <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <!-- MOBILE MENU TOGGLE -->
+            <div class="hamburger-menu" id="hamburger-menu">
+                <div class="hamburger"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END NAV -->
+
             </a>
            
             <ul class="nav-menu" id="nav-menu">
@@ -90,12 +119,12 @@
                             <div class="item-content-description top-down delay-4">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, possimus eius. Deserunt non odit, cum vero reprehenderit laudantium odio vitae autem quam, incidunt molestias ratione mollitia accusantium, facere ab suscipit.
                             </div>
-                            <div class="item-action top-down delay-6">
+                            <!-- <div class="item-action top-down delay-6">
                                 <a href="#" class="btn btn-hover">
                                     <i class="bx bxs-right-arrow"></i>
                                     <span>Subcribe now</span>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -128,12 +157,12 @@
                             <div class="item-content-description top-down delay-4">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, possimus eius. Deserunt non odit, cum vero reprehenderit laudantium odio vitae autem quam, incidunt molestias ratione mollitia accusantium, facere ab suscipit.
                             </div>
-                            <div class="item-action top-down delay-6">
-                                <a href="#" class="btn btn-hover">
+                            <!-- <div class="item-action top-down delay-6">
+                                <a href="transaction.html" class="btn btn-hover">
                                     <i class="bx bxs-right-arrow"></i>
                                     <span>Subscribe now</span>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -166,12 +195,12 @@
                             <div class="item-content-description top-down delay-4">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, possimus eius. Deserunt non odit, cum vero reprehenderit laudantium odio vitae autem quam, incidunt molestias ratione mollitia accusantium, facere ab suscipit.
                             </div>
-                            <div class="item-action top-down delay-6">
-                                <a href="#" class="btn btn-hover">
+                            <!-- <div class="item-action top-down delay-6">
+                                <a href="transaction.html" class="btn btn-hover">
                                     <i class="bx bxs-right-arrow"></i>
                                     <span>Subscribe now</span>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -344,96 +373,9 @@
     </div>
     <!-- END HERO SECTION -->
 
-    <!-- PRICING SECTION -->
-    <div class="section">
-        <div class="container">
-            <div class="pricing">
-                <div class="pricing-header">
-                    Fl<span class="main-color">i</span>x pricing
-                </div>
-                <div class="pricing-list">
-                    <div class="row">
-                        <div class="col-4 col-md-12 col-sm-12">
-                            <div class="pricing-box">
-                                <div class="pricing-box-header">
-                                    <div class="pricing-name">
-                                        Basic
-                                    </div>
-                                    <div class="pricing-price">
-                                        Free
-                                    </div>
-                                </div>
-                                <div class="pricing-box-content">
-                                    <p>Originals</p>
-                                    <p>Swich plans anytime</p>
-                                    <p><del>65+ top Live</del></p>
-                                    <p><del>TV Channels</del></p>
-                                    <p><del>4K Video Quality</del></p>
-                                </div>
-                                <div class="pricing-box-action">
-                                    <a href="#" class="btn btn-hover">
-                                        <span>Transaction Queue/span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 col-md-12 col-sm-12">
-                            <div class="pricing-box hightlight">
-                                <div class="pricing-box-header">
-                                    <div class="pricing-name">
-                                        Premium
-                                    </div>
-                                    <div class="pricing-price">
-                                        $15.99 <span>/month</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-box-content">
-                                    <p>Originals</p>
-                                    <p>Swich plans anytime</p>
-                                    <p>Full HD Video Quality</p>
-                                    <p>65+ top Live</p>
-                                    <p><del>TV Channels</del></p>         
-                                </div>
-                                <div class="pricing-box-action">
-                                    <a href="#" class="btn btn-hover">
-                                        <span>Transaction Queue</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4 col-md-12 col-sm-12">
-                            <div class="pricing-box">
-                                <div class="pricing-box-header">
-                                    <div class="pricing-name">
-                                        VIP
-                                    </div>
-                                    <div class="pricing-price">
-                                        $35.99 <span>/month</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-box-content">
-                                    <p>Originals</p>
-                                    <p>Swich plans anytime</p>
-                                    <p>65+ top Live</p>
-                                    <p>TV Channels</p>
-                                    <p>4K Video Quality</p>
-                                </div>
-                                <div class="pricing-box-action">
-                                    <a href="#" class="btn btn-hover">
-                                        <span>Transaction Queue</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END PRICING SECTION -->
 
     
-    <button id="connectButton">Connect Wallet</button>
+    <!-- <button id="connectButton">Connect Wallet</button>
 
     <form id="queueTransactionForm">
       <input type="text" id="functionCall" placeholder="Function Call" required>
@@ -468,15 +410,15 @@
     <div class="queued-transactions">
         <h2>Queued Transactions</h2>
         <ul id="transactionList">
-            <!-- List items will be dynamically added here -->
-        </ul>
-    </div>
+            List items will be dynamically added here -->
+        <!-- </ul>
+    </div> -->
 
-    <div class="queued-transactions">
+    <!-- <div class="queued-transactions">
     <h2>Queued Transactions</h2>
-    <ul id="transactionList">
+    <ul id="transactionList"> -->
         <!-- List items will be dynamically added here -->
-    </ul>
+    <!-- </ul>
 </div>
 
 <li>
@@ -486,12 +428,12 @@
     <span>Execution Date: ...</span>
     <button class="cancel-transaction">Cancel</button>
     <button class="adjust-transaction">Adjust</button>
-</li>
+</li> -->
 
-<div class="execute-transactions">
+<!-- <div class="execute-transactions">
     <h2>Execute Transactions</h2>
     <button id="executeTransactionsButton">Execute Due Transactions</button>
-</div>
+</div> --> 
 
     <!-- FOOTER SECTION -->
     <footer class="section">
@@ -593,6 +535,62 @@
     <!-- Web3 SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 
+
+ <script>
+//     let web3;
+//     let userManager;
+//     const authButton = document.getElementById('authButton');
+//     const connectButton = document.getElementById('connectButton');
+
+//     window.addEventListener('load', async () => {
+//         if (window.ethereum) {
+//             web3 = new Web3(window.ethereum);
+
+//             try {
+//                 await ethereum.request({ method: 'eth_requestAccounts' });
+//                 const accounts = await web3.eth.getAccounts();
+
+//                 // Fetch ABI and set up contract
+//                 const response = await fetch('UserManagerABI.json');
+//                 const { abi } = await response.json();
+//                 const contractAddress = '0xa41C93c7728D8FD8452354f0621e7A003a9d274e'; // Replace with your contract address
+//                 userManager = new web3.eth.Contract(abi, contractAddress);
+
+//                 if (accounts.length > 0) {
+//                     const userAddress = accounts[0];
+//                     const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
+
+//                     // Update button based on registration status
+//                     if (isRegistered) {
+//                         authButton.href = 'profile.html';
+//                         authButton.innerHTML = '<span>Profile</span>';
+//                     } else {
+//                         authButton.href = 'login.html';
+//                         authButton.innerHTML = '<span>Login</span>';
+//                     }
+//                 } else {
+//                     authButton.href = 'login.html';
+//                     authButton.innerHTML = '<span>Login</span>';
+//                 }
+//             } catch (error) {
+//                 console.error('Error occurred:', error);
+//                 alert('Please connect to MetaMask.');
+//             }
+//         } else {
+//             alert('MetaMask is not installed. Please install MetaMask to continue.');
+//         }
+//     });
+
+//     connectButton.addEventListener('click', async () => {
+//         try {
+//             await ethereum.request({ method: 'eth_requestAccounts' });
+//             alert('Wallet connected.');
+//         } catch (error) {
+//             alert('Failed to connect wallet.');
+//         }
+//     });
+// </script>
+    
     <script src="blockchain.js"></script>
 
  <script>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Movie - Flix</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="profile-wrapper">
+        <div class="profile-container">
+            <h2>Add Movie</h2>
+            <div class="profile-info">
+                <p><strong>Current Address:</strong> <span id="currentAddress"></span></p>
+                <p><strong>Owner's Address:</strong> <span id="ownerAddress"></span></p>
+            </div>
+            <form id="addMovieForm">
+                <input type="text" id="title" placeholder="Movie Title" required>
+                <input type="text" id="genre" placeholder="Movie Genre" required>
+                <button type="submit" class="btn btn-hover">Add Movie</button>
+            </form>
+            <button id="goToMainPage" class="btn btn-hover" onclick="window.location.href='index.html';">Go to Main Page</button>
+        </div>
+    </div>
+
+    <style>
+        /* Add styles here (similar to userprofile.html) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .profile-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background: #1b1b1b;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input {
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            background: #333;
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .btn-hover {
+            display: inline-block;
+            background: #fcb800;
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-hover:hover {
+            background: #e5a700;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+        const contractAddress = '0x095c4CC40F997dF4cadC78fb0Ce8C76242907abd'; // Replace with your deployed contract address
+        let web3;
+        let userManager;
+
+        window.addEventListener('load', async () => {
+    if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.enable(); // Request access to MetaMask
+
+        try {
+            const response = await fetch('../UserManagerABI.json'); // Fetch ABI
+            const data = await response.json();
+            userManager = new web3.eth.Contract(data.abi, contractAddress); // Initialize the contract
+
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length > 0) {
+                const currentAddress = accounts[0];
+                loadCurrentAddress(currentAddress); // Load current user address
+                const ownerAddress = await loadOwner(); // Load the owner's address
+
+                // Redirect if current address is not the owner
+                if (currentAddress.toLowerCase() !== ownerAddress.toLowerCase()) {
+                    alert("You are not the owner. Redirecting to main page.");
+                    window.location.href = "index.html";
+                }
+            } else {
+                alert('No MetaMask account found.');
+            }
+        } catch (error) {
+            console.error('Error fetching ABI or initializing contract:', error);
+            alert('Failed to load profile. Please try again.');
+        }
+    } else {
+        alert('MetaMask is not installed. Please install MetaMask and try again.');
+    }
+});
+
+async function loadOwner() {
+    try {
+        const ownerAddress = await userManager.methods.getOwner().call();
+        document.getElementById('ownerAddress').innerText = formatAddress(ownerAddress);
+        return ownerAddress; // Return the owner address
+    } catch (error) {
+        console.error('Error fetching owner address:', error);
+        alert('Failed to fetch owner address. See console for details.');
+    }
+}
+
+
+        function formatAddress(address) {
+            return address.slice(0, 6) + "..." + address.slice(-4);
+        }
+
+        async function loadCurrentAddress(account) {
+            document.getElementById('currentAddress').innerText = formatAddress(account);
+        }
+
+        // Handle form submission
+        document.getElementById('addMovieForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const title = document.getElementById('title').value;
+            const genre = document.getElementById('genre').value;
+
+            const accounts = await web3.eth.getAccounts();
+            try {
+                await userManager.methods.addMovie(title, genre).send({ from: accounts[0] });
+                alert("Movie added successfully!");
+                document.getElementById('addMovieForm').reset();
+            } catch (error) {
+                console.error("Error adding movie:", error);
+                alert("Failed to add movie. Please try again.");
+            }
+        });
+    </script>
+</body>
+
+</html>
