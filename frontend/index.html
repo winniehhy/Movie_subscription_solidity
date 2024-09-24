@@ -46,7 +46,7 @@
                         <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
                     </a>
                     <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
-                        <li><a href="#" id="copyAddressButton" style="color: #fff;">Copy Address</a></li>
+                        <li><a href="#" id="copyAddressButton" style="color: #fff; padding: 30px">Copy Address</a></li>
                         <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
                     </ul>
                 </li>
@@ -60,31 +60,6 @@
     </div>
 </div>
 <!-- END NAV -->
-
-            </a>
-           
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Genre</a></li>
-                <li><a href="#">Movies</a></li>
-                <li><a href="#">Series</a></li>
-                <li><a href="#">About</a></li>
-                <li>
-                    <a href="#" class="btn btn-hover" id="connectButton">
-                        <span>Connect Wallet</span>
-                    </a>
-                </li>
-            </ul>
-            
-            <!-- MOBILE MENU TOGGLE -->
-            <div class="hamburger-menu" id="hamburger-menu">
-                <div class="hamburger"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END NAV -->
-
 
     <!-- HERO SECTION -->
     <div class="hero-section">
@@ -535,118 +510,6 @@
     <!-- Web3 SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 
-
- <script>
-//     let web3;
-//     let userManager;
-//     const authButton = document.getElementById('authButton');
-//     const connectButton = document.getElementById('connectButton');
-
-//     window.addEventListener('load', async () => {
-//         if (window.ethereum) {
-//             web3 = new Web3(window.ethereum);
-
-//             try {
-//                 await ethereum.request({ method: 'eth_requestAccounts' });
-//                 const accounts = await web3.eth.getAccounts();
-
-//                 // Fetch ABI and set up contract
-//                 const response = await fetch('UserManagerABI.json');
-//                 const { abi } = await response.json();
-//                 const contractAddress = '0xa41C93c7728D8FD8452354f0621e7A003a9d274e'; // Replace with your contract address
-//                 userManager = new web3.eth.Contract(abi, contractAddress);
-
-//                 if (accounts.length > 0) {
-//                     const userAddress = accounts[0];
-//                     const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
-
-//                     // Update button based on registration status
-//                     if (isRegistered) {
-//                         authButton.href = 'profile.html';
-//                         authButton.innerHTML = '<span>Profile</span>';
-//                     } else {
-//                         authButton.href = 'login.html';
-//                         authButton.innerHTML = '<span>Login</span>';
-//                     }
-//                 } else {
-//                     authButton.href = 'login.html';
-//                     authButton.innerHTML = '<span>Login</span>';
-//                 }
-//             } catch (error) {
-//                 console.error('Error occurred:', error);
-//                 alert('Please connect to MetaMask.');
-//             }
-//         } else {
-//             alert('MetaMask is not installed. Please install MetaMask to continue.');
-//         }
-//     });
-
-//     connectButton.addEventListener('click', async () => {
-//         try {
-//             await ethereum.request({ method: 'eth_requestAccounts' });
-//             alert('Wallet connected.');
-//         } catch (error) {
-//             alert('Failed to connect wallet.');
-//         }
-//     });
-// </script>
-    
-    <script src="blockchain.js"></script>
-
- <script>
-    let web3;
-    let userManager;
-    const authButton = document.getElementById('authButton');
-    const connectButton = document.getElementById('connectButton');
-
-    window.addEventListener('load', async () => {
-        if (window.ethereum) {
-            web3 = new Web3(window.ethereum);
-
-            try {
-                await ethereum.request({ method: 'eth_requestAccounts' });
-                const accounts = await web3.eth.getAccounts();
-
-                // Fetch ABI and set up contract
-                const response = await fetch('UserManagerABI.json');
-                const { abi } = await response.json();
-                const contractAddress = '0xa41C93c7728D8FD8452354f0621e7A003a9d274e'; // Replace with your contract address
-                userManager = new web3.eth.Contract(abi, contractAddress);
-
-                if (accounts.length > 0) {
-                    const userAddress = accounts[0];
-                    const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
-
-                    // Update button based on registration status
-                    if (isRegistered) {
-                        authButton.href = 'profile.html';
-                        authButton.innerHTML = '<span>Profile</span>';
-                    } else {
-                        authButton.href = 'login.html';
-                        authButton.innerHTML = '<span>Login</span>';
-                    }
-                } else {
-                    authButton.href = 'login.html';
-                    authButton.innerHTML = '<span>Login</span>';
-                }
-            } catch (error) {
-                console.error('Error occurred:', error);
-                alert('Please connect to MetaMask.');
-            }
-        } else {
-            alert('MetaMask is not installed. Please install MetaMask to continue.');
-        }
-    });
-
-    connectButton.addEventListener('click', async () => {
-        try {
-            await ethereum.request({ method: 'eth_requestAccounts' });
-            alert('Wallet connected.');
-        } catch (error) {
-            alert('Failed to connect wallet.');
-        }
-    });
-</script>
     
 </body>
 

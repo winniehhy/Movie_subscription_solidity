@@ -79,3 +79,9 @@
     margin: 0;
     z-index: 1000; /* Ensure it appears above other elements */
 }
+
+#subscriptionDates {
+    color: white;
+    text-align:right;
+    margin-right: 50px;
+}

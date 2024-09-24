@@ -30,9 +30,9 @@
         <div class="nav">
             <a href="#" class="logo">
                 <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
-                <a href="register.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
-                    <span>Register</span> <!-- This will change dynamically based on login state -->
-                </a>
+                <!-- <a href="register.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
+                    <span>Register</span> 
+                </a> -->
             </a>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="index.html">Home</a></li>
@@ -46,7 +46,7 @@
                         <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
                     </a>
                     <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
-                        <li><a href="#" id="copyAddressButton" style="color: #fff; padding: 30px">Copy Address</a></li>
+                        <li><a href="#" id="copyAddressButton" style="color: #fff;">Copy Address</a></li>
                         <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
                         <li><a href="#" id="cancelSubscriptionButton" style="color: #fff;">Cancel Subscription</a></li>
                         <li><a href="transactionHistory.html" id="TransactionHistoryButton" style="color: #fff;">Transaction History</a></li>
@@ -63,112 +63,6 @@
     </div>
 </div>
 <!-- END NAV -->
-
-<div id="subscriptionStatus" style="text-align: right; margin-right: 50px;">Subscription status: unknown</div>
-<div id="subscriptionDates">
-    <p id="startDate"></p>
-    <p id="endDate"></p>
-</div>
-<div>
-    <span id="userBalance"  class="hidden"></span>
-</div>
-
-<!-- PRICING SECTION -->
-<div class="section">
-    <div class="container">
-        <div class="pricing">
-            <div class="pricing-header">
-                Fl<span class="main-color">i</span>x pricing
-            </div>
-            <div class="pricing-list">
-                <div class="row">
-                    <div class="col-4 col-md-12 col-sm-12">
-                        <div class="pricing-box">
-                            <div class="pricing-box-header">
-                                <div class="pricing-name">
-                                    Monthly
-                                </div>
-                                <div class="pricing-price">
-                                    15 ETH
-                                </div>
-                            </div>
-                            <div class="pricing-box-content">
-                                <p> HD and 4K video quality</p>
-                                <p>Ad-free viewing </p>
-                                <p> Monthly cost: 15 ETH/month</p>
-                                <p> Flexible to unsubscribe for subscription</p>
-                            </div>
-                            <div class="pricing-box-action">
-                                <a href="#" class=" plan-button" data-plan="Monthly" data-amount="15">
-                                    <span>1 month trial</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-12 col-sm-12">
-                        <div class="pricing-box hightlight">
-                            <div class="pricing-box-header">
-                                <div class="pricing-name">
-                                    Yearly
-                                </div>
-                                <div class="pricing-price">
-                                    30 ETH 
-                                </div>
-                            </div>
-                            <div class="pricing-box-content">
-                                <p> HD and 4K video quality</p>
-                                <p> Ad-free viewing </p>
-                                <p> Monthly cost: 30 ETH/month</p>
-                                <p> Flexible to unsubscribe for subscription</p>        
-                            </div>
-                            <div class="pricing-box-action">
-                                <a href="#" class="plan-button" data-plan="Yearly" data-amount="30">
-                                    <span>Year Plan</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-12 col-sm-12">
-                        <div class="pricing-box">
-                            <div class="pricing-box-header">
-                                <div class="pricing-name">
-                                    Customized
-                                </div>
-                            </div>
-                            <div class="pricing-box-content">
-                                <input type="number" id="customDays" placeholder="Number of Days" min="1">
-                                <button id="customPlanButton">Calculate</button>
-                                <div id="customPlanAmount" class="white-text"></div> <!-- Apply white-text class here -->
-                            </div>
-                            <div class="pricing-box-action">
-                                <a href="#" class="btn btn-hover plan-button" data-plan="Custom" data-amount="">
-                                    <span>Subscribe</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END PRICING SECTION -->
-
-<!-- Hidden form to store selected plan and amount -->
-<form id="subscribeForm">
-    <input type="hidden" id="selectedPlan">
-    <input type="hidden" id="selectedAmount">
-    <button type="submit" style="display: none;"></button>
-</form>
-
-<div id="transactionCountdown" style="display: none; color: #fff; font-size: 18px; margin-top: 10px;">
-    Time left for transaction execution: <span id="timeLeft" style = "font-size: 2em; margin-left : 10px"></span>
-    <button id="doneButton" style="display: block;">Done</button>
-</div>
-
-
-
-
 
 <!-- FOOTER SECTION -->
 <footer class="section">
@@ -270,9 +164,8 @@
 <script src="index.js"></script>
 <!-- Web3 SCRIPT -->
 <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
-<script type="module" src="../js/transaction.js"></script>
+<script type="module" src="../js/transactionHistory.js"></script>
 
 </body>
 
 </html>
-

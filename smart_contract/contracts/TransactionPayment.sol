@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract TransactionPayment {
@@ -10,6 +11,7 @@ contract TransactionPayment {
     }
 
     mapping(bytes32 => Subscription) public subscriptions;
+    bytes32[] public subscriptionIds;
 
     // Events
     event SubscriptionQueued(bytes32 indexed subscriptionId, address indexed subscriber, uint256 unlockTime);
@@ -77,15 +79,31 @@ function queueSubscription(uint _unlockTime) external payable returns (uint) {
         emit SubscriptionExecuted(_subscriptionId, _beneficiary, sub.amount);
     }
 
-    // Check the status of a subscription (queued, executed, or cancelled)
-    function getSubscriptionStatus(bytes32 _subscriptionId) external view returns (string memory) {
-        Subscription memory sub = subscriptions[_subscriptionId];
-        if (sub.cancelled) {
-            return "Cancelled";
-        } else if (sub.executed) {
-            return "Executed";
-        } else {
-            return "Queued";
+  // Function to get all subscriptions within a specific time frame
+    function getSubscriptionsWithinTimeFrame(uint startTime, uint endTime) external view returns (Subscription[] memory) {
+        uint count = 0;
+
+        // First, count the number of subscriptions within the time frame
+        for (uint i = 0; i < subscriptionIds.length; i++) {
+            Subscription memory sub = subscriptions[subscriptionIds[i]];
+            if (sub.unlockTime >= startTime && sub.unlockTime <= endTime) {
+                count++;
+            }
         }
+
+        // Create an array to hold the subscriptions within the time frame
+        Subscription[] memory result = new Subscription[](count);
+        uint index = 0;
+
+        // Populate the result array with the subscriptions within the time frame
+        for (uint i = 0; i < subscriptionIds.length; i++) {
+            Subscription memory sub = subscriptions[subscriptionIds[i]];
+            if (sub.unlockTime >= startTime && sub.unlockTime <= endTime) {
+                result[index] = sub;
+                index++;
+            }
+        }
+
+        return result;
     }
 }

@@ -1,7 +1,7 @@
-import contractData from '../../smart_contract/build/contracts/TransactionPayment.json'; // Import the contract data
-
-const contractAddress = '0x325e323E353ca4a100982Fa8681baD1b3DDD2496';
-const contractABI = contractData.abi;
+import contractData from '/../smart_contract/build/contracts/transactionPayment.json';
+//import contractData from '/../smart_contract/build/contracts/UserManager.json';
+        const contractAddress = contractData.networks[5777]?.address;  // smart contract address
+        const contractABI = contractData.abi; // smart contract's ABI
 
 let web3;
 let userAddress;
@@ -68,7 +68,8 @@ async function queueSubscription(amount, planType, customDays) {
     } else if (planType === 'Custom') {
         durationInSeconds = customDays * 24 * 60 * 60; // Custom days in seconds
     } else {
-        throw new Error('Invalid plan type');
+        alert('Invalid plan type selected.');
+        return false;
     }
 
     const unlockTime = Math.floor(Date.now() / 1000) + durationInSeconds; // Set unlock time
@@ -90,18 +91,39 @@ async function queueSubscription(amount, planType, customDays) {
         } else {
             console.error('Transaction failed');
             alert('Transaction failed.');
-            return;
+            return false;
         }
 
         // Check for events in the transaction receipt
         if (tx.events && tx.events.SubscriptionQueued) {
             // Get the subscription ID from the event logs
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
-            //subscriptionId = subscriptionId.slice(-5); // Show only the last 5 characters
             alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
             // Store the subscription ID in local storage
             localStorage.setItem('subscriptionId', subscriptionId);
+
+            // Calculate and display the start and end dates
+            const startDate = new Date();
+            const endDate = new Date(startDate.getTime() + durationInSeconds * 1000);
+
+            const startDateString = startDate.toLocaleDateString();
+            const endDateString = endDate.toLocaleDateString();
+
+            alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}`);
+
+            // Display the dates in the HTML
+            const startDateElement = document.getElementById('startDate');
+            const endDateElement = document.getElementById('endDate');
+
+            if (startDateElement && endDateElement) {
+                startDateElement.textContent = `Subscription Start Date: ${startDateString}`;
+                endDateElement.textContent = `Subscription End Date: ${endDateString}`;
+                console.log('Start Date:', startDateString);
+                console.log('End Date:', endDateString);
+            } else {
+                console.error('Date elements not found in the DOM.');
+            }
 
             // Start countdown timer
             startCountdown(planType, customDays, subscriptionId);
@@ -262,16 +284,6 @@ async function cancelSubscription(subscriptionId) {
     }
 }
 
-async function getSubscriptionStatus(subscriptionId) {
-    try {
-        const status = await transactionPayment.methods.getSubscriptionStatus(subscriptionId).call();
-        console.log('Subscription status:', status);
-        updateStatus(status);
-    } catch (error) {
-        console.error('Error getting subscription status:', error);
-        alert('Failed to get subscription status. Error: ' + error.message);
-    }
-}
 
 $(document).ready(async () => {
     await initialize();
