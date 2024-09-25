@@ -10,25 +10,44 @@ let countdownInterval;
 
 async function initialize() {
     if (typeof window.ethereum !== 'undefined') {
+        web3 = new Web3(window.ethereum);
+        
         try {
             userAddress = localStorage.getItem('userAddress');
             const userAddressElement = document.getElementById('userAddress');
             const connectButton = document.getElementById('connectButton');
 
-            if (userAddress) {
-                web3 = new Web3(window.ethereum);
-                userAddressElement.textContent = userAddress;
-                console.log('Using connected MetaMask account:', userAddress);
-
-                // Initialize the smart contract instance
-                transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
-
-                // Listen for events
-                setupEventListeners();
+            if (!userAddress) {
+                // No stored user address, try to connect using MetaMask
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length === 0) {
+                    console.error('No MetaMask accounts found. Please connect your wallet.');
+                    userAddressElement.textContent = 'Please connect your wallet on the main page.';
+                    connectButton.style.display = 'none'; // Hide connect button until user connects
+                    return;
+                }
+                userAddress = accounts[0];
+                localStorage.setItem('userAddress', userAddress);
             } else {
-                userAddressElement.textContent = 'Please connect your wallet on the main page.';
-                connectButton.style.display = 'none'; // Hide the connect button if the user is not connected
+                console.log('Using connected MetaMask account from localStorage:', userAddress);
             }
+
+            userAddressElement.textContent = userAddress;
+            console.log('MetaMask account:', userAddress);
+
+            // Initialize smart contract
+            transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
+            console.log("Contract initialized:", transactionPayment);
+
+            // Check if contract initialization is successful
+            if (!transactionPayment.methods) {
+                console.error("Contract methods not found. Check ABI and contract address.");
+                return;
+            }
+
+            // Listen for events
+            setupEventListeners();
+
         } catch (error) {
             console.error('Error initializing contract:', error);
             alert('Failed to initialize contract. Please try again.');
