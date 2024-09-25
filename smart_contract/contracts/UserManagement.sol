@@ -25,6 +25,8 @@ contract UserManager {
     mapping(address => bool) public hasActiveSubscription; // Tracks active subscriptions
     mapping(address => Subscription[]) public subscriptionHistory; // Track subscription history
 
+    address[] private userAddresses;
+
     event UserRegistered(
         address indexed userAddress,
         string username,
@@ -72,6 +74,9 @@ contract UserManager {
             nextUpdateTime: 0,
             isUpdated: false
         });
+
+         // Push the user's address to the userAddresses array
+            userAddresses.push(msg.sender);
 
         usernames[username] = true; // Mark username as taken
         emails[email] = true; // Mark email as taken
@@ -182,4 +187,18 @@ function isEmailTaken(string memory email) public view returns (bool) {
 //     require(bytes(users[msg.sender].username).length != 0, "User not registered");
 //     return subscriptionHistory[msg.sender];
 // }
+
+
+//-------Added to retrieve user details and show in transactionHistory-----
+function getUserAddresses() public view returns (address[] memory) {
+    return userAddresses;
+}
+
+function getAllUsers() public view returns (User[] memory) {
+        User[] memory allUsers = new User[](userAddresses.length);
+        for (uint i = 0; i < userAddresses.length; i++) {
+            allUsers[i] = users[userAddresses[i]];
+        }
+        return allUsers;
+    }
 }
