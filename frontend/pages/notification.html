@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Page</title>
+    <link rel="stylesheet" href="../css/notification.css"> <!-- Link to CSS file -->
+    
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" id="new-tab" onclick="showTab('new-notifications', 'new-tab')">
+                New Notifications <span id="notificationCount" class="badge"></span>
+            </div>
+            <div class="tab" id="history-tab" onclick="showTab('notification-history', 'history-tab')">Notification History</div>
+        </div>
+
+        <div class="tab-content active" id="new-notifications">
+            <div class="filter-section">
+                <input type="text" id="searchInput" placeholder="Search notifications..." oninput="filterNotifications()">
+                <input type="date" id="dateFilter" onchange="filterNotifications()">
+            </div>
+            <div id="newNotifications" class="panel">
+                <!-- New notifications will appear here -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="notification-history">
+            <div class="filter-section">
+                <input type="text" id="searchHistoryInput" placeholder="Search notification history..." oninput="filterHistoryNotifications()">
+                <input type="date" id="dateFilterHistory" onchange="filterHistoryNotifications()">
+            </div>
+            <div id="notificationHistory" class="panel">
+                <!-- Notification history will appear here -->
+            </div>
+        </div>
+
+        <button id="clearStorageButton" class="btn">Clear All Data</button>
+        <button id="disconnectButton" class="btn">Disconnect Wallet</button>
+    </div>
+
+     <!-- Web3 SCRIPT -->
+     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="../js/notification.js"></script>
+   
+</body>
+</html>

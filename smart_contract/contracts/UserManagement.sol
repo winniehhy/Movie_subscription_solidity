@@ -19,12 +19,15 @@ contract UserManagement {
     }
 
     mapping(address => User) public users;
-    mapping(string => bool) private usernames;
-    mapping(string => bool) private emails;
+    mapping(string => bool) private usernames; // Mapping to prevent duplicate usernames
+    mapping(string => bool) private emails; // Mapping to prevent duplicate emails
+    mapping(address => bool) public hasActiveSubscription; // Tracks active subscriptions
 
     event UserRegistered(address indexed userAddress, string username, string email);
     event ProfileUpdated(address indexed userAddress, string username, string email);
     event MovieAdded(string title, string genre);
+
+    address[] private userAddresses;
 
     // constructor(address _transactionPaymentAddress) {
     //     owner = msg.sender;
@@ -66,8 +69,8 @@ contract UserManagement {
             nextUpdateTime: 0
         });
 
-        usernames[username] = true;
-        emails[email] = true;
+        usernames[username] = true; // Mark username as taken
+        emails[email] = true; // Mark email as taken
 
         emit UserRegistered(msg.sender, username, email);
     }
@@ -134,5 +137,19 @@ contract UserManagement {
 
     function addMovie(string memory title, string memory genre) public onlyOwner {
         emit MovieAdded(title, genre);
+    }
+
+
+//-------Added to retrieve user details and show in transactionHistory-----
+function getUserAddresses() public view returns (address[] memory) {
+    return userAddresses;
+}
+
+function getAllUsers() public view returns (User[] memory) {
+        User[] memory allUsers = new User[](userAddresses.length);
+        for (uint i = 0; i < userAddresses.length; i++) {
+            allUsers[i] = users[userAddresses[i]];
+        }
+        return allUsers;
     }
 }

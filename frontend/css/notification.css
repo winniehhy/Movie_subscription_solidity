@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+width: 70%;
+max-width: 800px;
+background-color: white;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+padding: 20px;
+max-height: 80vh; /* Set a max height */
+overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #e5e7eb;
+    border-radius: 10px 10px 0 0;
+    transition: background-color 0.3s;
+}
+
+.tab.active {
+    background-color: #1d4ed8;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.panel {
+max-height: 60vh; /* Set a max height for the notifications panel */
+overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.notification-item {
+background-color: #fff;
+padding: 15px;
+margin-bottom: 10px;
+border-radius: 6px;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap; /* Allows buttons to move to the next line if needed */
+}
+
+.notification-text {
+flex: 1; /* Take up remaining space */
+margin-right: 10px; /* Add some spacing between text and buttons */
+}
+
+.notification-buttons {
+display: flex;
+gap: 10px; /* Adds spacing between the buttons */
+flex-wrap: wrap; /* Allows buttons to wrap to the next line if needed */
+}
+
+.btn {
+padding: 5px 10px;
+background-color: #1d4ed8;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+margin: 2px 0; /* Add a small margin for better alignment */
+}
+
+.btn:hover {
+background-color: #3b82f6;
+}
+
+
+#clearStorageButton {
+    margin-top: 20px;
+    background-color: #e53e3e;
+}
+
+.badge {
+    background-color: red;
+    color: white;
+    border-radius: 12px;
+    padding: 0 6px;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.filter-section input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 48%;
+}
