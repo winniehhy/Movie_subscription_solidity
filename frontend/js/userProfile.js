@@ -1,4 +1,4 @@
-import contractData from '../../smart_contract/build/contracts/UserManager.json';
+import contractData from '../../smart_contract/build/contracts/UserManagement.json';
 const contractAddress = contractData.networks[5777]?.address;  // smart contract address
 const contractABI = contractData.abi; 
 let web3;
@@ -92,7 +92,7 @@ async function loadProfile(account) {
 // Restrict Add Movie button to contract owner
 async function loadOwner() {
     try {
-        const ownerAddress = await userManager.methods.getOwner().call();
+        const ownerAddress = await userManager.methods.getOwner().call(); // Ensure this is a read call
         document.getElementById('ownerAddress').innerText = formatAddress(ownerAddress);
 
         const accounts = await web3.eth.getAccounts();
@@ -109,4 +109,4 @@ async function loadOwner() {
 
 document.getElementById('disconnectMetaMask').addEventListener('click', () => {
     alert('Disconnected from MetaMask.');
-});
+}); 

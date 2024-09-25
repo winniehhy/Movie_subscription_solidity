@@ -1,0 +1,37 @@
+  <!-- NAV -->
+  <div class="nav-wrapper">
+    <div class="container">
+        <div class="nav">
+            <a href="#" class="logo">
+                <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                <a href="userProfile.html" class="btn" id="authButton" style="margin-right: 500px; background-color:#fcb800;">
+                    <span>User Profile</span> <!-- This will change dynamically based on login state -->
+                </a>
+            </a>
+           
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Content</a></li>
+                <li><a href="/pages/Vote.html">Vote</a></li>
+                <li><a href="#">Notification</a></li>
+                <li><a href="/pages/transaction.html">Payment</a></li>
+                <li>
+                    <a href="#" class="btn btn-hover" id="connectButton">
+                        <span>Connect Wallet</span>
+                        <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; margin: 0;">
+                        <li><a href="#" id="copyAddressButton" style="color: #fff; padding: 30px">Copy Address</a></li>
+                        <li><a href="#" id="disconnectButton" style="color: #fff;">Disconnect Wallet</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <!-- MOBILE MENU TOGGLE -->
+            <div class="hamburger-menu" id="hamburger-menu">
+                <div class="hamburger"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END NAV -->

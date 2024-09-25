@@ -1,4 +1,4 @@
-import contractData from '/../smart_contract/build/contracts/transactionPayment.json';
+import contractData from '../../smart_contract/build/contracts/TransactionPayment.json';
 //import contractData from '/../smart_contract/build/contracts/UserManager.json';
         const contractAddress = contractData.networks[5777]?.address;  // smart contract address
         const contractABI = contractData.abi; // smart contract's ABI
@@ -7,55 +7,64 @@ let web3;
 let userAddress;
 let transactionPayment;
 let countdownInterval;
-
 async function initialize() {
     if (typeof window.ethereum !== 'undefined') {
-        userAddress = localStorage.getItem('userAddress');
-        const userAddressElement = document.getElementById('userAddress');
-        const connectButton = document.getElementById('connectButton');
+        web3 = new Web3(window.ethereum);
 
-        if (userAddress) {
-            web3 = new Web3(window.ethereum);
-            userAddressElement.textContent = userAddress;
-            console.log('Using connected MetaMask account:', userAddress);
+        try {
+            await window.ethereum.enable(); // Request account access if needed
+            userAddress = localStorage.getItem('userAddress');
+            const userAddressElement = document.getElementById('userAddress');
 
-            try {
-                // Initialize contract
-                transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
-
-                // Listen for events
-                transactionPayment.events.SubscriptionQueued({ filter: { subscriber: userAddress } })
-                    .on('data', event => {
-                        console.log('Subscription queued:', event);
-                        updateStatus('queued');
-                    })
-                    .on('error', console.error);
-
-                transactionPayment.events.SubscriptionExecuted({ filter: { subscriber: userAddress } })
-                    .on('data', event => {
-                        console.log('Subscription executed:', event);
-                        updateStatus('executed');
-                    })
-                    .on('error', console.error);
-
-                transactionPayment.events.SubscriptionCancelled({ filter: { subscriber: userAddress } })
-                    .on('data', event => {
-                        console.log('Subscription cancelled:', event);
-                        updateStatus('cancelled');
-                    })
-                    .on('error', console.error);
-            } catch (error) {
-                console.error('Error initializing contract:', error);
-                alert('Failed to initialize contract. Please try again.');
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length === 0) {
+                console.error('No MetaMask accounts found. Please connect your wallet.');
+                return;
             }
-        } else {
-            userAddressElement.textContent = 'Please connect your wallet on the main page.';
-            connectButton.style.display = 'none'; // Hide the connect button if the user is not connected
+            userAddress = accounts[0];
+            console.log('Using MetaMask account:', userAddress);
+            userAddressElement.textContent = userAddress;
+
+            // Initialize contract
+            transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
+            console.log("Contract initialized:", transactionPayment);
+
+            // Check if contract initialization is successful
+            if (!transactionPayment.methods) {
+                console.error("Contract methods not found. Check ABI and contract address.");
+                return;
+            }
+
+            // Listen for events
+            transactionPayment.events.SubscriptionQueued({ filter: { subscriber: userAddress } })
+                .on('data', event => {
+                    console.log('Subscription queued:', event);
+                    updateStatus('queued');
+                })
+                .on('error', console.error);
+
+            transactionPayment.events.SubscriptionExecuted({ filter: { subscriber: userAddress } })
+                .on('data', event => {
+                    console.log('Subscription executed:', event);
+                    updateStatus('executed');
+                })
+                .on('error', console.error);
+
+            transactionPayment.events.SubscriptionCancelled({ filter: { subscriber: userAddress } })
+                .on('data', event => {
+                    console.log('Subscription cancelled:', event);
+                    updateStatus('cancelled');
+                })
+                .on('error', console.error);
+        } catch (error) {
+            console.error('Error initializing contract:', error);
+            alert('Failed to initialize contract. Please try again.');
         }
     } else {
         alert('Please install MetaMask!');
     }
 }
+
 
 async function queueSubscription(amount, planType, customDays) {
     let durationInSeconds;
