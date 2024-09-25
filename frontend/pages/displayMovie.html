@@ -17,8 +17,7 @@
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <!-- APP CSS -->
         <link rel="stylesheet" href="../css/grid.css">
-        <link rel="stylesheet" href="../css/index.css">
-        <link rel="stylesheet" href="../css/addMovie.css">
+        <link rel="stylesheet" href="../css/displayMovie.css">
     </head>
     
     <body>
@@ -57,41 +56,20 @@
         </div>
     </div>
     <!-- END NAV -->
-    <!-- Movie Management Form -->
-    <div class="form-container">
-        <h2>Create a Movie</h2>
-        <form id="movieForm">
-            <div class="form-group">
-                <label for="name">Movie Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter movie name" required>
-            </div>
 
-            <div class="form-group">
-                <label for="rate">Movie Rate</label>
-                <input type="text" id="rate" name="rate" placeholder="e.g., PG, R" required>
-            </div>
+    <header>
+        <h1>Movie Subscription System</h1>
+    </header>
 
-            <div class="form-group">
-                <label for="releaseDate">Release Date</label>
-                <input type="date" id="releaseDate" name="releaseDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="endDate">End Date</label>
-                <input type="date" id="endDate" name="endDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Movie Description</label>
-                <textarea id="description" name="description" placeholder="Describe the movie..." rows="5" required></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
+    <!-- Main Content -->
+    <div class="movie-container" id="movie-container">
+        <!-- Movies will be dynamically injected here -->
     </div>
 
-    <!-- FOOTER SECTION -->
-    <footer class="section">
+    <a href="addMovie.html"><button>Add Movie</button></a>
+
+     <!-- FOOTER SECTION -->
+     <footer class="section">
         <div class="container">
             <div class="row">
                 <div class="col-4 col-md-6 col-sm-12">
@@ -179,8 +157,7 @@
     Low Jian Hao
 </div>
 <!-- END COPYRIGHT SECTION -->
-
-    <!-- SCRIPT -->
+<!-- SCRIPT -->
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- OWL CAROUSEL -->
@@ -190,6 +167,6 @@
     <!-- Web3 SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
-    <script type="module" src="../js/addMovie.js"></script>
+    <script type="module" src="../js/displayMovie.js"></script>
 </body>
 </html>
