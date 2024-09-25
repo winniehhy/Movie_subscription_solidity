@@ -1,9 +1,9 @@
-const UserManager = artifacts.require("UserManager");
+const UserManagement = artifacts.require("UserManagement");
 const TransactionPayment = artifacts.require("TransactionPayment");
 const MovieVoting = artifacts.require("MovieVoting");
 
 module.exports = function(deployer) {
-    deployer.deploy(UserManager);
+    deployer.deploy(UserManagement);
     deployer.deploy(TransactionPayment);
     deployer.deploy(MovieVoting);
 };
