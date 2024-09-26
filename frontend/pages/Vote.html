@@ -16,9 +16,9 @@
         <!-- BOX ICONS -->
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <!-- APP CSS -->
+        <link rel="stylesheet" href="../css/vote.css">
         <link rel="stylesheet" href="../css/grid.css">
         <link rel="stylesheet" href="../css/index.css">
-        <link rel="stylesheet" href="../css/vote.css">
     </head>
     
     <body>
@@ -58,59 +58,263 @@
     </div>
     <!-- END NAV -->
     <!--Vote page-->
-    <div class="Votecontainer">
-        <h1>Vote For Movie</h1>
-        <div class="form-section">
-            <div>
-                <h2>Submit Your Vote</h2>
-                <label for="category">Category:</label>
-                <select name="category" id="category">
-                    <option value="Best Movie in august 2024">Best Movie in august 2024</option>
-                    <option value="Best Comedy Movie in august 2024">Best Comedy Movie in august 2024</option>
-                    <option value="Best Horror Movie in august 2024">Best Horror Movie in august 2024</option>
-                    <option value="Best Movie in September 2024">Best Movie in September 2024</option>
-                    <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
-                    <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
-                    <option value="Best Movie in october 2024">Best Movie in october 2024</option>
-                    <option value="Best Comedy Movie in october 2024">Best Comedy Movie in october 2024</option>
-                    <option value="Best Horror Movie in october 2024">Best Horror Movie in october 2024</option>
-                </select>
-                <label for="movie">Movie:</label>
-                <select name="movieName" id="movieName">
-                <option value="Inside Out 2">Inside Out 2</option>
-                <option value="Deadpool & Wolverine">Deadpool & Wolverine</option>
-                <option value="Beetlejuice Beetlejuice">Beetlejuice Beetlejuice</option>
-                <option value="Longlegs">Longlegs</option>
-                <option value="Sonic the Hedgehog 3">Sonic the Hedgehog 3</option>
-                <option value="The Lord of the Rings: The Rings of Power">The Lord of the Rings: The Rings of Power</option>
-                <option value="Transformers One">Transformers One</option>
-                <option value="Despicable Me 4">Despicable Me 4</option>
-                <option value="His Three Daughters">His Three Daughters</option>
-                </select>
-                <button id="submitVoteButton">Submit Vote</button>
+    <div class="big-container">
+        <!-- HERO SECTION -->
+        <div class="hero-section">
+        <!-- TOP MOVIES SLIDE -->
+            <h1>Movies</h1>
+            <div class="top-movies-slide">
+                <div class="owl-carousel" id="top-movies-slide" style="width: 400px;">
+            <!-- MOVIE ITEM -->
+            <div class="movie-item" >
+                <img src="../images/series/supergirl.jpg" alt="">
+                <div class="movie-item-content">
+                    <div class="movie-item-title">
+                        Supergirl
+                    </div>
+                    <div class="movie-infos">
+                        <div class="movie-info">
+                            <i class="bx bxs-star"></i>
+                            <span>9.5</span>
+                        </div>
+                        <div class="movie-info">
+                            <i class="bx bxs-time"></i>
+                            <span>120 mins</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>16+</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h2>Cancel Your Vote</h2>
-                <label for="category">Category:</label>
-                <select name="category" id="cancelcategory">
-                    <option value="Best Movie in august 2024">Best Movie in august 2024</option>
-                    <option value="Best Comedy Movie in august 2024">Best Comedy Movie in august 2024</option>
-                    <option value="Best Horror Movie in august 2024">Best Horror Movie in august 2024</option>
-                    <option value="Best Movie in September 2024">Best Movie in September 2024</option>
-                    <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
-                    <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
-                    <option value="Best Movie in october 2024">Best Movie in october 2024</option>
-                    <option value="Best Comedy Movie in october 2024">Best Comedy Movie in october 2024</option>
-                    <option value="Best Horror Movie in october 2024">Best Horror Movie in october 2024</option>
-                </select>
-                <button id="cancelVoteButton">Cancel Vote</button>
+            <!-- END MOVIE ITEM -->
+            <!-- MOVIE ITEM -->
+            <div class="movie-item">
+                <img src="../images/movies/captain-marvel.png" alt="">
+                <div class="movie-item-content">
+                    <div class="movie-item-title">
+                        Captain Marvel
+                    </div>
+                    <div class="movie-infos">
+                        <div class="movie-info">
+                            <i class="bx bxs-star"></i>
+                            <span>9.5</span>
+                        </div>
+                        <div class="movie-info">
+                            <i class="bx bxs-time"></i>
+                            <span>120 mins</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>16+</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- END MOVIE ITEM -->
+            <!-- MOVIE ITEM -->
+            <div class="movie-item">
+                <img src="../images/cartoons/demon-slayer.jpg" alt="">
+                <div class="movie-item-content">
+                    <div class="movie-item-title">
+                        Infinity Train
+                    </div>
+                    <div class="movie-infos">
+                        <div class="movie-info">
+                            <i class="bx bxs-star"></i>
+                            <span>9.5</span>
+                        </div>
+                        <div class="movie-info">
+                            <i class="bx bxs-time"></i>
+                            <span>120 mins</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>16+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MOVIE ITEM -->
+            <!-- MOVIE ITEM -->
+            <div class="movie-item">
+                <img src="../images/movies/blood-shot.jpg" alt="">
+                <div class="movie-item-content">
+                    <div class="movie-item-title">
+                        Bloodshot
+                    </div>
+                    <div class="movie-infos">
+                        <div class="movie-info">
+                            <i class="bx bxs-star"></i>
+                            <span>9.5</span>
+                        </div>
+                        <div class="movie-info">
+                            <i class="bx bxs-time"></i>
+                            <span>120 mins</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>16+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MOVIE ITEM -->
+            <!-- MOVIE ITEM -->
+            <div class="movie-item">
+                <img src="../images/series/wanda.png" alt="">
+                <div class="movie-item-content">
+                    <div class="movie-item-title">
+                        Wanda Vision
+                    </div>
+                    <div class="movie-infos">
+                        <div class="movie-info">
+                            <i class="bx bxs-star"></i>
+                            <span>9.5</span>
+                        </div>
+                        <div class="movie-info">
+                            <i class="bx bxs-time"></i>
+                            <span>120 mins</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>16+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MOVIE ITEM -->
+            <!-- MOVIE ITEM -->
+            <div class="movie-item">
+                <img src="../images/movies/bat-man.jpg" alt="">
+                <div class="movie-item-content">
+                    <div class="movie-item-title">
+                        The Dark Knight
+                    </div>
+                    <div class="movie-infos">
+                        <div class="movie-info">
+                            <i class="bx bxs-star"></i>
+                            <span>9.5</span>
+                        </div>
+                        <div class="movie-info">
+                            <i class="bx bxs-time"></i>
+                            <span>120 mins</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <span>16+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MOVIE ITEM -->
+                </div>
+            </div>
+            <!-- END TOP MOVIES SLIDE -->
         </div>
-
+        <!-- END HERO SECTION -->
+         <!-- Vote submit SECTION -->
+        <div class="Votecontainer">
+            <h1>Vote For Movie</h1>
+            <div class="wrapper">
+                <div class="title-text">
+                   <div class="title login">
+                       Submit Vote
+                   </div>
+                   <div class="title signup">
+                       Cancel Vote
+                   </div>
+                </div>
+                <div class="form-container">
+                   <div class="slide-controls">
+                      <input type="radio" name="slide" id="login" checked>
+                      <input type="radio" name="slide" id="signup">
+                      <label for="login" class="slide login">Submit</label>
+                      <label for="signup" class="slide signup">Cancel</label>
+                      <div class="slider-tab"></div>
+                   </div>
+                   <div class="form-inner">
+                      <form action="#" class="login">
+                         <div class="field">
+                           <label for="category">Category:</label>
+                           <select name="category" id="category">
+                           <option value="Best Movie in august 2024">Best Movie in august 2024</option>
+                           <option value="Best Comedy Movie in august 2024">Best Comedy Movie in august 2024</option>
+                           <option value="Best Horror Movie in august 2024">Best Horror Movie in august 2024</option>
+                           <option value="Best Movie in September 2024">Best Movie in September 2024</option>
+                           <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
+                           <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
+                           <option value="Best Movie in october 2024">Best Movie in october 2024</option>
+                           <option value="Best Comedy Movie in october 2024">Best Comedy Movie in october 2024</option>
+                           <option value="Best Horror Movie in october 2024">Best Horror Movie in october 2024</option>
+                           </select>
+                         </div>
+                         <div class="field">
+                           <label for="movie">Movie:</label>
+                           <select name="movieName" id="movieName">
+                           <option value="Inside Out 2">Inside Out 2</option>
+                           <option value="Deadpool & Wolverine">Deadpool & Wolverine</option>
+                           <option value="Beetlejuice Beetlejuice">Beetlejuice Beetlejuice</option>
+                           <option value="Longlegs">Longlegs</option>
+                           <option value="Sonic the Hedgehog 3">Sonic the Hedgehog 3</option>
+                           <option value="The Lord of the Rings: The Rings of Power">The Lord of the Rings: The Rings of Power</option>
+                           <option value="Transformers One">Transformers One</option>
+                           <option value="Despicable Me 4">Despicable Me 4</option>
+                           <option value="His Three Daughters">His Three Daughters</option>
+                           </select>
+                         </div>                  
+                         <div class="field">
+                         </div>
+                         <div class="field btn">
+                           <div class="btn-layer"></div>
+                           <button id="submitVoteButton">Submit Vote</button>
+                        </div>
+                      </form>
+                      <form action="#" class="signup">
+                         <div class="field">
+                           <label for="category">Category:</label>
+                           <select name="category" id="cancelcategory">
+                               <option value="Best Movie in august 2024">Best Movie in august 2024</option>
+                               <option value="Best Comedy Movie in august 2024">Best Comedy Movie in august 2024</option>
+                               <option value="Best Horror Movie in august 2024">Best Horror Movie in august 2024</option>
+                               <option value="Best Movie in September 2024">Best Movie in September 2024</option>
+                               <option value="Best Comedy Movie in September 2024">Best Comedy Movie in September 2024</option>
+                               <option value="Best Horror Movie in September 2024">Best Horror Movie in September 2024</option>
+                               <option value="Best Movie in october 2024">Best Movie in october 2024</option>
+                               <option value="Best Comedy Movie in october 2024">Best Comedy Movie in october 2024</option>
+                               <option value="Best Horror Movie in october 2024">Best Horror Movie in october 2024</option>
+                           </select>
+                         </div>
+                         <div class="field"></div>
+                         <div class="field"></div>
+                         <div class="field btn">
+                            <div class="btn-layer"></div>
+                            <button id="cancelVoteButton">Cancel Vote</button>
+                         </div>
+                      </form>
+                   </div>
+                </div>
+             </div>       
+        </div>
+    </div>
+    <div class="big-container2">
         <h1>Display vote For Movie</h1>
         <div class="form-section2">
-            <div>
-                <h2 style="padding-top: 20px;">Display vote results</h2>
+            <div class="DisplayForm">
+                <h2>Display vote results</h2>
                 <label for="category">Category:</label>
                 <select name="category" id="viewCategoryResult">
                 <option value="Best Movie in august 2024">Best Movie in august 2024</option>
@@ -131,6 +335,7 @@
             </div>                
         </div>
     </div>
+
 
     <!-- FOOTER SECTION -->
     <footer class="section">
@@ -232,8 +437,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- OWL CAROUSEL -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
-    <!-- APP SCRIPT -->
-    <script src="../index.js"></script>
     <!-- Web3 SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>

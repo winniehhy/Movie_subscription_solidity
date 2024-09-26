@@ -9,8 +9,7 @@ async function initialize() {
     if (typeof window.ethereum !== 'undefined') {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            userAddress = accounts[0];
-
+            userAddress = localStorage.getItem('userAddress');
             if (userAddress) {
                 loadNotifications();
                 loadNotificationHistory();
@@ -33,8 +32,23 @@ const userReadNotificationsKey = () => `readNotifications_${userAddress}`;
 
 async function loadNotifications() {
     const newNotifications = document.getElementById('newNotifications');
-    const notifications = JSON.parse(localStorage.getItem(userNotificationsKey())) || [];
-    
+    let notifications = JSON.parse(localStorage.getItem(userNotificationsKey())) || [];
+
+    // Check for expiring subscriptions and add upcoming renewal notifications
+    const expiringSubscriptions = getExpiringSubscriptions();
+    expiringSubscriptions.forEach(subscription => {
+        const renewalNotification = {
+            message: `Your subscription for ${subscription.planType} is expiring soon.`,
+            timestamp: Date.now(),
+            planType: subscription.planType,
+            subscriptionId: subscription.subscriptionId,
+            startDate: subscription.startDate,
+            endDate: subscription.endDate
+        };
+        notifications.push(renewalNotification);
+    });
+
+    // Update the notification count
     const notificationCount = document.getElementById('notificationCount');
     notificationCount.textContent = notifications.length > 0 ? notifications.length : '';
 
@@ -48,26 +62,45 @@ async function loadNotifications() {
     notifications.forEach((notification, index) => {
         const notificationItem = document.createElement('div');
         notificationItem.className = 'notification-item';
-        
-        const countdownElement = document.createElement('div');
-        countdownElement.id = `countdown-${index}`;
-        countdownElement.style.marginTop = '5px';
-        countdownElement.style.fontWeight = 'bold';
-        countdownElement.style.color = '#ff0000';
 
+        // Create the inner HTML for the notification
         notificationItem.innerHTML = `
             <p><strong>${notification.message}</strong> <small>${new Date(notification.timestamp).toLocaleString()}</small></p>
             <div class="notification-buttons">
                 <button class="btn" onclick="viewNotification(${index})">View Notification</button>
                 <button class="btn" onclick="markAsRead(${index})">Mark as Read</button>
             </div>
+            <div id="countdown-${index}" style="margin-top: 5px; font-weight: bold; color: #ff0000;"></div>
         `;
-        
-        notificationItem.appendChild(countdownElement);
+
         newNotifications.appendChild(notificationItem);
 
+        // Now that the countdown div is part of the DOM, we can reference it
+        const countdownElement = document.getElementById(`countdown-${index}`);
         startNotificationCountdown(notification, countdownElement);
     });
+
+    // Save the updated notifications back to localStorage
+    localStorage.setItem(userNotificationsKey(), JSON.stringify(notifications));
+}
+
+function getExpiringSubscriptions() {
+    // Retrieve subscriptions from localStorage or your data source
+    const subscriptions = JSON.parse(localStorage.getItem('userSubscriptions')) || [];
+    const expiringSubscriptions = [];
+    const oneDayInMs = 24 * 60 * 60 * 1000;
+
+    subscriptions.forEach(subscription => {
+        const endDate = new Date(subscription.endDate).getTime();
+        const currentTime = Date.now();
+        const timeLeft = endDate - currentTime;
+
+        if (timeLeft > 0 && timeLeft <= oneDayInMs) {
+            expiringSubscriptions.push(subscription);
+        }
+    });
+
+    return expiringSubscriptions;
 }
 
 function startNotificationCountdown(notification, countdownElement) {
@@ -93,7 +126,11 @@ function startNotificationCountdown(notification, countdownElement) {
         const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
+        if (days <= 1 && days >= 0) {
+            countdownElement.innerHTML = `<span style="color:yellow; font-weight:bold;">Upcoming Subscription Renewal!</span><span style="color:white; font-weight:bold;"> Subscription Expires in:</span> ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        } else {
         countdownElement.textContent = `Time left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
     }, 1000);
 }
 

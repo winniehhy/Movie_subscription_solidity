@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import contractData from '/../smart_contract/build/contracts/transactionPayment.json';
 //import contractData from '/../smart_contract/build/contracts/UserManager.json';
+=======
+import contractData from '/../smart_contract/build/contracts/TransactionPayment.json';
+
+>>>>>>> 8967bc2cb6b977641cfb13c7a34ac0c81b7f2b2e
         const contractAddress = contractData.networks[5777]?.address;  // smart contract address
         const contractABI = contractData.abi; // smart contract's ABI
 
@@ -176,6 +181,7 @@ async function queueSubscription(amount, planType, customDays) {
         if (tx.events && tx.events.SubscriptionQueued) {
             // Get the subscription ID from the event logs
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
+            console.log('Subscription ID:', subscriptionId); // Log the subscription ID
             alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
             // Store the subscription ID in local storage
@@ -188,20 +194,8 @@ async function queueSubscription(amount, planType, customDays) {
             const startDateString = startDate.toLocaleDateString();
             const endDateString = endDate.toLocaleDateString();
 
+            // Prompt the start and end dates
             alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}`);
-
-            // Display the dates in the HTML
-            const startDateElement = document.getElementById('startDate');
-            const endDateElement = document.getElementById('endDate');
-
-            if (startDateElement && endDateElement) {
-                startDateElement.textContent = `Subscription Start Date: ${startDateString}`;
-                endDateElement.textContent = `Subscription End Date: ${endDateString}`;
-                console.log('Start Date:', startDateString);
-                console.log('End Date:', endDateString);
-            } else {
-                console.error('Date elements not found in the DOM.');
-            }
 
             // Start countdown timer
             startCountdown(planType, customDays, subscriptionId);
@@ -267,6 +261,7 @@ function startCountdown(planType, customDays, subscriptionId) {
         timeLeftElement.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
     }, 1000);
 
+<<<<<<< HEAD
     // doneButton.onclick = async () => {
     //     const userConfirmed = confirm('You will be cancelling your plan, are you sure to proceed?');
     //     if (userConfirmed) {
@@ -288,6 +283,42 @@ function startCountdown(planType, customDays, subscriptionId) {
     //         }
     //     }
     // };
+=======
+    doneButton.onclick = async () => {
+        const userConfirmed = confirm('Your plan will be executed and terminated immediately. Are you sure you want to proceed?');
+        if (userConfirmed) {
+            const subscriptionId = prompt('Please enter your subscription ID:');
+            if (!subscriptionId) {
+                alert('Subscription ID is required to execute the plan.');
+                return;
+            }
+
+            try {
+                clearInterval(countdownInterval);
+                timeLeftElement.textContent = 'Subscription cancelled!';
+                countdownElement.style.display = 'none'; // Hide the countdown element
+                await executeSubscription(subscriptionId);
+            } catch (error) {
+                console.error('Error executing subscription:', error);
+                alert('Failed to execute subscription. Error: ' + error.message);
+            }
+        }
+    };
+>>>>>>> 8967bc2cb6b977641cfb13c7a34ac0c81b7f2b2e
+}
+
+
+function stopTimer() {
+    // Assuming you have a global variable `countdownInterval` for the countdown timer
+    clearInterval(countdownInterval);
+    console.log('Timer stopped.');
+
+    const timeLeftElement = document.getElementById('timeLeft');
+    const countdownElement = document.getElementById('transactionCountdown');
+    if (timeLeftElement && countdownElement) {
+        timeLeftElement.textContent = 'Subscription cancelled!';
+        countdownElement.style.display = 'none'; // Hide the countdown element
+    }
 }
 
 function updateStatus(status) {
@@ -319,12 +350,29 @@ function updateStatus(status) {
 
 async function executeSubscription(subscriptionId) {
     try {
-        console.log(`Executing subscription with ID: ${subscriptionId} for user: ${userAddress}`);
-        const tx = await transactionPayment.methods.executeSubscription(subscriptionId, userAddress).send({ from: userAddress });
-        console.log('Subscription executed:', tx);
+        console.log(`Transferring funds for subscription ID: ${subscriptionId} for user: ${userAddress}`);
+        const formattedSubscriptionId = web3.utils.padLeft(subscriptionId, 64); // Ensure the subscription ID is correctly formatted
+
+        // Log the formatted subscription ID
+        console.log('Formatted Subscription ID:', formattedSubscriptionId);
+
+        // Call the smart contract method to execute the subscription and transfer funds to the hardcoded beneficiary address
+        const tx = await transactionPayment.methods.executeSubscription(formattedSubscriptionId).send({ 
+            from: userAddress,
+            gas: 3000000 // Set a high gas limit for debugging purposes
+        });
+
+        console.log('Funds transferred:', tx);
+        alert('Funds transferred successfully.');
     } catch (error) {
-        console.error('Error executing subscription:', error);
-        alert('Failed to execute subscription. Error: ' + error.message);
+        console.error('Error transferring funds:', error);
+
+        // Check if the error has a data property with more details
+        if (error.data) {
+            console.error('Error data:', error.data);
+        }
+
+        alert('Failed to transfer funds. Error: ' + error.message);
     }
 }
 
@@ -476,6 +524,7 @@ $(document).ready(async () => {
             } else {
                 await cancelSubscription(subscriptionId);
                 alert('Subscription cancelled and funds refunded.');
+                stopTimer()
             }
         } catch (error) {
             console.error('Error cancelling subscription:', error);

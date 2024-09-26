@@ -10,9 +10,9 @@ module.exports = async function(deployer) {
     const userManageInstance = await UserManagement.deployed();
 
     // Deploy other contracts
-    await deployer.deploy(TransactionPayment,userManageInstance.address);
+    await deployer.deploy(TransactionPayment, userManageInstance.address);
     await deployer.deploy(NotificationManagement);
 
     // Pass the UserManagement contract's address to the MovieVoting constructor
-    await deployer.deploy(MovieVoting);
+    await deployer.deploy(MovieVoting, userManageInstance.address);
 };

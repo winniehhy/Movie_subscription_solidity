@@ -6,10 +6,12 @@ contract ContentManagement {
     mapping(uint256 => Movie) private movies;
 
     // Event emitted when a new movie is created
-    event NewMovie(uint256 indexed movieId, string name, uint256 releaseDate, uint256 endDate, string description);
-
-    // Event emitted when a movie is released
-    event MovieReleased(uint256 indexed movieId);
+    event NewMovie(
+        uint256 indexed movieId,
+        string name,
+        uint256 releaseDate,
+        string description
+    );
 
     // Struct to represent a movie
     struct Movie {
@@ -17,9 +19,8 @@ contract ContentManagement {
         string name;
         string rate; // e.g. "R", "P12"
         uint256 releaseDate;
-        uint256 endDate;
         string description;
-        bool isReleased;
+        bool isAvailable; // true if released, false otherwise
     }
 
     // Only the owner can create a new movie
@@ -45,75 +46,65 @@ contract ContentManagement {
         _;
     }
 
-    // Modifier to check if the movie can be released
-    modifier canRelease(uint256 _id) {
-        require(movies[_id].releaseDate <= block.timestamp, "Movie has not reached the release date");
-        require(!movies[_id].isReleased, "Movie has already been released");
-        _;
-    }
-
     // Create a new movie
     function createMovie(
         string memory _name,
         string memory _rate,
         uint256 _releaseDate,
-        uint256 _endDate,
         string memory _description
     ) public onlyOwner {
-        require(_releaseDate < _endDate, "Release date must be before the end date");
-
         // Create a new movie struct
+        bool availability = _releaseDate <= block.timestamp;
         Movie memory newMovie = Movie({
             id: movieIdCounter,
             name: _name,
             rate: _rate,
             releaseDate: _releaseDate,
-            endDate: _endDate,
             description: _description,
-            isReleased: false
+            isAvailable: availability // Set availability based on the release date
         });
 
         // Add movie to the mapping
         movies[movieIdCounter] = newMovie;
 
         // Emit event for new movie creation
-        emit NewMovie(movieIdCounter, _name, _releaseDate, _endDate, _description);
+        emit NewMovie(movieIdCounter, _name, _releaseDate, _description);
 
         // Increment movie ID counter
         movieIdCounter++;
     }
 
-    // Release a movie when the release date is reached
-    function releaseMovie(uint256 _id) public movieExists(_id) canRelease(_id) {
-        Movie storage movie = movies[_id];
-        movie.isReleased = true;
-
-        emit MovieReleased(_id);
-    }
-
-    // Check if a movie is available to watch
-    function isMovieAvailable(uint256 _id) public view movieExists(_id) returns (bool) {
+    // Check if a movie is available to watch (dynamically checks the release date)
+    function isMovieAvailable(
+        uint256 _id
+    ) public view movieExists(_id) returns (bool) {
         Movie memory movie = movies[_id];
-        return movie.isReleased && movie.endDate >= block.timestamp;
+        // Update availability based on the release date
+        return movie.releaseDate <= block.timestamp;
     }
 
     // Get movie details
-    function getMovie(uint256 _id) public view movieExists(_id) returns (
-        string memory name,
-        string memory rate,
-        uint256 releaseDate,
-        uint256 endDate,
-        string memory description,
-        bool isReleased
-    ) {
+    function getMovie(
+        uint256 _id
+    )
+        public
+        view
+        movieExists(_id)
+        returns (
+            string memory name,
+            string memory rate,
+            uint256 releaseDate,
+            string memory description,
+            bool isAvailable
+        )
+    {
         Movie memory movie = movies[_id];
         return (
             movie.name,
             movie.rate,
             movie.releaseDate,
-            movie.endDate,
             movie.description,
-            movie.isReleased
+            isMovieAvailable(_id) // Dynamically return if movie is available
         );
     }
 

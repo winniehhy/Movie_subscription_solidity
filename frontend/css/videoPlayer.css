@@ -1,4 +1,3 @@
-
 :root {
     --main-color: #1f83ed;
     --body-bg: #181616;
@@ -210,93 +209,40 @@ a.movie-item:hover {
     left: 6px;
 }
 
-/* Flexbox container for movie items */
-.parent-of-movie-items {
+
+#video-section {
     display: flex;
-    flex-wrap: wrap; /* Ensures the movies wrap to the next line if needed */
-    justify-content: flex-start; /* Aligns items to the left */
-    gap: 20px; /* Space between movie items */
+    margin-top: 60px;
 }
 
-/* Each individual movie item */
-.movie-item {
-    position: relative; /* Allows the content to be positioned within the image */
-    width: 250px; /* Width of the movie item */
-    height: 375px; /* Height of the movie item */
-    overflow: hidden;
-    cursor: pointer;
-}
-
-/* The movie image */
-.movie-item img {
+video {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s linear; /* Smooth hover zoom effect */
+    max-width: 600px;
+    border-radius: 8px;
 }
 
-/* Zoom effect on hover */
-.movie-item:hover img {
-    transform: scale(1.05);
-}
-
-/* Content (text) overlaid on the image */
-.movie-item-content {
-    position: absolute;
-    bottom: 0; /* Position the content at the bottom of the image */
-    width: 100%; /* Full width of the image */
-    padding: 10px; /* Padding around the text */
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    color: #fff; /* White text */
-    text-align: center; /* Center the text */
-    box-sizing: border-box; /* Ensure padding doesn’t affect width */
-}
-
-/* Title styling */
-.movie-item-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0; /* No margin around the title */
-}
-
-/* Additional movie information (rating, date, etc.) */
-.movie-infos {
-    display: flex; /* Set the container to use flexbox */
-    justify-content: space-between; /* Space out items evenly */
-    align-items: center; /* Align items vertically in the center */
-    margin-top: 5px; /* Space between title and info */
-    font-size: 0.9rem;
-    gap: 10px; /* Add spacing between the items */
-}
-
-/* Individual info items */
-.movie-info {
+.item-content-wrapper {
+    margin-left: 20px;
     display: flex;
-    align-items: center; /* Vertically align icon and text */
+    flex-direction: column;
+    flex: 1; /* Allows the content to take remaining space */
 }
 
-/* Example icon styling (optional) */
-.movie-info i {
-    margin-right: 5px; /* Space between icon and text */
+.item-content-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
-.add-movie-container {
-    display: flex;              /* Use flexbox to center the button */
-    flex-direction: column;     /* Stack the button and text vertically */
-    align-items: center;        /* Center align the items */
-    margin: 40px 0;            /* Add vertical spacing above and below */
-}
-
-.add-movie-container .plan-button {
-    padding: 10px 20px;        /* Adjust padding to be slightly smaller */
-    font-size: 1.25rem;        /* Decrease font size */
-    font-weight: 700;          /* Adjust font weight for a more standard look */
-}
-
-.add-movie-container h3 {
-    margin-top: 10px;          /* Adjusts the space above the sentence */
-    color: #fff;            /* Match the color to the theme */
-    text-align: center;        /* Center the text */
+.plan-button {
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 footer.section {

@@ -2,30 +2,33 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f2f5;
+    background-color: #121212; /* Dark background for the body */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: white; /* Set default text color to white */
 }
 
 .container {
-width: 70%;
-max-width: 800px;
-background-color: white;
-border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-padding: 20px;
-max-height: 80vh; /* Set a max height */
-overflow-y: auto; /* Enable vertical scrolling */
+    width: 70%;
+    max-width: 800px;
+    background-color: #333333; /* Darker shade for the container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Stronger shadow for better contrast */
+    padding: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: white; /* Ensure text inside container is white */
 }
 
 .tabs {
     display: flex;
     justify-content: space-around;
-    background-color: #e5e7eb;
+    background-color: #242424; /* Dark background for tabs */
     border-radius: 10px;
     margin-bottom: 20px;
+    color: white; /* Ensure text inside tabs is white */
 }
 
 .tab {
@@ -34,18 +37,20 @@ overflow-y: auto; /* Enable vertical scrolling */
     text-align: center;
     cursor: pointer;
     font-weight: bold;
-    background-color: #e5e7eb;
+    background-color: #242424; /* Same as tabs background */
     border-radius: 10px 10px 0 0;
     transition: background-color 0.3s;
+    color: #ddd; /* Light text for readability */
 }
 
 .tab.active {
-    background-color: #1d4ed8;
+    background-color: #007bff; /* Blue color for active tab */
     color: white;
 }
 
 .tab-content {
     display: none;
+    color: white; /* Ensure content text is white */
 }
 
 .tab-content.active {
@@ -53,55 +58,59 @@ overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .panel {
-max-height: 60vh; /* Set a max height for the notifications panel */
-overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 60vh;
+    overflow-y: auto;
+    color: white; /* Ensure panel text is white */
 }
 
 .notification-item {
-background-color: #fff;
-padding: 15px;
-margin-bottom: 10px;
-border-radius: 6px;
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-wrap: wrap; /* Allows buttons to move to the next line if needed */
+    background-color: #444444; /* Slightly lighter gray for contrast */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white; /* Ensure notification item text is white */
 }
 
 .notification-text {
-flex: 1; /* Take up remaining space */
-margin-right: 10px; /* Add some spacing between text and buttons */
+    flex: 1;
+    margin-right: 10px;
+    color: white; /* Ensure text inside notification is white */
 }
 
 .notification-buttons {
-display: flex;
-gap: 10px; /* Adds spacing between the buttons */
-flex-wrap: wrap; /* Allows buttons to wrap to the next line if needed */
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: white; /* Ensure buttons text is white */
 }
 
 .btn {
-padding: 5px 10px;
-background-color: #1d4ed8;
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-margin: 2px 0; /* Add a small margin for better alignment */
+    padding: 5px 10px;
+    background-color: #007bff; /* Blue background for buttons */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 2px 0;
 }
 
 .btn:hover {
-background-color: #3b82f6;
+    background-color: #0056b3; /* Darker blue on hover */
+    color: white; /* Ensure hover text is white */
 }
 
-
 #clearStorageButton {
-    margin-top: 20px;
-    background-color: #e53e3e;
+    background-color: #dc3545; /* Red color for emphasis */
+    color: white; /* Ensure button text is white */
 }
 
 .badge {
-    background-color: red;
+    background-color: #dc3545; /* Red badge for notifications */
     color: white;
     border-radius: 12px;
     padding: 0 6px;
@@ -113,6 +122,7 @@ background-color: #3b82f6;
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    color: white; /* Ensure filter section text is white */
 }
 
 .filter-section input {
@@ -120,4 +130,7 @@ background-color: #3b82f6;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 48%;
+    color: white; /* Ensure input text is white */
+    background-color: #222; /* Dark input background */
 }
+

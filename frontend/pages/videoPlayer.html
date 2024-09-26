@@ -17,7 +17,7 @@
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <!-- APP CSS -->
         <link rel="stylesheet" href="../css/grid.css">
-        <link rel="stylesheet" href="../css/displayMovie.css">
+        <link rel="stylesheet" href="../css/videoPlayer.css">
     </head>
     
     <body>
@@ -57,22 +57,19 @@
     </div>
     <!-- END NAV -->
 
-    <div id="video-player"></div>
-        <h3>Watch Trailer</h3>
-        <video id="movie-video" width="600" controls>
-            <source src="../video/Oppenheimer .mp4" type="video/mp4">
+    <div id="video-section">
+        <video id="movie-video" controls>
+            <source src="../video/Oppenheimer.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-    </div>
 
-    <h1>Movie Details</h1>
-    <div id="movie-details">
-        <h2 id="movie-name"></h2>
-        <p><strong>Rating:</strong> <span id="movie-rate"></span></p>
-        <p><strong>Release Date:</strong> <span id="release-date"></span></p>
-        <p><strong>End Date:</strong> <span id="end-date"></span></p>
-        <p><strong>Description:</strong> <span id="movie-description"></span></p>
-        <p><strong>Is Released:</strong> <span id="is-released"></span></p>
+        <div class="item-content-wrapper">
+            <h1 class="item-content-title" id="movie-name"></h1>
+            <p><strong>Rating:</strong> <span id="movie-rate"></span></p>
+            <p><strong>Release Date:</strong> <span id="release-date"></span></p>
+            <p><strong>Description:</strong> <span id="movie-description"></span></p>
+            <p><strong>Is Released:</strong> <span id="is-released"></span></p>
+        </div>
     </div>
 
      <!-- FOOTER SECTION -->
@@ -174,6 +171,6 @@
     <!-- Web3 SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
-    <script type="module" src="../js/displayMovie.js"></script>
+    <script type="module" src="../js/videoPlayer.js"></script>
 </body>
 </html>
