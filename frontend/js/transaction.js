@@ -11,8 +11,10 @@ let countdownInterval;
 async function initialize() {
     if (typeof window.ethereum !== 'undefined') {
         web3 = new Web3(window.ethereum);
-        
+         
         try {
+           // Request account access from MetaMask
+           await window.ethereum.request({ method: 'eth_requestAccounts' });
             userAddress = localStorage.getItem('userAddress');
             const userAddressElement = document.getElementById('userAddress');
             const connectButton = document.getElementById('connectButton');
@@ -64,7 +66,7 @@ function setupEventListeners() {
             console.log('Subscription queued:', event);
             updateStatus('queued');
 
-            // Add the new notification to localStorage
+          //=============================Notification================================
             const notifications = JSON.parse(localStorage.getItem(userNotificationsKey())) || [];
             const planType = localStorage.getItem('planType');
             const customDays = parseInt(localStorage.getItem('customDays'), 10);
@@ -82,6 +84,8 @@ function setupEventListeners() {
 
             const endDate = new Date(startDate.getTime() + durationInMilliseconds);
 
+            
+
             const newNotification = {
                 message: `Subscription queued successfully! Your subscription ID is: ${event.returnValues.subscriptionId}`,
                 subscriptionId: event.returnValues.subscriptionId,
@@ -98,6 +102,8 @@ function setupEventListeners() {
                 loadNotifications();
             }
         })
+
+         //=============================Notification================================
         .on('error', console.error);
 
     transactionPayment.events.SubscriptionExecuted({ filter: { subscriber: userAddress } })
@@ -111,7 +117,7 @@ function setupEventListeners() {
         .on('data', event => {
             console.log('Subscription cancelled:', event);
             updateStatus('cancelled');
-
+ //=============================Notification Start ================================
                // Add the new notification to localStorage
                const notifications = JSON.parse(localStorage.getItem(userNotificationsKey())) || [];
                const newNotification = {
@@ -126,6 +132,7 @@ function setupEventListeners() {
                    loadNotifications();
                }
            })
+             //=============================Notification End================================
         .on('error', console.error);
 }
 
@@ -162,6 +169,7 @@ async function queueSubscription(amount, planType, customDays) {
 
         if (tx.status && tx.events && tx.events.SubscriptionQueued) {
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
+            
             alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
             // Store the subscription ID in local storage
@@ -174,7 +182,12 @@ async function queueSubscription(amount, planType, customDays) {
             const startDateString = startDate.toLocaleDateString();
             const endDateString = endDate.toLocaleDateString();
 
-            alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}`);
+            alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}
+             Subscription queued successfully! Your subscription ID is: ${subscriptionId}
+                
+                `
+                 
+            );
 
             // Display the dates in the HTML
             const startDateElement = document.getElementById('startDate');
