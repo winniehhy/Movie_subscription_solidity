@@ -1,14 +1,8 @@
-import contractData from '../../smart_contract/build/contracts/TransactionPayment.json';
-import userContractData from '../../smart_contract/build/contracts/UserManagement.json';
-
+import contractData from '/../smart_contract/build/contracts/transactionPayment.json';
 //import contractData from '/../smart_contract/build/contracts/UserManager.json';
         const contractAddress = contractData.networks[5777]?.address;  // smart contract address
         const contractABI = contractData.abi; // smart contract's ABI
 
-        const userManageAddress = userContractData.networks[5777]?.address;  // smart contract address
-        const userManageABI = userContractData.abi; // smart contract's ABI
-
-        
 let web3;
 let userAddress;
 let transactionPayment;
@@ -16,64 +10,54 @@ let countdownInterval;
 
 async function initialize() {
     if (typeof window.ethereum !== 'undefined') {
-        web3 = new Web3(window.ethereum);
-        
-        try {
-            userAddress = localStorage.getItem('userAddress');
-            const userAddressElement = document.getElementById('userAddress');
-            const connectButton = document.getElementById('connectButton');
+        userAddress = localStorage.getItem('userAddress');
+        const userAddressElement = document.getElementById('userAddress');
+        const connectButton = document.getElementById('connectButton');
 
-            if (!userAddress) {
-                // No stored user address, try to connect using MetaMask
-                const accounts = await web3.eth.getAccounts();
-                if (accounts.length === 0) {
-                    console.error('No MetaMask accounts found. Please connect your wallet.');
-                    userAddressElement.textContent = 'Please connect your wallet on the main page.';
-                    connectButton.style.display = 'none'; // Hide connect button until user connects
-                    return;
-                }
-                userAddress = accounts[0];
-                localStorage.setItem('userAddress', userAddress);
-            } else {
-                console.log('Using connected MetaMask account from localStorage:', userAddress);
-            }
-
+        if (userAddress) {
+            web3 = new Web3(window.ethereum);
             userAddressElement.textContent = userAddress;
-            console.log('MetaMask account:', userAddress);
+            console.log('Using connected MetaMask account:', userAddress);
 
-            // Initialize smart contract
-            transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
-            console.log("Contract initialized:", transactionPayment);
+            try {
+                // Initialize contract
+                transactionPayment = new web3.eth.Contract(contractABI, contractAddress);
 
-            // Check if contract initialization is successful
-            if (!transactionPayment.methods) {
-                console.error("Contract methods not found. Check ABI and contract address.");
-                return;
+                // Listen for events
+                transactionPayment.events.SubscriptionQueued({ filter: { subscriber: userAddress } })
+                    .on('data', event => {
+                        console.log('Subscription queued:', event);
+                        updateStatus('queued');
+                    })
+                    .on('error', console.error);
+
+                transactionPayment.events.SubscriptionExecuted({ filter: { subscriber: userAddress } })
+                    .on('data', event => {
+                        console.log('Subscription executed:', event);
+                        updateStatus('executed');
+                    })
+                    .on('error', console.error);
+
+                transactionPayment.events.SubscriptionCancelled({ filter: { subscriber: userAddress } })
+                    .on('data', event => {
+                        console.log('Subscription cancelled:', event);
+                        updateStatus('cancelled');
+                    })
+                    .on('error', console.error);
+            } catch (error) {
+                console.error('Error initializing contract:', error);
+                alert('Failed to initialize contract. Please try again.');
             }
-
-            // Listen for events
-            setupEventListeners();
-
-        } catch (error) {
-            console.error('Error initializing contract:', error);
-            alert('Failed to initialize contract. Please try again.');
+        } else {
+            userAddressElement.textContent = 'Please connect your wallet on the main page.';
+            connectButton.style.display = 'none'; // Hide the connect button if the user is not connected
         }
     } else {
         alert('Please install MetaMask!');
     }
 }
 
-async function checkUserRegistration() {
-    try {
-        const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
-        console.log("User registration status:", isRegistered);
-        return isRegistered;
-    } catch (error) {
-        console.error("Error checking user registration:", error);
-        return false; // Return false in case of an error
-    }
-}
-
+          //=============================Notification================================
 // Function to set up smart contract event listeners
 function setupEventListeners() {
     transactionPayment.events.SubscriptionQueued({ filter: { subscriber: userAddress } })
@@ -81,7 +65,7 @@ function setupEventListeners() {
             console.log('Subscription queued:', event);
             updateStatus('queued');
 
-            // Add the new notification to localStorage
+          //=============================Notification================================
             const notifications = JSON.parse(localStorage.getItem(userNotificationsKey())) || [];
             const planType = localStorage.getItem('planType');
             const customDays = parseInt(localStorage.getItem('customDays'), 10);
@@ -99,6 +83,8 @@ function setupEventListeners() {
 
             const endDate = new Date(startDate.getTime() + durationInMilliseconds);
 
+            
+
             const newNotification = {
                 message: `Subscription queued successfully! Your subscription ID is: ${event.returnValues.subscriptionId}`,
                 subscriptionId: event.returnValues.subscriptionId,
@@ -115,6 +101,8 @@ function setupEventListeners() {
                 loadNotifications();
             }
         })
+
+         //=============================Notification================================
         .on('error', console.error);
 
     transactionPayment.events.SubscriptionExecuted({ filter: { subscriber: userAddress } })
@@ -128,7 +116,7 @@ function setupEventListeners() {
         .on('data', event => {
             console.log('Subscription cancelled:', event);
             updateStatus('cancelled');
-
+ //=============================Notification Start ================================
                // Add the new notification to localStorage
                const notifications = JSON.parse(localStorage.getItem(userNotificationsKey())) || [];
                const newNotification = {
@@ -143,20 +131,14 @@ function setupEventListeners() {
                    loadNotifications();
                }
            })
+             //=============================Notification End================================
         .on('error', console.error);
 }
 
-// Local storage key generation
-const userNotificationsKey = () => `notifications_${userAddress}`;
-
-// Function to queue a subscription
 async function queueSubscription(amount, planType, customDays) {
     let durationInSeconds;
 
-    // Store planType and customDays in localStorage
-    localStorage.setItem('planType', planType);
-    localStorage.setItem('customDays', customDays);
-
+    // Calculate the duration based on the plan type
     if (planType === 'Monthly') {
         durationInSeconds = 30 * 24 * 60 * 60; // 30 days in seconds
     } else if (planType === 'Yearly') {
@@ -168,16 +150,31 @@ async function queueSubscription(amount, planType, customDays) {
         return false;
     }
 
-    const unlockTime = Math.floor(Date.now() / 1000) + durationInSeconds;
+    const unlockTime = Math.floor(Date.now() / 1000) + durationInSeconds; // Set unlock time
     let isQueued = false;
 
     try {
+        console.log('Queueing subscription with amount:', amount);
         const tx = await transactionPayment.methods.queueSubscription(unlockTime).send({
             from: userAddress,
             value: web3.utils.toWei(amount.toString(), 'ether')
         });
 
-        if (tx.status && tx.events && tx.events.SubscriptionQueued) {
+        // Log the entire transaction receipt
+        console.log('Transaction receipt:', JSON.stringify(tx, null, 2));
+
+        // Checking for a successful transaction
+        if (tx.status) {
+            console.log('Transaction successful');
+        } else {
+            console.error('Transaction failed');
+            alert('Transaction failed.');
+            return false;
+        }
+
+        // Check for events in the transaction receipt
+        if (tx.events && tx.events.SubscriptionQueued) {
+            // Get the subscription ID from the event logs
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
             alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
@@ -211,7 +208,9 @@ async function queueSubscription(amount, planType, customDays) {
 
             isQueued = true;
         } else {
+            // Fallback: Log the transaction logs to inspect manually if no events are found
             console.error('No SubscriptionQueued event found in transaction receipt.');
+            console.log('Transaction logs:', tx.logs);  // Log tx.logs for further inspection
             alert('Failed to queue subscription. Event not found.');
         }
     } catch (error) {
@@ -225,9 +224,9 @@ async function queueSubscription(amount, planType, customDays) {
 function startCountdown(planType, customDays, subscriptionId) {
     const countdownElement = document.getElementById('transactionCountdown');
     const timeLeftElement = document.getElementById('timeLeft');
-    const doneButton = document.getElementById('doneButton');
+   // const doneButton = document.getElementById('doneButton');
 
-    if (!countdownElement || !timeLeftElement || !doneButton) {
+    if (!countdownElement || !timeLeftElement ) {
         console.error('Countdown elements not found in the DOM.');
         return;
     }
@@ -268,27 +267,27 @@ function startCountdown(planType, customDays, subscriptionId) {
         timeLeftElement.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
     }, 1000);
 
-    doneButton.onclick = async () => {
-        const userConfirmed = confirm('You will be cancelling your plan, are you sure to proceed?');
-        if (userConfirmed) {
-            const subscriptionId = prompt('Please enter your subscription ID:');
-            if (!subscriptionId) {
-                alert('Subscription ID is required to cancel the plan.');
-                return;
-            }
+    // doneButton.onclick = async () => {
+    //     const userConfirmed = confirm('You will be cancelling your plan, are you sure to proceed?');
+    //     if (userConfirmed) {
+    //         const subscriptionId = prompt('Please enter your subscription ID:');
+    //         if (!subscriptionId) {
+    //             alert('Subscription ID is required to cancel the plan.');
+    //             return;
+    //         }
     
-            try {
-                clearInterval(countdownInterval);
-                timeLeftElement.textContent = 'Subscription cancelled!';
-                countdownElement.style.display = 'none'; // Hide the countdown element
-                await cancelSubscription(subscriptionId);
-                alert('Subscription cancelled and funds refunded.');
-            } catch (error) {
-                console.error('Error cancelling subscription:', error);
-                alert('Failed to cancel subscription. Error: ' + error.message);
-            }
-        }
-    };
+    //         try {
+    //             clearInterval(countdownInterval);
+    //             timeLeftElement.textContent = 'Subscription cancelled!';
+    //             countdownElement.style.display = 'none'; // Hide the countdown element
+    //             await cancelSubscription(subscriptionId);
+    //             alert('Subscription cancelled and funds refunded.');
+    //         } catch (error) {
+    //             console.error('Error cancelling subscription:', error);
+    //             alert('Failed to cancel subscription. Error: ' + error.message);
+    //         }
+    //     }
+    // };
 }
 
 function updateStatus(status) {
@@ -459,7 +458,6 @@ $(document).ready(async () => {
     $('#disconnectButton').click(() => {
         localStorage.removeItem('userAddress');
         alert('Wallet disconnected.');
-        
         location.reload(); // Reload the page to reflect the disconnected state
     });
 
