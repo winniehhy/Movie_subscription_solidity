@@ -1,4 +1,4 @@
-import userManagerData from '../../smart_contract/build/contracts/UserManager.json';
+import userManagerData from '../../smart_contract/build/contracts/UserManagement.json';
 import transactionPaymentData from '../../smart_contract/build/contracts/TransactionPayment.json';
 
 const userManagerAddress = userManagerData.networks[5777]?.address;
@@ -36,18 +36,24 @@ async function updateTable(month) {
             { name: 'Jane Smi', id: '0x0000000000000000000000000000000000000000000000000000000000012345', status: 'Executed' },
         ],
         February: [
-            { name: 'Alice Brown', id: '0x000000000000000000000000000000000000000000000000000000000002t334', status: 'Cancelled' },
-            { name: 'Bob White', id: '0x000000000000000000000000000000000000000000000000000003e445', status: 'Executed' },
-            { name: 'Charlie Black', id: '0x00000000000000000000000000000000000000000000000000000000000a1556', status: 'Cancelled' }
+            { name: 'Alice', id: '0x000000000000000000000000000000000000000000000000000000000002t334', status: 'Cancelled' },
+            { name: 'Bob', id: '0x000000000000000000000000000000000000000000000000000003e445', status: 'Executed' },
+            { name: 'Mei', id: '0x00000000000000000000000000000000000000000000000000000000000a1886', status: 'Cancelled' }
         ],
         March: [
-            { name: 'David Green', id: '0x000000000000000000000000000000000000000000000000000000000004d556', status: 'Executed' },
+            { name: 'David ', id: '0x000000000000000000000000000000000000000000000000000000000004d556', status: 'Executed' },
+            { name: 'Steve', id: '0x000000000000000000000000000000000000000000000000000003e775', status: 'Executed' },
+            { name: 'Sam', id: '0x00000000000000000000000000000000000000000000000000000000000a1996', status: 'Cancelled' }
         ],
         April: [
-            { name: 'Eve Blue', id: '0x000000000000000000000000000000000000000000000000000000000005e667', status: 'Cancelled' },
+            { name: 'Mandy', id: '0x000000000000000000000000000000000000000000000000000000000005e667', status: 'Cancelled' },
         ],
         May: [
-            { name: 'Frank Yellow', id: '0x000000000000000000000000000000000000000000000000000000000006f778', status: 'Executed' },
+            { name: 'Frank ', id: '0x000000000000000000000000000000000000000000000000000000000006f778', status: 'Executed' },
+            { name: 'Jane', id: '0x000000000000000000000000000000000000000000000000000003e195', status: 'Executed' },
+            { name: 'Oliver', id: '0x00000000000000000000000000000000000000000000000000000000000a1776', status: 'Executed' },
+            { name: 'Lily', id: '0x000000000000000000000000000000000000000000000000000003e885', status: 'Executed' },
+            { name: 'William', id: '0x00000000000000000000000000000000000000000000000000000000000a1536', status: 'Executed' }
         ],
         June: [
             { name: 'Grace Pink', id: '0x000000000000000000000000000000000000000000000000000000000007g889', status: 'Cancelled' },
@@ -58,7 +64,10 @@ async function updateTable(month) {
         August: [
             { name: 'Ivy Orange', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Cancelled' },
         ],
-        September: await fetchSeptemberData(), // Fetch data for September dynamically
+        September: [
+            { name: 'Samantha', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Cancelled' },
+        ],
+        ...(await fetchSeptemberData()), // Fetch data for September dynamically
         October: [],
         November: [],
         December: [],
@@ -83,6 +92,10 @@ async function updateTable(month) {
 }
 
 async function fetchSeptemberData() {
+    const hardcodedData = [
+        { name: 'Mei', id: '0x00000000000000000000000000000000000000000000000000000000000a1234', status: 'Executed' },
+        { name: 'John Doe', id: '0x00000000000000000000000000000000000000000000000000000000000b5678', status: 'Cancelled' },
+    ];
     try {
         const users = await userManager.methods.getAllUsers().call();
         console.log("Fetched Users from UserManager contract:", users); // Debug
