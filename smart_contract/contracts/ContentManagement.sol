@@ -53,8 +53,13 @@ contract ContentManagement {
         uint256 _releaseDate,
         string memory _description
     ) public onlyOwner {
-        // Create a new movie struct
+        // Determine availability based on the release date
         bool availability = _releaseDate <= block.timestamp;
+
+        // Emit debugging information
+        emit NewMovie(movieIdCounter, _name, _releaseDate, _description);
+
+        // Create a new movie struct
         Movie memory newMovie = Movie({
             id: movieIdCounter,
             name: _name,
