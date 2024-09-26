@@ -29,7 +29,7 @@ async function submitMovieForm() {
 
     // Interact with the contract to store file names
     try {
-        await movieSubscriptionSystem.methods.createMovie(name, rate, releaseDate, description, newImageFileName, newVideoFileName)
+        await movieSubscriptionSystem.methods.createMovie(name, rate, releaseDate, description)
             .send({ from: account });
 
         alert('Movie created successfully! Please move the files to the appropriate directory.');
