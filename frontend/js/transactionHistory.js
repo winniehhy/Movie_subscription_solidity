@@ -66,6 +66,8 @@ async function updateTable(month) {
         ],
         September: [
             { name: 'Samantha', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Cancelled' },
+            { name: 'Lily', id: '0x000000000000000000000000000000000000000000000000000003e885', status: 'Executed' },
+            { name: 'William', id: '0x00000000000000000000000000000000000000000000000000000000000a1536', status: 'Executed' }
         ],
         ...(await fetchSeptemberData()), // Fetch data for September dynamically
         October: [],
