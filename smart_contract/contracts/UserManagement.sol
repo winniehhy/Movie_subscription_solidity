@@ -21,7 +21,6 @@ contract UserManagement {
     mapping(address => User) public users;
     mapping(string => bool) private usernames; // Mapping to prevent duplicate usernames
     mapping(string => bool) private emails; // Mapping to prevent duplicate emails
-    mapping(address => bool) public hasActiveSubscription; // Tracks active subscriptions
 
     event UserRegistered(address indexed userAddress, string username, string email);
     event ProfileUpdated(address indexed userAddress, string username, string email);
@@ -89,7 +88,7 @@ contract UserManagement {
         users[msg.sender].username = _newUsername;
         users[msg.sender].email = _newEmail;
         users[msg.sender].lastUpdated = block.timestamp;
-        users[msg.sender].nextUpdateTime = block.timestamp + 1 days;
+        users[msg.sender].nextUpdateTime = block.timestamp + 30 seconds;
 
         emit ProfileUpdated(msg.sender, _newUsername, _newEmail);
     }

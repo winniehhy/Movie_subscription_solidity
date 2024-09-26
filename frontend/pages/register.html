@@ -1,22 +1,24 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Flix Registration</title>
-      <link rel="stylesheet" href="register.css" />
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
-        rel="stylesheet"
-      />
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flix Registration</title>
+    <link rel="stylesheet" href="register.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-    <body>
-      <div class="register-wrapper">
+  <body>
+    <div class="container">
+      <!-- Registration Form Section -->
+      <div class="form-side">
         <div class="register-container">
           <h2>Register for Fl<span class="main-color">i</span>x</h2>
           <form class="register-form" id="registerForm">
@@ -32,118 +34,169 @@
               <span>Register</span>
             </button>
           </form>
-          <div class="already-member">
-            Already have an account? <a href="login.html">Login here</a>
-          </div>
-          <button id="connectMetaMask" class="btn btn-hover" disabled>
-            <span>Connect with MetaMask</span>
-          </button>
-          <div id="statusMessage" style="margin-top: 10px"></div>
         </div>
       </div>
 
-      <style>
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: "Cairo", sans-serif;
-        }
+      <div class="signin-side">
+        <h2>Remember to Connect Wallet</h2>
+        <p>It's easy to start, just register an account.</p>
+        <button id="connectMetaMask" class="btn-connect-wallet" disabled>
+          <span>Connect with MetaMask</span>
+        </button>
+        <div id="statusMessage" style="margin-top: 10px"></div>      </div>
+    </div>
 
-        body {
-          background: #000;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          color: #fff;
-        }
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Cairo", sans-serif;
+      }
 
-        .register-wrapper {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-        }
+      body {
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+      }
 
-        .register-container {
-          background: #1b1b1b;
-          padding: 40px;
-          border-radius: 10px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-          text-align: center;
-          width: 100%;
-          max-width: 400px;
-        }
+      .container {
+        display: flex;
+        width: 80%;
+        max-width: 1000px;
+        background: #1b1b1b;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
 
-        h2 {
-          font-weight: 700;
-          margin-bottom: 20px;
-        }
+      /* Left Side - Form */
+      .form-side {
+        flex: 1;
+        padding: 40px;
+        background-color: #333; /* Changed to grey */
+        color: #fff; /* Text color remains white */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .main-color {
-          color: #fcb800;
-        }
+      .register-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
 
-        .register-form .input-box {
-          position: relative;
-          margin-bottom: 20px;
-        }
+      h2 {
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+      }
 
-        .register-form .input-box i {
-          position: absolute;
-          left: 15px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #fcb800;
-        }
+      .main-color {
+        color: #fcb800; /* Yellow theme */
+      }
 
-        .register-form .input-box input {
-          width: 100%;
-          padding: 12px 40px;
-          background: #333;
-          border: none;
-          outline: none;
-          color: #fff;
-          border-radius: 5px;
-        }
+      .register-form .input-box {
+        position: relative;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 400px; /* Center-align form inputs */
+      }
 
-        .btn-hover {
-          display: inline-block;
-          background: #fcb800;
-          color: #000;
-          padding: 12px 20px;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background 0.3s ease;
-          width: 100%;
-          margin-top: 10px;
-        }
+      .register-form .input-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fcb800;
+      }
 
-        .btn-hover:hover {
-          background: #e5a700;
-        }
+      .register-form .input-box input {
+        width: 100%;
+        padding: 12px 40px;
+        background: #222; /* Darker grey for input background */
+        border: none;
+        outline: none;
+        color: #fff;
+        border-radius: 5px;
+      }
 
-        .already-member {
-          margin-top: 15px;
-        }
+      .btn-hover {
+        display: inline-block;
+        background: #fcb800; /* Yellow for the button */
+        color: #000;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+        max-width: 400px; /* Center-align button */
+      }
 
-        .already-member a {
-          color: #fcb800;
-          text-decoration: none;
-        }
+      .btn-hover:hover {
+        background: #e5a700; /* Slightly darker yellow on hover */
+      }
 
-        .already-member a:hover {
-          text-decoration: underline;
-        }
+      .btn-connect-wallet {
+    background-color: #fcb800; /* Updated background color */
+    color: #000; /* Updated text color */
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
 
-        #statusMessage {
-          color: #fcb800;
-        }
-      </style>
+  .btn-connect-wallet:hover {
+    background-color: #e5a700; /* Slightly darker shade for hover */
+  }
 
-      <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-      <script type="module" src="../js/register.js">
-      </script>
-    </body>
-  </html>
+      /* Right Side - Sign In */
+      .signin-side {
+        flex: 1;
+        background-color: #fcb800; /* Yellow theme background */
+        color: black; /* Black text to contrast */
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .signin-side h2 {
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .signin-side p {
+        margin-bottom: 20px;
+      }
+
+      .btn-connect-wallet {
+        background-color: #3b3b3b; /* Not too dark black */
+        color: #fff; /* White text */
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+        transition: background 0.3s ease;
+      }
+
+      .btn-connect-wallet:hover {
+        background-color: #555; /* Slightly lighter on hover */
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script type="module" src="../js/register.js"></script>
+  </body>
+</html>
