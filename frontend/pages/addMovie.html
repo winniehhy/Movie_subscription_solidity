@@ -1,181 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Movie - Flix</title>
-    <link rel="stylesheet" href="profile.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.7/css/boxicons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
-</head>
-
-<body>
-    <div class="profile-wrapper">
-        <div class="profile-container">
-            <h2>Add Movie</h2>
-            <div class="profile-info">
-                <p><strong>Current Address:</strong> <span id="currentAddress"></span></p>
-                <p><strong>Owner's Address:</strong> <span id="ownerAddress"></span></p>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" type="x-icon" href="./images/movie logo.png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Flix - Vote
+        </title>
+        <!-- GOOGLE FONTS -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+        <!-- OWL CAROUSEL -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+        <!-- BOX ICONS -->
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <!-- APP CSS -->
+        <link rel="stylesheet" href="../css/grid.css">
+        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="../css/addMovie.css">
+    </head>
+    
+    <body>
+    
+      <!-- NAV -->
+    <div class="nav-wrapper">
+        <div class="container">
+            <div class="nav">
+                <a href="index.html" class="logo">
+                    <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="displayMovie.html">Content</a></li>
+                    <li><a href="../pages/Vote.html">Vote</a></li>
+                    <li><a href="#">Notification</a></li>
+                    <li><a href="../pages/transaction.html">Payment</a></li>
+                    <li>
+                        <a href="#" class="btn btn-hover" id="connectButton">
+                            <span>Connect Wallet</span>
+                            <span id="userAddress" style="margin-left: 20px; color: #fff;"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="walletDropdown" style="display: none; position: absolute; background-color: #333; color: #fff; list-style: none; padding: 10px; ">
+                            <li><a href="#" id="copyAddressButton" style="color: #fff; font-size: large; float: left;padding: 10px;">Copy Address</a></li>
+                            <li><a href="#" id="disconnectButton" style="color: #fff; font-size: large; float: left; padding: 10px;">Disconnect Wallet</a></li>
+                        </ul>
+                        
+                    </li>
+                </ul>
+                
+                <!-- MOBILE MENU TOGGLE -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <div class="hamburger"></div>
+                </div>
             </div>
-            <form id="addMovieForm">
-                <input type="text" id="title" placeholder="Movie Title" required>
-                <input type="text" id="genre" placeholder="Movie Genre" required>
-                <button type="submit" class="btn btn-hover">Add Movie</button>
-            </form>
-            <button id="goToMainPage" class="btn btn-hover" onclick="window.location.href='index.html';">Go to Main Page</button>
         </div>
     </div>
+    <!-- END NAV -->
+    <!-- Movie Management Form -->
+    <div class="form-container">
+        <h2>Create a Movie</h2>
+        <form id="movieForm">
+            <div class="form-group">
+                <label for="name">Movie Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter movie name" required>
+            </div>
 
-    <style>
-        /* Add styles here (similar to userprofile.html) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
+            <div class="form-group">
+                <label for="rate">Movie Rate</label>
+                <input type="text" id="rate" name="rate" placeholder="e.g., PG, R" required>
+            </div>
 
-        body {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #fff;
-        }
+            <div class="form-group">
+                <label for="releaseDate">Release Date</label>
+                <input type="date" id="releaseDate" name="releaseDate" required>
+            </div>
 
-        .profile-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+            <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate" required>
+            </div>
 
-        .profile-container {
-            background: #1b1b1b;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
+            <div class="form-group">
+                <label for="description">Movie Description</label>
+                <textarea id="description" name="description" placeholder="Describe the movie..." rows="5" required></textarea>
+            </div>
 
-        h2 {
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
 
-        .profile-info {
-            margin-bottom: 20px;
-            text-align: left;
-        }
+    <!-- FOOTER SECTION -->
+    <footer class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-6 col-sm-12">
+                    <div class="content">
+                        <a href="#" class="logo">
+                            <i class='bx bx-movie-play bx-tada main-color'></i>Fl<span class="main-color">i</span>x
+                        </a>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut veniam ex quos hic id nobis beatae earum sapiente! Quod ipsa exercitationem officiis non error illum minima iusto et. Dolores, quibusdam?
+                        </p>
+                        <div class="social-list">
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                            <a href="#" class="social-item">
+                                <i class="bx bxl-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Flix</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Pricing plans</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Browse</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Pricing plans</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Help</b></p>
+                                <ul class="footer-menu">
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">My profile</a></li>
+                                    <li><a href="#">Pricing plans</a></li>
+                                    <li><a href="#">Contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-6 col-sm-6">
+                            <div class="content">
+                                <p><b>Download app</b></p>
+                                <ul class="footer-menu">
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/google-play.png" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="../images/app-store.png" alt="">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER SECTION -->
 
-        input {
-            padding: 12px 20px;
-            margin-bottom: 15px;
-            background: #333;
-            border: none;
-            outline: none;
-            color: #fff;
-            border-radius: 5px;
-            width: 100%;
-        }
+<!-- COPYRIGHT SECTION -->
+<div class="copyright">
+    Low Jian Hao
+</div>
+<!-- END COPYRIGHT SECTION -->
 
-        .btn-hover {
-            display: inline-block;
-            background: #fcb800;
-            color: #000;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn-hover:hover {
-            background: #e5a700;
-        }
-    </style>
-
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-    <script>
-        const contractAddress = '0x095c4CC40F997dF4cadC78fb0Ce8C76242907abd'; // Replace with your deployed contract address
-        let web3;
-        let userManager;
-
-        window.addEventListener('load', async () => {
-    if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        await window.ethereum.enable(); // Request access to MetaMask
-
-        try {
-            const response = await fetch('../UserManagerABI.json'); // Fetch ABI
-            const data = await response.json();
-            userManager = new web3.eth.Contract(data.abi, contractAddress); // Initialize the contract
-
-            const accounts = await web3.eth.getAccounts();
-            if (accounts.length > 0) {
-                const currentAddress = accounts[0];
-                loadCurrentAddress(currentAddress); // Load current user address
-                const ownerAddress = await loadOwner(); // Load the owner's address
-
-                // Redirect if current address is not the owner
-                if (currentAddress.toLowerCase() !== ownerAddress.toLowerCase()) {
-                    alert("You are not the owner. Redirecting to main page.");
-                    window.location.href = "index.html";
-                }
-            } else {
-                alert('No MetaMask account found.');
-            }
-        } catch (error) {
-            console.error('Error fetching ABI or initializing contract:', error);
-            alert('Failed to load profile. Please try again.');
-        }
-    } else {
-        alert('MetaMask is not installed. Please install MetaMask and try again.');
-    }
-});
-
-async function loadOwner() {
-    try {
-        const ownerAddress = await userManager.methods.getOwner().call();
-        document.getElementById('ownerAddress').innerText = formatAddress(ownerAddress);
-        return ownerAddress; // Return the owner address
-    } catch (error) {
-        console.error('Error fetching owner address:', error);
-        alert('Failed to fetch owner address. See console for details.');
-    }
-}
-
-
-        function formatAddress(address) {
-            return address.slice(0, 6) + "..." + address.slice(-4);
-        }
-
-        async function loadCurrentAddress(account) {
-            document.getElementById('currentAddress').innerText = formatAddress(account);
-        }
-
-        // Handle form submission
-        document.getElementById('addMovieForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const title = document.getElementById('title').value;
-            const genre = document.getElementById('genre').value;
-
-            const accounts = await web3.eth.getAccounts();
-            try {
-                await userManager.methods.addMovie(title, genre).send({ from: accounts[0] });
-                alert("Movie added successfully!");
-                document.getElementById('addMovieForm').reset();
-            } catch (error) {
-                console.error("Error adding movie:", error);
-                alert("Failed to add movie. Please try again.");
-            }
-        });
-    </script>
+    <!-- SCRIPT -->
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- OWL CAROUSEL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
+    <!-- APP SCRIPT -->
+    <script src="../index.js"></script>
+    <!-- Web3 SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+    <script type="module" src="../js/addMovie.js"></script>
 </body>
-
 </html>

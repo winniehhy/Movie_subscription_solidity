@@ -2,6 +2,7 @@ const UserManagement = artifacts.require("UserManagement");
 const TransactionPayment = artifacts.require("TransactionPayment");
 const MovieVoting = artifacts.require("MovieVoting");
 const NotificationManagement = artifacts.require("NotificationManagement");
+const ContentManagement = artifacts.require("ContentManagement");
 
 module.exports = async function(deployer) {
     // Deploy the UserManagement contract
