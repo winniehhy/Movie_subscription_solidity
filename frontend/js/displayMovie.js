@@ -35,9 +35,6 @@ async function displayMovies() {
             try {
                 const movie = await contentManagement.methods.getMovie(i).call(); // Get movie details by ID
 
-                // Check if the movie is available
-                const isAvailable = await contentManagement.methods.isMovieAvailable(i).call();
-
                 // Create a new movie element
                 const movieElement = document.createElement('div');
                 movieElement.classList.add('movie-item');
@@ -45,52 +42,58 @@ async function displayMovies() {
                 // Set a default image for each movie
                 const defaultImageUrl = '../images/movies/bat-man.jpg'; // Replace with the path to your default image
 
-                // Create movie element based on availability
+                // Convert release date to GMT+8 for display
+                const releaseDateGMT8 = convertToGMT8(new Date(movie[2] * 1000));
+
+                // Dynamically check the availability of the movie
+                const isAvailable = await contentManagement.methods.isMovieAvailable(i).call();
+
+                // Add movie details based on availability
                 if (isAvailable) {
-                    // If the movie is available, make it clickable
+                    // Movie is available, wrap it with an <a> tag for navigation
                     movieElement.innerHTML = `
-                    <a href="../pages/videoPlayer.html?movieId=${i}">
-                        <img src="${defaultImageUrl}" alt="${movie[0]} Poster">
-                        <div class="movie-item-content">
-                            <div class="movie-item-title">${movie[0]}</div>
-                            <div class="movie-infos">
-                                <div class="movie-info">
-                                    <i class="bx bxs-star"></i>
-                                    <span>${movie[1]}</span> <!-- Assuming this is a rating or popularity score -->
-                                </div>
-                                <div class="movie-info">
-                                    <i class="bx bxs-time"></i>
-                                    <span>${new Date(movie[2] * 1000).toLocaleDateString()}</span> <!-- Movie release date -->
-                                </div>
-                                <div class="movie-info">
-                                    <span>Released</span> <!-- Availability status -->
+                        <a href="../pages/videoPlayer.html?movieId=${i}">
+                            <img src="${defaultImageUrl}" alt="${movie[0]} Poster">
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">${movie[0]}</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class="bx bxs-star"></i>
+                                        <span>${movie[1]}</span> <!-- Assuming this is a rating or popularity score -->
+                                    </div>
+                                    <div class="movie-info">
+                                        <i class="bx bxs-time"></i>
+                                        <span>${releaseDateGMT8}</span> <!-- Movie release date in GMT+8 -->
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>Released</span> <!-- Availability status -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                     `;
                 } else {
-                    // If the movie is not available, add a click event that triggers an alert
+                    // Movie is not available, show an alert on click
                     movieElement.innerHTML = `
-                    <div onclick="handleMovieClick(${i});" style="cursor: pointer;">
-                        <img src="${defaultImageUrl}" alt="${movie[0]} Poster" style="opacity: 0.5;"> <!-- Dim the image -->
-                        <div class="movie-item-content">
-                            <div class="movie-item-title">${movie[0]}</div>
-                            <div class="movie-infos">
-                                <div class="movie-info">
-                                    <i class="bx bxs-star"></i>
-                                    <span>${movie[1]}</span> <!-- Assuming this is a rating or popularity score -->
-                                </div>
-                                <div class="movie-info">
-                                    <i class="bx bxs-time"></i>
-                                    <span>${new Date(movie[2] * 1000).toLocaleDateString()}</span> <!-- Movie release date -->
-                                </div>
-                                <div class="movie-info">
-                                    <span>Not Released</span> <!-- Availability status -->
+                        <div onclick="handleMovieClick(${i});" style="cursor: pointer;">
+                            <img src="${defaultImageUrl}" alt="${movie[0]} Poster" style="opacity: 0.5;"> <!-- Dim the image -->
+                            <div class="movie-item-content">
+                                <div class="movie-item-title">${movie[0]}</div>
+                                <div class="movie-infos">
+                                    <div class="movie-info">
+                                        <i class="bx bxs-star"></i>
+                                        <span>${movie[1]}</span> <!-- Assuming this is a rating or popularity score -->
+                                    </div>
+                                    <div class="movie-info">
+                                        <i class="bx bxs-time"></i>
+                                        <span>${releaseDateGMT8}</span> <!-- Movie release date in GMT+8 -->
+                                    </div>
+                                    <div class="movie-info">
+                                        <span>Not Released</span> <!-- Availability status -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     `;
                 }
 
@@ -108,9 +111,23 @@ async function displayMovies() {
     }
 }
 
-// Function to handle movie click
-function handleMovieClick(movieId) {
-    // Show an alert if the movie hasn't been released yet
-    alert("Movie hasn't been released yet.");
+// Convert to GMT+8 function
+function convertToGMT8(date) {
+    // Convert the date to the time zone offset for GMT+8 (UTC+8)
+    const gmt8Offset = 8 * 60; // Offset in minutes
+    const localTime = new Date(date.getTime() + gmt8Offset * 60 * 1000);
+    
+    // Format the date as a string (e.g., 'MM/DD/YYYY HH:MM:SS')
+    return localTime.toLocaleDateString() + ' ' + localTime.toLocaleTimeString();
 }
+
+// Function to handle movie click for unreleased movies
+async function handleMovieClick(movieId) {
+    alert("Movie hasn't been released yet.");
+    console.log(`Attempted to access movie ID: ${movieId}`); // Debug log
+}
+
+
+
+
 

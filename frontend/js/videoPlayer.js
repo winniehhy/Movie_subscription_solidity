@@ -35,12 +35,22 @@ window.addEventListener('load', async () => {
 // Function to populate movie details on the page
 function populateMovieDetails(movie) {
     console.log("Fetched Movie Details:", movie);
-    
+
     document.getElementById('movie-name').innerText = movie.name;
     document.getElementById('movie-rate').innerText = movie.rate;
-    document.getElementById('release-date').innerText = new Date(movie.releaseDate * 1000).toLocaleDateString();
+    // Convert release date to GMT+8 and display it
+    const releaseDateGMT8 = convertToGMT8(new Date(movie.releaseDate * 1000));
+    document.getElementById('release-date').innerText = releaseDateGMT8;
     document.getElementById('movie-description').innerText = movie.description;
     document.getElementById('is-released').innerText = movie.isAvailable ? 'Yes' : 'No';
+}
 
+// Function to convert the release date to GMT+8
+function convertToGMT8(date) {
+    // Convert the date to the time zone offset for GMT+8 (UTC+8)
+    const gmt8Offset = 8 * 60; // Offset in minutes
+    const localTime = new Date(date.getTime() + gmt8Offset * 60 * 1000);
 
+    // Format the date as a string (e.g., 'MM/DD/YYYY HH:MM:SS')
+    return localTime.toLocaleDateString() + ' ' + localTime.toLocaleTimeString();
 }
