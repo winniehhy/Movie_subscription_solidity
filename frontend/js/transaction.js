@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import contractData from '/../smart_contract/build/contracts/transactionPayment.json';
 //import contractData from '/../smart_contract/build/contracts/UserManager.json';
-=======
-import contractData from '/../smart_contract/build/contracts/TransactionPayment.json';
-
->>>>>>> 8967bc2cb6b977641cfb13c7a34ac0c81b7f2b2e
         const contractAddress = contractData.networks[5777]?.address;  // smart contract address
         const contractABI = contractData.abi; // smart contract's ABI
 
@@ -105,6 +100,10 @@ function setupEventListeners() {
             if (typeof loadNotifications === 'function') {
                 loadNotifications();
             }
+
+            // // Update the HTML elements
+            // document.getElementById('startDate').innerText = `Start Date: ${startDate.toLocaleDateString()}`;
+            // document.getElementById('endDate').innerText = `End Date: ${endDate.toLocaleDateString()}`;
         })
 
          //=============================Notification================================
@@ -182,7 +181,7 @@ async function queueSubscription(amount, planType, customDays) {
             // Get the subscription ID from the event logs
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
             console.log('Subscription ID:', subscriptionId); // Log the subscription ID
-            alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
+            alert(`Successfully added to queue, your subscription ID is: ${subscriptionId}`);
 
             // Store the subscription ID in local storage
             localStorage.setItem('subscriptionId', subscriptionId);
@@ -197,6 +196,18 @@ async function queueSubscription(amount, planType, customDays) {
             // Prompt the start and end dates
             alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}`);
 
+                 // Display the dates in the HTML
+                const startDateElement = document.getElementById('startDate');
+                const endDateElement = document.getElementById('endDate');
+    
+                if (startDateElement && endDateElement) {
+                    startDateElement.textContent = `Subscription Start Date: ${startDateString}`;
+                    endDateElement.textContent = `Subscription End Date: ${endDateString}`;
+                    console.log('Start Date:', startDateString);
+                    console.log('End Date:', endDateString);
+                } else {
+                    console.error('Date elements not found in the DOM.');
+                }
             // Start countdown timer
             startCountdown(planType, customDays, subscriptionId);
 
@@ -261,7 +272,6 @@ function startCountdown(planType, customDays, subscriptionId) {
         timeLeftElement.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
     }, 1000);
 
-<<<<<<< HEAD
     // doneButton.onclick = async () => {
     //     const userConfirmed = confirm('You will be cancelling your plan, are you sure to proceed?');
     //     if (userConfirmed) {
@@ -283,28 +293,6 @@ function startCountdown(planType, customDays, subscriptionId) {
     //         }
     //     }
     // };
-=======
-    doneButton.onclick = async () => {
-        const userConfirmed = confirm('Your plan will be executed and terminated immediately. Are you sure you want to proceed?');
-        if (userConfirmed) {
-            const subscriptionId = prompt('Please enter your subscription ID:');
-            if (!subscriptionId) {
-                alert('Subscription ID is required to execute the plan.');
-                return;
-            }
-
-            try {
-                clearInterval(countdownInterval);
-                timeLeftElement.textContent = 'Subscription cancelled!';
-                countdownElement.style.display = 'none'; // Hide the countdown element
-                await executeSubscription(subscriptionId);
-            } catch (error) {
-                console.error('Error executing subscription:', error);
-                alert('Failed to execute subscription. Error: ' + error.message);
-            }
-        }
-    };
->>>>>>> 8967bc2cb6b977641cfb13c7a34ac0c81b7f2b2e
 }
 
 
