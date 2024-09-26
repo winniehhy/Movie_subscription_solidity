@@ -58,7 +58,7 @@
     <!-- END NAV -->
 
     <header>
-        <h1>Movie Subscription System</h1>
+        <h1 style="text-align: center; font-size: 50px; font-weight: bold;">Movie Subscription System</h1>
     </header>
 
     <!-- Main Content -->
@@ -66,7 +66,12 @@
         <!-- Movies will be dynamically injected here -->
     </div>
 
-    <a href="addMovie.html"><button>Add Movie</button></a>
+    <div class="add-movie-container">
+        <a href="addMovie.html">
+            <button class="plan-button" onclick="checkOwnerAndRedirect()">Add Movie</button>
+        </a>
+        <h3>*Only owner of the website can add movie.</h3>
+    </div>
 
      <!-- FOOTER SECTION -->
      <footer class="section">
