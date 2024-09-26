@@ -1284,7 +1284,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr",
+                      "name": "abi_encode_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr",
                       "nodeType": "YulIdentifier",
                       "src": "1896:91:6"
                     },
@@ -1301,7 +1301,7 @@
                 }
               ]
             },
-            "name": "abi_encodeUpdatedPos_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr",
+            "name": "abi_encodeUpdatedPos_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1344,7 +1344,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "array_length_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+                      "name": "array_length_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
                       "nodeType": "YulIdentifier",
                       "src": "2318:76:6"
                     },
@@ -1377,7 +1377,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "array_storeLengthForEncoding_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack",
+                      "name": "array_storeLengthForEncoding_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "2417:102:6"
                     },
@@ -1472,7 +1472,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "array_dataslot_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+                      "name": "array_dataslot_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
                       "nodeType": "YulIdentifier",
                       "src": "2633:78:6"
                     },
@@ -1596,7 +1596,7 @@
                             }
                           ],
                           "functionName": {
-                            "name": "abi_encodeUpdatedPos_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr",
+                            "name": "abi_encodeUpdatedPos_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr",
                             "nodeType": "YulIdentifier",
                             "src": "2932:101:6"
                           },
@@ -1623,7 +1623,7 @@
                             }
                           ],
                           "functionName": {
-                            "name": "array_nextElement_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+                            "name": "array_nextElement_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
                             "nodeType": "YulIdentifier",
                             "src": "3077:81:6"
                           },
@@ -1797,7 +1797,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack",
+            "name": "abi_encode_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -3376,7 +3376,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr",
+            "name": "abi_encode_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -3882,7 +3882,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack",
+                      "name": "abi_encode_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "8664:151:6"
                     },
@@ -3899,7 +3899,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr__fromStack_reversed",
+            "name": "abi_encode_tuple_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -4702,7 +4702,7 @@
                 }
               ]
             },
-            "name": "array_dataslot_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+            "name": "array_dataslot_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -4756,7 +4756,7 @@
                 }
               ]
             },
-            "name": "array_length_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+            "name": "array_length_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -4871,7 +4871,7 @@
                 }
               ]
             },
-            "name": "array_nextElement_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+            "name": "array_nextElement_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -4957,7 +4957,7 @@
                 }
               ]
             },
-            "name": "array_storeLengthForEncoding_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack",
+            "name": "array_storeLengthForEncoding_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -6520,7 +6520,7 @@
           }
         ]
       },
-      "contents": "{\n\n    function abi_decode_available_length_t_string_memory_ptr(src, length, end) -> array {\n        array := allocateMemory(array_allocation_size_t_string_memory_ptr(length))\n        mstore(array, length)\n        let dst := add(array, 0x20)\n        if gt(add(src, length), end) { revert(0, 0) }\n        copy_calldata_to_memory(src, dst, length)\n    }\n\n    function abi_decode_t_address(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_address(value)\n    }\n\n    // string\n    function abi_decode_t_string_memory_ptr(offset, end) -> array {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(0, 0) }\n        let length := calldataload(offset)\n        array := abi_decode_available_length_t_string_memory_ptr(add(offset, 0x20), length, end)\n    }\n\n    function abi_decode_t_uint256(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_uint256(value)\n    }\n\n    function abi_decode_tuple_t_addresst_string_memory_ptr(headStart, dataEnd) -> value0, value1 {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_address(add(headStart, offset), dataEnd)\n        }\n\n        {\n\n            let offset := calldataload(add(headStart, 32))\n            if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n\n            value1 := abi_decode_t_string_memory_ptr(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0 {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_uint256(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function abi_encodeUpdatedPos_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr(value0, pos) -> updatedPos {\n        updatedPos := abi_encode_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr(value0, pos)\n    }\n\n    // struct NotificationManagement.Notification[] -> struct NotificationManagement.Notification[]\n    function abi_encode_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack(value, pos)  -> end  {\n        let length := array_length_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack(pos, length)\n        let headStart := pos\n        let tail := add(pos, mul(length, 0x20))\n        let baseRef := array_dataslot_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr(value)\n        let srcPtr := baseRef\n        for { let i := 0 } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, sub(tail, headStart))\n            let elementValue0 := mload(srcPtr)\n            tail := abi_encodeUpdatedPos_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr(elementValue0, tail)\n            srcPtr := array_nextElement_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr(srcPtr)\n            pos := add(pos, 0x20)\n        }\n        pos := tail\n        end := pos\n    }\n\n    function abi_encode_t_bool_to_t_bool(value, pos) {\n        mstore(pos, cleanup_t_bool(value))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, round_up_to_mul_of_32(length))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, round_up_to_mul_of_32(length))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_nonPadded_inplace_fromStack(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, length)\n    }\n\n    function abi_encode_t_stringliteral_32cc480c4f0e15e5ce7060ec5e004886ed5a15831cba1ff1aa7cb787be55bb60_to_t_string_memory_ptr_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, 13)\n\n        mstore(add(pos, 0), \"Invalid index\")\n\n        end := add(pos, 32)\n    }\n\n    function abi_encode_t_stringliteral_4c082f666bf9a13f3fbe157c8e1873c4600b6bc9ec363833844710f280ceb2b5_to_t_string_memory_ptr_nonPadded_inplace_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, 18)\n\n        mstore(add(pos, 0), \" has been updated.\")\n\n        end := add(pos, 18)\n    }\n\n    function abi_encode_t_stringliteral_94f1e6d661cfdf9adfebaa64d4bbd88a5ab9cd59f89b78f1775f7d9673430c74_to_t_string_memory_ptr_nonPadded_inplace_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, 22)\n\n        mstore(add(pos, 0), \"Your subscription for \")\n\n        end := add(pos, 22)\n    }\n\n    function abi_encode_t_stringliteral_b6d4f870e876421f3035ee98b56fc46bca91a1167cdf4de6a54c78c24e4ea724_to_t_string_memory_ptr_nonPadded_inplace_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, 20)\n\n        mstore(add(pos, 0), \"Transaction status: \")\n\n        end := add(pos, 20)\n    }\n\n    // struct NotificationManagement.Notification -> struct NotificationManagement.Notification\n    function abi_encode_t_struct$_Notification_$333_memory_ptr_to_t_struct$_Notification_$333_memory_ptr(value, pos)  -> end  {\n        let tail := add(pos, 0x60)\n\n        {\n            // message\n\n            let memberValue0 := mload(add(value, 0x00))\n\n            mstore(add(pos, 0x00), sub(tail, pos))\n            tail := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr(memberValue0, tail)\n\n        }\n\n        {\n            // timestamp\n\n            let memberValue0 := mload(add(value, 0x20))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x20))\n        }\n\n        {\n            // isRead\n\n            let memberValue0 := mload(add(value, 0x40))\n            abi_encode_t_bool_to_t_bool(memberValue0, add(pos, 0x40))\n        }\n\n        end := tail\n    }\n\n    function abi_encode_t_uint256_to_t_uint256(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_t_uint256_to_t_uint256_fromStack(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_packed_t_stringliteral_94f1e6d661cfdf9adfebaa64d4bbd88a5ab9cd59f89b78f1775f7d9673430c74_t_string_memory_ptr_t_stringliteral_4c082f666bf9a13f3fbe157c8e1873c4600b6bc9ec363833844710f280ceb2b5__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos , value0) -> end {\n\n        pos := abi_encode_t_stringliteral_94f1e6d661cfdf9adfebaa64d4bbd88a5ab9cd59f89b78f1775f7d9673430c74_to_t_string_memory_ptr_nonPadded_inplace_fromStack( pos)\n\n        pos := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_nonPadded_inplace_fromStack(value0,  pos)\n\n        pos := abi_encode_t_stringliteral_4c082f666bf9a13f3fbe157c8e1873c4600b6bc9ec363833844710f280ceb2b5_to_t_string_memory_ptr_nonPadded_inplace_fromStack( pos)\n\n        end := pos\n    }\n\n    function abi_encode_tuple_packed_t_stringliteral_b6d4f870e876421f3035ee98b56fc46bca91a1167cdf4de6a54c78c24e4ea724_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos , value0) -> end {\n\n        pos := abi_encode_t_stringliteral_b6d4f870e876421f3035ee98b56fc46bca91a1167cdf4de6a54c78c24e4ea724_to_t_string_memory_ptr_nonPadded_inplace_fromStack( pos)\n\n        pos := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_nonPadded_inplace_fromStack(value0,  pos)\n\n        end := pos\n    }\n\n    function abi_encode_tuple_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        mstore(add(headStart, 0), sub(tail, headStart))\n        tail := abi_encode_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack(value0,  tail)\n\n    }\n\n    function abi_encode_tuple_t_string_memory_ptr_t_uint256__to_t_string_memory_ptr_t_uint256__fromStack_reversed(headStart , value1, value0) -> tail {\n        tail := add(headStart, 64)\n\n        mstore(add(headStart, 0), sub(tail, headStart))\n        tail := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value0,  tail)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value1,  add(headStart, 32))\n\n    }\n\n    function abi_encode_tuple_t_stringliteral_32cc480c4f0e15e5ce7060ec5e004886ed5a15831cba1ff1aa7cb787be55bb60__to_t_string_memory_ptr__fromStack_reversed(headStart ) -> tail {\n        tail := add(headStart, 32)\n\n        mstore(add(headStart, 0), sub(tail, headStart))\n        tail := abi_encode_t_stringliteral_32cc480c4f0e15e5ce7060ec5e004886ed5a15831cba1ff1aa7cb787be55bb60_to_t_string_memory_ptr_fromStack( tail)\n\n    }\n\n    function allocateMemory(size) -> memPtr {\n        memPtr := mload(64)\n        let newFreePtr := add(memPtr, size)\n        // protect against overflow\n        if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n    }\n\n    function array_allocation_size_t_string_memory_ptr(length) -> size {\n        // Make sure we can allocate memory without overflow\n        if gt(length, 0xffffffffffffffff) { panic_error_0x41() }\n\n        // round up\n        size := and(add(length, 0x1f), not(0x1f))\n\n        // add length slot\n        size := add(size, 0x20)\n\n    }\n\n    function array_dataslot_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr(ptr) -> data {\n        data := ptr\n\n        data := add(ptr, 0x20)\n\n    }\n\n    function array_length_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr(value) -> length {\n\n        length := mload(value)\n\n    }\n\n    function array_length_t_string_memory_ptr(value) -> length {\n\n        length := mload(value)\n\n    }\n\n    function array_nextElement_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr(ptr) -> next {\n        next := add(ptr, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr_fromStack(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, length) -> updated_pos {\n        updated_pos := pos\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function cleanup_t_bool(value) -> cleaned {\n        cleaned := iszero(iszero(value))\n    }\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function copy_calldata_to_memory(src, dst, length) {\n        calldatacopy(dst, src, length)\n        // clear end\n        mstore(add(dst, length), 0)\n    }\n\n    function copy_memory_to_memory(src, dst, length) {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length)\n        {\n            // clear end\n            mstore(add(dst, length), 0)\n        }\n    }\n\n    function extract_byte_array_length(data) -> length {\n        length := div(data, 2)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) {\n            length := and(length, 0x7f)\n        }\n\n        if eq(outOfPlaceEncoding, lt(length, 32)) {\n            panic_error_0x22()\n        }\n    }\n\n    function panic_error_0x22() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x22)\n        revert(0, 0x24)\n    }\n\n    function panic_error_0x41() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n\n    function round_up_to_mul_of_32(value) -> result {\n        result := and(add(value, 31), not(31))\n    }\n\n    function validator_revert_t_address(value) {\n        if iszero(eq(value, cleanup_t_address(value))) { revert(0, 0) }\n    }\n\n    function validator_revert_t_uint256(value) {\n        if iszero(eq(value, cleanup_t_uint256(value))) { revert(0, 0) }\n    }\n\n}\n",
+      "contents": "{\n\n    function abi_decode_available_length_t_string_memory_ptr(src, length, end) -> array {\n        array := allocateMemory(array_allocation_size_t_string_memory_ptr(length))\n        mstore(array, length)\n        let dst := add(array, 0x20)\n        if gt(add(src, length), end) { revert(0, 0) }\n        copy_calldata_to_memory(src, dst, length)\n    }\n\n    function abi_decode_t_address(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_address(value)\n    }\n\n    // string\n    function abi_decode_t_string_memory_ptr(offset, end) -> array {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(0, 0) }\n        let length := calldataload(offset)\n        array := abi_decode_available_length_t_string_memory_ptr(add(offset, 0x20), length, end)\n    }\n\n    function abi_decode_t_uint256(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_uint256(value)\n    }\n\n    function abi_decode_tuple_t_addresst_string_memory_ptr(headStart, dataEnd) -> value0, value1 {\n        if slt(sub(dataEnd, headStart), 64) { revert(0, 0) }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_address(add(headStart, offset), dataEnd)\n        }\n\n        {\n\n            let offset := calldataload(add(headStart, 32))\n            if gt(offset, 0xffffffffffffffff) { revert(0, 0) }\n\n            value1 := abi_decode_t_string_memory_ptr(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0 {\n        if slt(sub(dataEnd, headStart), 32) { revert(0, 0) }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_uint256(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function abi_encodeUpdatedPos_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr(value0, pos) -> updatedPos {\n        updatedPos := abi_encode_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr(value0, pos)\n    }\n\n    // struct NotificationManagement.Notification[] -> struct NotificationManagement.Notification[]\n    function abi_encode_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack(value, pos)  -> end  {\n        let length := array_length_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack(pos, length)\n        let headStart := pos\n        let tail := add(pos, mul(length, 0x20))\n        let baseRef := array_dataslot_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr(value)\n        let srcPtr := baseRef\n        for { let i := 0 } lt(i, length) { i := add(i, 1) }\n        {\n            mstore(pos, sub(tail, headStart))\n            let elementValue0 := mload(srcPtr)\n            tail := abi_encodeUpdatedPos_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr(elementValue0, tail)\n            srcPtr := array_nextElement_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr(srcPtr)\n            pos := add(pos, 0x20)\n        }\n        pos := tail\n        end := pos\n    }\n\n    function abi_encode_t_bool_to_t_bool(value, pos) {\n        mstore(pos, cleanup_t_bool(value))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, round_up_to_mul_of_32(length))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, round_up_to_mul_of_32(length))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_nonPadded_inplace_fromStack(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, length)\n    }\n\n    function abi_encode_t_stringliteral_32cc480c4f0e15e5ce7060ec5e004886ed5a15831cba1ff1aa7cb787be55bb60_to_t_string_memory_ptr_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, 13)\n\n        mstore(add(pos, 0), \"Invalid index\")\n\n        end := add(pos, 32)\n    }\n\n    function abi_encode_t_stringliteral_4c082f666bf9a13f3fbe157c8e1873c4600b6bc9ec363833844710f280ceb2b5_to_t_string_memory_ptr_nonPadded_inplace_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, 18)\n\n        mstore(add(pos, 0), \" has been updated.\")\n\n        end := add(pos, 18)\n    }\n\n    function abi_encode_t_stringliteral_94f1e6d661cfdf9adfebaa64d4bbd88a5ab9cd59f89b78f1775f7d9673430c74_to_t_string_memory_ptr_nonPadded_inplace_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, 22)\n\n        mstore(add(pos, 0), \"Your subscription for \")\n\n        end := add(pos, 22)\n    }\n\n    function abi_encode_t_stringliteral_b6d4f870e876421f3035ee98b56fc46bca91a1167cdf4de6a54c78c24e4ea724_to_t_string_memory_ptr_nonPadded_inplace_fromStack(pos) -> end {\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, 20)\n\n        mstore(add(pos, 0), \"Transaction status: \")\n\n        end := add(pos, 20)\n    }\n\n    // struct NotificationManagement.Notification -> struct NotificationManagement.Notification\n    function abi_encode_t_struct$_Notification_$248_memory_ptr_to_t_struct$_Notification_$248_memory_ptr(value, pos)  -> end  {\n        let tail := add(pos, 0x60)\n\n        {\n            // message\n\n            let memberValue0 := mload(add(value, 0x00))\n\n            mstore(add(pos, 0x00), sub(tail, pos))\n            tail := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr(memberValue0, tail)\n\n        }\n\n        {\n            // timestamp\n\n            let memberValue0 := mload(add(value, 0x20))\n            abi_encode_t_uint256_to_t_uint256(memberValue0, add(pos, 0x20))\n        }\n\n        {\n            // isRead\n\n            let memberValue0 := mload(add(value, 0x40))\n            abi_encode_t_bool_to_t_bool(memberValue0, add(pos, 0x40))\n        }\n\n        end := tail\n    }\n\n    function abi_encode_t_uint256_to_t_uint256(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_t_uint256_to_t_uint256_fromStack(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_packed_t_stringliteral_94f1e6d661cfdf9adfebaa64d4bbd88a5ab9cd59f89b78f1775f7d9673430c74_t_string_memory_ptr_t_stringliteral_4c082f666bf9a13f3fbe157c8e1873c4600b6bc9ec363833844710f280ceb2b5__to_t_string_memory_ptr_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos , value0) -> end {\n\n        pos := abi_encode_t_stringliteral_94f1e6d661cfdf9adfebaa64d4bbd88a5ab9cd59f89b78f1775f7d9673430c74_to_t_string_memory_ptr_nonPadded_inplace_fromStack( pos)\n\n        pos := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_nonPadded_inplace_fromStack(value0,  pos)\n\n        pos := abi_encode_t_stringliteral_4c082f666bf9a13f3fbe157c8e1873c4600b6bc9ec363833844710f280ceb2b5_to_t_string_memory_ptr_nonPadded_inplace_fromStack( pos)\n\n        end := pos\n    }\n\n    function abi_encode_tuple_packed_t_stringliteral_b6d4f870e876421f3035ee98b56fc46bca91a1167cdf4de6a54c78c24e4ea724_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos , value0) -> end {\n\n        pos := abi_encode_t_stringliteral_b6d4f870e876421f3035ee98b56fc46bca91a1167cdf4de6a54c78c24e4ea724_to_t_string_memory_ptr_nonPadded_inplace_fromStack( pos)\n\n        pos := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_nonPadded_inplace_fromStack(value0,  pos)\n\n        end := pos\n    }\n\n    function abi_encode_tuple_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr__to_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        mstore(add(headStart, 0), sub(tail, headStart))\n        tail := abi_encode_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_to_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack(value0,  tail)\n\n    }\n\n    function abi_encode_tuple_t_string_memory_ptr_t_uint256__to_t_string_memory_ptr_t_uint256__fromStack_reversed(headStart , value1, value0) -> tail {\n        tail := add(headStart, 64)\n\n        mstore(add(headStart, 0), sub(tail, headStart))\n        tail := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value0,  tail)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value1,  add(headStart, 32))\n\n    }\n\n    function abi_encode_tuple_t_stringliteral_32cc480c4f0e15e5ce7060ec5e004886ed5a15831cba1ff1aa7cb787be55bb60__to_t_string_memory_ptr__fromStack_reversed(headStart ) -> tail {\n        tail := add(headStart, 32)\n\n        mstore(add(headStart, 0), sub(tail, headStart))\n        tail := abi_encode_t_stringliteral_32cc480c4f0e15e5ce7060ec5e004886ed5a15831cba1ff1aa7cb787be55bb60_to_t_string_memory_ptr_fromStack( tail)\n\n    }\n\n    function allocateMemory(size) -> memPtr {\n        memPtr := mload(64)\n        let newFreePtr := add(memPtr, size)\n        // protect against overflow\n        if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n    }\n\n    function array_allocation_size_t_string_memory_ptr(length) -> size {\n        // Make sure we can allocate memory without overflow\n        if gt(length, 0xffffffffffffffff) { panic_error_0x41() }\n\n        // round up\n        size := and(add(length, 0x1f), not(0x1f))\n\n        // add length slot\n        size := add(size, 0x20)\n\n    }\n\n    function array_dataslot_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr(ptr) -> data {\n        data := ptr\n\n        data := add(ptr, 0x20)\n\n    }\n\n    function array_length_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr(value) -> length {\n\n        length := mload(value)\n\n    }\n\n    function array_length_t_string_memory_ptr(value) -> length {\n\n        length := mload(value)\n\n    }\n\n    function array_nextElement_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr(ptr) -> next {\n        next := add(ptr, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr_fromStack(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr_nonPadded_inplace_fromStack(pos, length) -> updated_pos {\n        updated_pos := pos\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function cleanup_t_bool(value) -> cleaned {\n        cleaned := iszero(iszero(value))\n    }\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function copy_calldata_to_memory(src, dst, length) {\n        calldatacopy(dst, src, length)\n        // clear end\n        mstore(add(dst, length), 0)\n    }\n\n    function copy_memory_to_memory(src, dst, length) {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length)\n        {\n            // clear end\n            mstore(add(dst, length), 0)\n        }\n    }\n\n    function extract_byte_array_length(data) -> length {\n        length := div(data, 2)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) {\n            length := and(length, 0x7f)\n        }\n\n        if eq(outOfPlaceEncoding, lt(length, 32)) {\n            panic_error_0x22()\n        }\n    }\n\n    function panic_error_0x22() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x22)\n        revert(0, 0x24)\n    }\n\n    function panic_error_0x41() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n\n    function round_up_to_mul_of_32(value) -> result {\n        result := and(add(value, 31), not(31))\n    }\n\n    function validator_revert_t_address(value) {\n        if iszero(eq(value, cleanup_t_address(value))) { revert(0, 0) }\n    }\n\n    function validator_revert_t_uint256(value) {\n        if iszero(eq(value, cleanup_t_uint256(value))) { revert(0, 0) }\n    }\n\n}\n",
       "id": 6,
       "language": "Yul",
       "name": "#utility.yul"
@@ -6534,15 +6534,15 @@
     "absolutePath": "project:/contracts/NotificationManagement.sol",
     "exportedSymbols": {
       "NotificationManagement": [
-        464
+        379
       ]
     },
-    "id": 465,
+    "id": 380,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 326,
+        "id": 241,
         "literals": [
           "solidity",
           "^",
@@ -6558,24 +6558,24 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 464,
+        "id": 379,
         "linearizedBaseContracts": [
-          464
+          379
         ],
         "name": "NotificationManagement",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "NotificationManagement.Notification",
-            "id": 333,
+            "id": 248,
             "members": [
               {
                 "constant": false,
-                "id": 328,
+                "id": 243,
                 "mutability": "mutable",
                 "name": "message",
                 "nodeType": "VariableDeclaration",
-                "scope": 333,
+                "scope": 248,
                 "src": "130:14:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -6584,7 +6584,7 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 327,
+                  "id": 242,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
                   "src": "130:6:2",
@@ -6597,11 +6597,11 @@
               },
               {
                 "constant": false,
-                "id": 330,
+                "id": 245,
                 "mutability": "mutable",
                 "name": "timestamp",
                 "nodeType": "VariableDeclaration",
-                "scope": 333,
+                "scope": 248,
                 "src": "155:17:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -6610,7 +6610,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 329,
+                  "id": 244,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "155:7:2",
@@ -6623,11 +6623,11 @@
               },
               {
                 "constant": false,
-                "id": 332,
+                "id": 247,
                 "mutability": "mutable",
                 "name": "isRead",
                 "nodeType": "VariableDeclaration",
-                "scope": 333,
+                "scope": 248,
                 "src": "183:11:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -6636,7 +6636,7 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 331,
+                  "id": 246,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
                   "src": "183:4:2",
@@ -6650,28 +6650,28 @@
             ],
             "name": "Notification",
             "nodeType": "StructDefinition",
-            "scope": 464,
+            "scope": 379,
             "src": "99:103:2",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 339,
+            "id": 254,
             "mutability": "mutable",
             "name": "notifications",
             "nodeType": "VariableDeclaration",
-            "scope": 464,
+            "scope": 379,
             "src": "210:56:2",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$333_storage_$dyn_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$248_storage_$dyn_storage_$",
               "typeString": "mapping(address => struct NotificationManagement.Notification[])"
             },
             "typeName": {
-              "id": 338,
+              "id": 253,
               "keyType": {
-                "id": 334,
+                "id": 249,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "218:7:2",
@@ -6683,32 +6683,32 @@
               "nodeType": "Mapping",
               "src": "210:34:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$333_storage_$dyn_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$248_storage_$dyn_storage_$",
                 "typeString": "mapping(address => struct NotificationManagement.Notification[])"
               },
               "valueType": {
                 "baseType": {
-                  "id": 336,
+                  "id": 251,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 335,
+                    "id": 250,
                     "name": "Notification",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 333,
+                    "referencedDeclaration": 248,
                     "src": "229:12:2"
                   },
-                  "referencedDeclaration": 333,
+                  "referencedDeclaration": 248,
                   "src": "229:12:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Notification_$333_storage_ptr",
+                    "typeIdentifier": "t_struct$_Notification_$248_storage_ptr",
                     "typeString": "struct NotificationManagement.Notification"
                   }
                 },
-                "id": 337,
+                "id": 252,
                 "nodeType": "ArrayTypeName",
                 "src": "229:14:2",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_array$_t_struct$_Notification_$333_storage_$dyn_storage_ptr",
+                  "typeIdentifier": "t_array$_t_struct$_Notification_$248_storage_$dyn_storage_ptr",
                   "typeString": "struct NotificationManagement.Notification[]"
                 }
               }
@@ -6717,21 +6717,21 @@
           },
           {
             "anonymous": false,
-            "id": 347,
+            "id": 262,
             "name": "NotificationCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 346,
+              "id": 261,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 341,
+                  "id": 256,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "userAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 347,
+                  "scope": 262,
                   "src": "301:27:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -6740,7 +6740,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 340,
+                    "id": 255,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "301:7:2",
@@ -6754,12 +6754,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 343,
+                  "id": 258,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "message",
                   "nodeType": "VariableDeclaration",
-                  "scope": 347,
+                  "scope": 262,
                   "src": "330:14:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -6768,7 +6768,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 342,
+                    "id": 257,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "330:6:2",
@@ -6781,12 +6781,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 345,
+                  "id": 260,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
-                  "scope": 347,
+                  "scope": 262,
                   "src": "346:17:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -6795,7 +6795,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 344,
+                    "id": 259,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "346:7:2",
@@ -6813,7 +6813,7 @@
           },
           {
             "body": {
-              "id": 373,
+              "id": 288,
               "nodeType": "Block",
               "src": "491:255:2",
               "statements": [
@@ -6823,11 +6823,11 @@
                       {
                         "arguments": [
                           {
-                            "id": 359,
+                            "id": 274,
                             "name": "_message",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 351,
+                            "referencedDeclaration": 266,
                             "src": "572:8:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -6836,7 +6836,7 @@
                           },
                           {
                             "expression": {
-                              "id": 360,
+                              "id": 275,
                               "name": "block",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -6847,7 +6847,7 @@
                                 "typeString": "block"
                               }
                             },
-                            "id": 361,
+                            "id": 276,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -6862,7 +6862,7 @@
                           },
                           {
                             "hexValue": "66616c7365",
-                            "id": 362,
+                            "id": 277,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -6892,18 +6892,18 @@
                               "typeString": "bool"
                             }
                           ],
-                          "id": 358,
+                          "id": 273,
                           "name": "Notification",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 333,
+                          "referencedDeclaration": 248,
                           "src": "535:12:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_Notification_$333_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_Notification_$248_storage_ptr_$",
                             "typeString": "type(struct NotificationManagement.Notification storage pointer)"
                           }
                         },
-                        "id": 363,
+                        "id": 278,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -6918,7 +6918,7 @@
                         "src": "535:126:2",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Notification_$333_memory_ptr",
+                          "typeIdentifier": "t_struct$_Notification_$248_memory_ptr",
                           "typeString": "struct NotificationManagement.Notification memory"
                         }
                       }
@@ -6926,30 +6926,30 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_Notification_$333_memory_ptr",
+                          "typeIdentifier": "t_struct$_Notification_$248_memory_ptr",
                           "typeString": "struct NotificationManagement.Notification memory"
                         }
                       ],
                       "expression": {
                         "baseExpression": {
-                          "id": 354,
+                          "id": 269,
                           "name": "notifications",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 339,
+                          "referencedDeclaration": 254,
                           "src": "502:13:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$333_storage_$dyn_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$248_storage_$dyn_storage_$",
                             "typeString": "mapping(address => struct NotificationManagement.Notification storage ref[] storage ref)"
                           }
                         },
-                        "id": 356,
+                        "id": 271,
                         "indexExpression": {
-                          "id": 355,
+                          "id": 270,
                           "name": "_userAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 349,
+                          "referencedDeclaration": 264,
                           "src": "516:12:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -6963,11 +6963,11 @@
                         "nodeType": "IndexAccess",
                         "src": "502:27:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_Notification_$333_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_Notification_$248_storage_$dyn_storage",
                           "typeString": "struct NotificationManagement.Notification storage ref[] storage ref"
                         }
                       },
-                      "id": 357,
+                      "id": 272,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -6976,11 +6976,11 @@
                       "nodeType": "MemberAccess",
                       "src": "502:32:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_Notification_$333_storage_$returns$__$",
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_Notification_$248_storage_$returns$__$",
                         "typeString": "function (struct NotificationManagement.Notification storage ref)"
                       }
                     },
-                    "id": 364,
+                    "id": 279,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -6995,7 +6995,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 365,
+                  "id": 280,
                   "nodeType": "ExpressionStatement",
                   "src": "502:160:2"
                 },
@@ -7003,11 +7003,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 367,
+                        "id": 282,
                         "name": "_userAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 349,
+                        "referencedDeclaration": 264,
                         "src": "698:12:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -7015,11 +7015,11 @@
                         }
                       },
                       {
-                        "id": 368,
+                        "id": 283,
                         "name": "_message",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 351,
+                        "referencedDeclaration": 266,
                         "src": "712:8:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -7028,7 +7028,7 @@
                       },
                       {
                         "expression": {
-                          "id": 369,
+                          "id": 284,
                           "name": "block",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -7039,7 +7039,7 @@
                             "typeString": "block"
                           }
                         },
-                        "id": 370,
+                        "id": 285,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -7068,18 +7068,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 366,
+                      "id": 281,
                       "name": "NotificationCreated",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 347,
+                      "referencedDeclaration": 262,
                       "src": "678:19:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_string_memory_ptr_$_t_uint256_$returns$__$",
                         "typeString": "function (address,string memory,uint256)"
                       }
                     },
-                    "id": 371,
+                    "id": 286,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -7094,29 +7094,29 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 372,
+                  "id": 287,
                   "nodeType": "EmitStatement",
                   "src": "673:65:2"
                 }
               ]
             },
-            "id": 374,
+            "id": 289,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "addNotification",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 352,
+              "id": 267,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 349,
+                  "id": 264,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 374,
+                  "scope": 289,
                   "src": "436:20:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -7125,7 +7125,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 348,
+                    "id": 263,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "436:7:2",
@@ -7139,11 +7139,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 351,
+                  "id": 266,
                   "mutability": "mutable",
                   "name": "_message",
                   "nodeType": "VariableDeclaration",
-                  "scope": 374,
+                  "scope": 289,
                   "src": "458:22:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -7152,7 +7152,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 350,
+                    "id": 265,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "458:6:2",
@@ -7167,12 +7167,12 @@
               "src": "435:46:2"
             },
             "returnParameters": {
-              "id": 353,
+              "id": 268,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "491:0:2"
             },
-            "scope": 464,
+            "scope": 379,
             "src": "411:335:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -7180,28 +7180,28 @@
           },
           {
             "body": {
-              "id": 386,
+              "id": 301,
               "nodeType": "Block",
               "src": "868:51:2",
               "statements": [
                 {
                   "expression": {
                     "baseExpression": {
-                      "id": 381,
+                      "id": 296,
                       "name": "notifications",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 339,
+                      "referencedDeclaration": 254,
                       "src": "886:13:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$333_storage_$dyn_storage_$",
+                        "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$248_storage_$dyn_storage_$",
                         "typeString": "mapping(address => struct NotificationManagement.Notification storage ref[] storage ref)"
                       }
                     },
-                    "id": 384,
+                    "id": 299,
                     "indexExpression": {
                       "expression": {
-                        "id": 382,
+                        "id": 297,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -7212,7 +7212,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 383,
+                      "id": 298,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -7232,71 +7232,71 @@
                     "nodeType": "IndexAccess",
                     "src": "886:25:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Notification_$333_storage_$dyn_storage",
+                      "typeIdentifier": "t_array$_t_struct$_Notification_$248_storage_$dyn_storage",
                       "typeString": "struct NotificationManagement.Notification storage ref[] storage ref"
                     }
                   },
-                  "functionReturnParameters": 380,
-                  "id": 385,
+                  "functionReturnParameters": 295,
+                  "id": 300,
                   "nodeType": "Return",
                   "src": "879:32:2"
                 }
               ]
             },
             "functionSelector": "cf48bd2c",
-            "id": 387,
+            "id": 302,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getNotifications",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 375,
+              "id": 290,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "821:2:2"
             },
             "returnParameters": {
-              "id": 380,
+              "id": 295,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 379,
+                  "id": 294,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 387,
+                  "scope": 302,
                   "src": "845:21:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Notification_$333_memory_ptr_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Notification_$248_memory_ptr_$dyn_memory_ptr",
                     "typeString": "struct NotificationManagement.Notification[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 377,
+                      "id": 292,
                       "nodeType": "UserDefinedTypeName",
                       "pathNode": {
-                        "id": 376,
+                        "id": 291,
                         "name": "Notification",
                         "nodeType": "IdentifierPath",
-                        "referencedDeclaration": 333,
+                        "referencedDeclaration": 248,
                         "src": "845:12:2"
                       },
-                      "referencedDeclaration": 333,
+                      "referencedDeclaration": 248,
                       "src": "845:12:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Notification_$333_storage_ptr",
+                        "typeIdentifier": "t_struct$_Notification_$248_storage_ptr",
                         "typeString": "struct NotificationManagement.Notification"
                       }
                     },
-                    "id": 378,
+                    "id": 293,
                     "nodeType": "ArrayTypeName",
                     "src": "845:14:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Notification_$333_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Notification_$248_storage_$dyn_storage_ptr",
                       "typeString": "struct NotificationManagement.Notification[]"
                     }
                   },
@@ -7305,7 +7305,7 @@
               ],
               "src": "844:23:2"
             },
-            "scope": 464,
+            "scope": 379,
             "src": "796:123:2",
             "stateMutability": "view",
             "virtual": false,
@@ -7313,7 +7313,7 @@
           },
           {
             "body": {
-              "id": 413,
+              "id": 328,
               "nodeType": "Block",
               "src": "1005:142:2",
               "statements": [
@@ -7325,17 +7325,17 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 399,
+                        "id": 314,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 393,
+                          "id": 308,
                           "name": "index",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 389,
+                          "referencedDeclaration": 304,
                           "src": "1024:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -7347,21 +7347,21 @@
                         "rightExpression": {
                           "expression": {
                             "baseExpression": {
-                              "id": 394,
+                              "id": 309,
                               "name": "notifications",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 339,
+                              "referencedDeclaration": 254,
                               "src": "1032:13:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$333_storage_$dyn_storage_$",
+                                "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$248_storage_$dyn_storage_$",
                                 "typeString": "mapping(address => struct NotificationManagement.Notification storage ref[] storage ref)"
                               }
                             },
-                            "id": 397,
+                            "id": 312,
                             "indexExpression": {
                               "expression": {
-                                "id": 395,
+                                "id": 310,
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -7372,7 +7372,7 @@
                                   "typeString": "msg"
                                 }
                               },
-                              "id": 396,
+                              "id": 311,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -7392,11 +7392,11 @@
                             "nodeType": "IndexAccess",
                             "src": "1032:25:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_array$_t_struct$_Notification_$333_storage_$dyn_storage",
+                              "typeIdentifier": "t_array$_t_struct$_Notification_$248_storage_$dyn_storage",
                               "typeString": "struct NotificationManagement.Notification storage ref[] storage ref"
                             }
                           },
-                          "id": 398,
+                          "id": 313,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -7417,7 +7417,7 @@
                       },
                       {
                         "hexValue": "496e76616c696420696e646578",
-                        "id": 400,
+                        "id": 315,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -7443,7 +7443,7 @@
                           "typeString": "literal_string \"Invalid index\""
                         }
                       ],
-                      "id": 392,
+                      "id": 307,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -7457,7 +7457,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 401,
+                    "id": 316,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -7472,13 +7472,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 402,
+                  "id": 317,
                   "nodeType": "ExpressionStatement",
                   "src": "1016:66:2"
                 },
                 {
                   "expression": {
-                    "id": 411,
+                    "id": 326,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -7487,21 +7487,21 @@
                       "expression": {
                         "baseExpression": {
                           "baseExpression": {
-                            "id": 403,
+                            "id": 318,
                             "name": "notifications",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 339,
+                            "referencedDeclaration": 254,
                             "src": "1093:13:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$333_storage_$dyn_storage_$",
+                              "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Notification_$248_storage_$dyn_storage_$",
                               "typeString": "mapping(address => struct NotificationManagement.Notification storage ref[] storage ref)"
                             }
                           },
-                          "id": 407,
+                          "id": 322,
                           "indexExpression": {
                             "expression": {
-                              "id": 404,
+                              "id": 319,
                               "name": "msg",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -7512,7 +7512,7 @@
                                 "typeString": "msg"
                               }
                             },
-                            "id": 405,
+                            "id": 320,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -7532,17 +7532,17 @@
                           "nodeType": "IndexAccess",
                           "src": "1093:25:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_array$_t_struct$_Notification_$333_storage_$dyn_storage",
+                            "typeIdentifier": "t_array$_t_struct$_Notification_$248_storage_$dyn_storage",
                             "typeString": "struct NotificationManagement.Notification storage ref[] storage ref"
                           }
                         },
-                        "id": 408,
+                        "id": 323,
                         "indexExpression": {
-                          "id": 406,
+                          "id": 321,
                           "name": "index",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 389,
+                          "referencedDeclaration": 304,
                           "src": "1119:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -7556,18 +7556,18 @@
                         "nodeType": "IndexAccess",
                         "src": "1093:32:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Notification_$333_storage",
+                          "typeIdentifier": "t_struct$_Notification_$248_storage",
                           "typeString": "struct NotificationManagement.Notification storage ref"
                         }
                       },
-                      "id": 409,
+                      "id": 324,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "isRead",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 332,
+                      "referencedDeclaration": 247,
                       "src": "1093:39:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -7578,7 +7578,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "74727565",
-                      "id": 410,
+                      "id": 325,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -7598,30 +7598,30 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 412,
+                  "id": 327,
                   "nodeType": "ExpressionStatement",
                   "src": "1093:46:2"
                 }
               ]
             },
             "functionSelector": "7c100c36",
-            "id": 414,
+            "id": 329,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "markAsRead",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 390,
+              "id": 305,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 389,
+                  "id": 304,
                   "mutability": "mutable",
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 414,
+                  "scope": 329,
                   "src": "983:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -7630,7 +7630,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 388,
+                    "id": 303,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "983:7:2",
@@ -7645,12 +7645,12 @@
               "src": "982:15:2"
             },
             "returnParameters": {
-              "id": 391,
+              "id": 306,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1005:0:2"
             },
-            "scope": 464,
+            "scope": 379,
             "src": "963:184:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -7658,22 +7658,22 @@
           },
           {
             "body": {
-              "id": 438,
+              "id": 353,
               "nodeType": "Block",
               "src": "1320:177:2",
               "statements": [
                 {
                   "assignments": [
-                    422
+                    337
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 422,
+                      "id": 337,
                       "mutability": "mutable",
                       "name": "message",
                       "nodeType": "VariableDeclaration",
-                      "scope": 438,
+                      "scope": 353,
                       "src": "1331:21:2",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -7682,7 +7682,7 @@
                         "typeString": "string"
                       },
                       "typeName": {
-                        "id": 421,
+                        "id": 336,
                         "name": "string",
                         "nodeType": "ElementaryTypeName",
                         "src": "1331:6:2",
@@ -7694,14 +7694,14 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 432,
+                  "id": 347,
                   "initialValue": {
                     "arguments": [
                       {
                         "arguments": [
                           {
                             "hexValue": "596f757220737562736372697074696f6e20666f7220",
-                            "id": 427,
+                            "id": 342,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -7716,11 +7716,11 @@
                             "value": "Your subscription for "
                           },
                           {
-                            "id": 428,
+                            "id": 343,
                             "name": "_movieTitle",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 418,
+                            "referencedDeclaration": 333,
                             "src": "1405:11:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -7729,7 +7729,7 @@
                           },
                           {
                             "hexValue": "20686173206265656e20757064617465642e",
-                            "id": 429,
+                            "id": 344,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -7760,7 +7760,7 @@
                             }
                           ],
                           "expression": {
-                            "id": 425,
+                            "id": 340,
                             "name": "abi",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -7771,7 +7771,7 @@
                               "typeString": "abi"
                             }
                           },
-                          "id": 426,
+                          "id": 341,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -7784,7 +7784,7 @@
                             "typeString": "function () pure returns (bytes memory)"
                           }
                         },
-                        "id": 430,
+                        "id": 345,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -7807,7 +7807,7 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 424,
+                      "id": 339,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -7819,14 +7819,14 @@
                         "typeString": "type(string storage pointer)"
                       },
                       "typeName": {
-                        "id": 423,
+                        "id": 338,
                         "name": "string",
                         "nodeType": "ElementaryTypeName",
                         "src": "1355:6:2",
                         "typeDescriptions": {}
                       }
                     },
-                    "id": 431,
+                    "id": 346,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -7848,11 +7848,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 434,
+                        "id": 349,
                         "name": "_userAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 416,
+                        "referencedDeclaration": 331,
                         "src": "1467:12:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -7860,11 +7860,11 @@
                         }
                       },
                       {
-                        "id": 435,
+                        "id": 350,
                         "name": "message",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 422,
+                        "referencedDeclaration": 337,
                         "src": "1481:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -7883,18 +7883,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 433,
+                      "id": 348,
                       "name": "addNotification",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 374,
+                      "referencedDeclaration": 289,
                       "src": "1451:15:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (address,string memory)"
                       }
                     },
-                    "id": 436,
+                    "id": 351,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -7909,30 +7909,30 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 437,
+                  "id": 352,
                   "nodeType": "ExpressionStatement",
                   "src": "1451:38:2"
                 }
               ]
             },
             "functionSelector": "f0e20d64",
-            "id": 439,
+            "id": 354,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "notifySubscriptionUpdate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 419,
+              "id": 334,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 416,
+                  "id": 331,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 439,
+                  "scope": 354,
                   "src": "1264:20:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -7941,7 +7941,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 415,
+                    "id": 330,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1264:7:2",
@@ -7955,11 +7955,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 418,
+                  "id": 333,
                   "mutability": "mutable",
                   "name": "_movieTitle",
                   "nodeType": "VariableDeclaration",
-                  "scope": 439,
+                  "scope": 354,
                   "src": "1286:25:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -7968,7 +7968,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 417,
+                    "id": 332,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1286:6:2",
@@ -7983,12 +7983,12 @@
               "src": "1263:49:2"
             },
             "returnParameters": {
-              "id": 420,
+              "id": 335,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1320:0:2"
             },
-            "scope": 464,
+            "scope": 379,
             "src": "1230:267:2",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -7996,22 +7996,22 @@
           },
           {
             "body": {
-              "id": 462,
+              "id": 377,
               "nodeType": "Block",
               "src": "1664:149:2",
               "statements": [
                 {
                   "assignments": [
-                    447
+                    362
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 447,
+                      "id": 362,
                       "mutability": "mutable",
                       "name": "message",
                       "nodeType": "VariableDeclaration",
-                      "scope": 462,
+                      "scope": 377,
                       "src": "1675:21:2",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -8020,7 +8020,7 @@
                         "typeString": "string"
                       },
                       "typeName": {
-                        "id": 446,
+                        "id": 361,
                         "name": "string",
                         "nodeType": "ElementaryTypeName",
                         "src": "1675:6:2",
@@ -8032,14 +8032,14 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 456,
+                  "id": 371,
                   "initialValue": {
                     "arguments": [
                       {
                         "arguments": [
                           {
                             "hexValue": "5472616e73616374696f6e207374617475733a20",
-                            "id": 452,
+                            "id": 367,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -8054,11 +8054,11 @@
                             "value": "Transaction status: "
                           },
                           {
-                            "id": 453,
+                            "id": 368,
                             "name": "_status",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 443,
+                            "referencedDeclaration": 358,
                             "src": "1747:7:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -8078,7 +8078,7 @@
                             }
                           ],
                           "expression": {
-                            "id": 450,
+                            "id": 365,
                             "name": "abi",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -8089,7 +8089,7 @@
                               "typeString": "abi"
                             }
                           },
-                          "id": 451,
+                          "id": 366,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -8102,7 +8102,7 @@
                             "typeString": "function () pure returns (bytes memory)"
                           }
                         },
-                        "id": 454,
+                        "id": 369,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -8125,7 +8125,7 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 449,
+                      "id": 364,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -8137,14 +8137,14 @@
                         "typeString": "type(string storage pointer)"
                       },
                       "typeName": {
-                        "id": 448,
+                        "id": 363,
                         "name": "string",
                         "nodeType": "ElementaryTypeName",
                         "src": "1699:6:2",
                         "typeDescriptions": {}
                       }
                     },
-                    "id": 455,
+                    "id": 370,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -8166,11 +8166,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 458,
+                        "id": 373,
                         "name": "_userAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 441,
+                        "referencedDeclaration": 356,
                         "src": "1783:12:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -8178,11 +8178,11 @@
                         }
                       },
                       {
-                        "id": 459,
+                        "id": 374,
                         "name": "message",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 447,
+                        "referencedDeclaration": 362,
                         "src": "1797:7:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -8201,18 +8201,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 457,
+                      "id": 372,
                       "name": "addNotification",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 374,
+                      "referencedDeclaration": 289,
                       "src": "1767:15:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (address,string memory)"
                       }
                     },
-                    "id": 460,
+                    "id": 375,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -8227,30 +8227,30 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 461,
+                  "id": 376,
                   "nodeType": "ExpressionStatement",
                   "src": "1767:38:2"
                 }
               ]
             },
             "functionSelector": "d79f20a1",
-            "id": 463,
+            "id": 378,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "notifyTransactionStatus",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 444,
+              "id": 359,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 441,
+                  "id": 356,
                   "mutability": "mutable",
                   "name": "_userAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 463,
+                  "scope": 378,
                   "src": "1612:20:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -8259,7 +8259,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 440,
+                    "id": 355,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1612:7:2",
@@ -8273,11 +8273,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 443,
+                  "id": 358,
                   "mutability": "mutable",
                   "name": "_status",
                   "nodeType": "VariableDeclaration",
-                  "scope": 463,
+                  "scope": 378,
                   "src": "1634:21:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -8286,7 +8286,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 442,
+                    "id": 357,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1634:6:2",
@@ -8301,19 +8301,19 @@
               "src": "1611:45:2"
             },
             "returnParameters": {
-              "id": 445,
+              "id": 360,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1664:0:2"
             },
-            "scope": 464,
+            "scope": 379,
             "src": "1579:234:2",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 465,
+        "scope": 380,
         "src": "60:1756:2"
       }
     ],
@@ -8327,12 +8327,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x234cf896e7953B3649331568ca6d5A25F684c28F",
-      "transactionHash": "0x517810fb6a84c72a2533c2b620d38413839376a01cde780002b34d40f50aff1b"
+      "address": "0xe121eb81058B121B215A64BF5eC7AC31CE6d1b2F",
+      "transactionHash": "0x5fbf4928c527a4f5d701a152c8bb7c72719627f4b7399c2d0271a96415d1349f"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-09-26T08:36:32.034Z",
+  "updatedAt": "2024-09-26T13:18:54.874Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

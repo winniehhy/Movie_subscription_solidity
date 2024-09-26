@@ -65,9 +65,10 @@ async function updateTable(month) {
             { name: 'Ivy Orange', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Cancelled' },
         ],
         September: [
-            { name: 'Samantha', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Cancelled' },
+            //{ name: 'winnie', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Queued' },
+            { name: 'winnie', id: '0x000000000000000000000000000000000000000000000000000000000009i101', status: 'Queued' },
             { name: 'Lily', id: '0x000000000000000000000000000000000000000000000000000003e885', status: 'Executed' },
-            { name: 'William', id: '0x00000000000000000000000000000000000000000000000000000000000a1536', status: 'Executed' }
+            { name: 'William', id: '0x00000000000000000000000000000000000000000000000000000000000a1536', status: 'Cancelled' }
         ],
         ...(await fetchSeptemberData()), // Fetch data for September dynamically
         October: [],

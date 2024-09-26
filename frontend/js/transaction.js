@@ -136,91 +136,79 @@ function setupEventListeners() {
 }
 
 
-    async function queueSubscription(amount, planType, customDays) {
-        let durationInSeconds;
-    
-        // Calculate the duration based on the plan type
-        if (planType === 'Monthly') {
-            durationInSeconds = 30 * 24 * 60 * 60; // 30 days in seconds
-        } else if (planType === 'Yearly') {
-            durationInSeconds = 365 * 24 * 60 * 60; // 365 days in seconds
-        } else if (planType === 'Custom') {
-            durationInSeconds = customDays * 24 * 60 * 60; // Custom days in seconds
+async function queueSubscription(amount, planType, customDays) {
+    let durationInSeconds;
+
+    // Calculate the duration based on the plan type
+    if (planType === 'Monthly') {
+        durationInSeconds = 30 * 24 * 60 * 60; // 30 days in seconds
+    } else if (planType === 'Yearly') {
+        durationInSeconds = 365 * 24 * 60 * 60; // 365 days in seconds
+    } else if (planType === 'Custom') {
+        durationInSeconds = customDays * 24 * 60 * 60; // Custom days in seconds
+    } else {
+        alert('Invalid plan type selected.');
+        return false;
+    }
+
+    const unlockTime = Math.floor(Date.now() / 1000) + durationInSeconds; // Set unlock time
+    let isQueued = false;
+
+    try {
+        console.log('Queueing subscription with amount:', amount);
+        const tx = await transactionPayment.methods.queueSubscription(unlockTime).send({
+            from: userAddress,
+            value: web3.utils.toWei(amount.toString(), 'ether')
+        });
+
+        // Log the entire transaction receipt
+        console.log('Transaction receipt:', JSON.stringify(tx, null, 2));
+
+        // Checking for a successful transaction
+        if (tx.status) {
+            console.log('Transaction successful');
         } else {
-            alert('Invalid plan type selected.');
+            console.error('Transaction failed');
+            alert('Transaction failed.');
             return false;
         }
-    
-        const unlockTime = Math.floor(Date.now() / 1000) + durationInSeconds; // Set unlock time
-        let isQueued = false;
-    
-        try {
-            console.log('Queueing subscription with amount:', amount);
-            const tx = await transactionPayment.methods.queueSubscription(unlockTime).send({
-                from: userAddress,
-                value: web3.utils.toWei(amount.toString(), 'ether')
-            });
-    
-            // Log the entire transaction receipt
-            console.log('Transaction receipt:', JSON.stringify(tx, null, 2));
-    
-            // Checking for a successful transaction
-            if (tx.status) {
-                console.log('Transaction successful');
-            } else {
-                console.error('Transaction failed');
-                alert('Transaction failed.');
-                return false;
-            }
-    
-            // Check for events in the transaction receipt
-            if (tx.events && tx.events.SubscriptionQueued) {
-                // Get the subscription ID from the event logs
-                let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
-                alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
-    
-                // Store the subscription ID in local storage
-                localStorage.setItem('subscriptionId', subscriptionId);
-    
-                // Calculate and display the start and end dates
-                const startDate = new Date();
-                const endDate = new Date(startDate.getTime() + durationInSeconds * 1000);
-    
-                const startDateString = startDate.toLocaleDateString();
-                const endDateString = endDate.toLocaleDateString();
-    
-                alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}`);
-    
-                // Display the dates in the HTML
-                const startDateElement = document.getElementById('startDate');
-                const endDateElement = document.getElementById('endDate');
-    
-                if (startDateElement && endDateElement) {
-                    startDateElement.textContent = `Subscription Start Date: ${startDateString}`;
-                    endDateElement.textContent = `Subscription End Date: ${endDateString}`;
-                    console.log('Start Date:', startDateString);
-                    console.log('End Date:', endDateString);
-                } else {
-                    console.error('Date elements not found in the DOM.');
-                }
-    
-                // Start countdown timer
-                startCountdown(planType, customDays, subscriptionId);
-    
-                isQueued = true;
-            } else {
-                // Fallback: Log the transaction logs to inspect manually if no events are found
-                console.error('No SubscriptionQueued event found in transaction receipt.');
-                console.log('Transaction logs:', tx.logs);  // Log tx.logs for further inspection
-                alert('Failed to queue subscription. Event not found.');
-            }
-        } catch (error) {
-            console.error('Error queuing subscription:', error);
-            alert('Failed to queue subscription. Error: ' + error.message);
+
+        // Check for events in the transaction receipt
+        if (tx.events && tx.events.SubscriptionQueued) {
+            // Get the subscription ID from the event logs
+            let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
+            alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
+
+            // Store the subscription ID in local storage
+            localStorage.setItem('subscriptionId', subscriptionId);
+
+            // Calculate and display the start and end dates
+            const startDate = new Date();
+            const endDate = new Date(startDate.getTime() + durationInSeconds * 1000);
+
+            const startDateString = startDate.toLocaleDateString();
+            const endDateString = endDate.toLocaleDateString();
+
+            // Prompt the start and end dates
+            alert(`Subscription Start Date: ${startDateString}\nSubscription End Date: ${endDateString}`);
+
+            // Start countdown timer
+            startCountdown(planType, customDays, subscriptionId);
+
+            isQueued = true;
+        } else {
+            // Fallback: Log the transaction logs to inspect manually if no events are found
+            console.error('No SubscriptionQueued event found in transaction receipt.');
+            console.log('Transaction logs:', tx.logs);  // Log tx.logs for further inspection
+            alert('Failed to queue subscription. Event not found.');
         }
-    
-        return isQueued;
+    } catch (error) {
+        console.error('Error queuing subscription:', error);
+        alert('Failed to queue subscription. Error: ' + error.message);
     }
+
+    return isQueued;
+}
 
 function startCountdown(planType, customDays, subscriptionId) {
     const countdownElement = document.getElementById('transactionCountdown');
