@@ -1,5 +1,5 @@
-import contractData from '/../smart_contract/build/contracts/transactionPayment.json';
-//import contractData from '/../smart_contract/build/contracts/UserManager.json';
+import contractData from '/../smart_contract/build/contracts/TransactionPayment.json';
+
         const contractAddress = contractData.networks[5777]?.address;  // smart contract address
         const contractABI = contractData.abi; // smart contract's ABI
 
@@ -135,7 +135,6 @@ function setupEventListeners() {
         .on('error', console.error);
 }
 
-
 async function queueSubscription(amount, planType, customDays) {
     let durationInSeconds;
 
@@ -177,6 +176,7 @@ async function queueSubscription(amount, planType, customDays) {
         if (tx.events && tx.events.SubscriptionQueued) {
             // Get the subscription ID from the event logs
             let subscriptionId = tx.events.SubscriptionQueued.returnValues.subscriptionId;
+            console.log('Subscription ID:', subscriptionId); // Log the subscription ID
             alert(`Subscription queued successfully! Your subscription ID is: ${subscriptionId}`);
 
             // Store the subscription ID in local storage
@@ -279,6 +279,19 @@ function startCountdown(planType, customDays, subscriptionId) {
 }
 
 
+function stopTimer() {
+    // Assuming you have a global variable `countdownInterval` for the countdown timer
+    clearInterval(countdownInterval);
+    console.log('Timer stopped.');
+
+    const timeLeftElement = document.getElementById('timeLeft');
+    const countdownElement = document.getElementById('transactionCountdown');
+    if (timeLeftElement && countdownElement) {
+        timeLeftElement.textContent = 'Subscription cancelled!';
+        countdownElement.style.display = 'none'; // Hide the countdown element
+    }
+}
+
 function updateStatus(status) {
     const statusElement = document.getElementById('subscriptionStatus');
     if (!statusElement) {
@@ -305,18 +318,31 @@ function updateStatus(status) {
             break;
     }
 }
+
 async function executeSubscription(subscriptionId) {
     try {
         console.log(`Transferring funds for subscription ID: ${subscriptionId} for user: ${userAddress}`);
         const formattedSubscriptionId = web3.utils.padLeft(subscriptionId, 64); // Ensure the subscription ID is correctly formatted
 
+        // Log the formatted subscription ID
+        console.log('Formatted Subscription ID:', formattedSubscriptionId);
+
         // Call the smart contract method to execute the subscription and transfer funds to the hardcoded beneficiary address
-        const tx = await transactionPayment.methods.executeSubscription(formattedSubscriptionId).send({ from: userAddress });
-        
+        const tx = await transactionPayment.methods.executeSubscription(formattedSubscriptionId).send({ 
+            from: userAddress,
+            gas: 3000000 // Set a high gas limit for debugging purposes
+        });
+
         console.log('Funds transferred:', tx);
         alert('Funds transferred successfully.');
     } catch (error) {
         console.error('Error transferring funds:', error);
+
+        // Check if the error has a data property with more details
+        if (error.data) {
+            console.error('Error data:', error.data);
+        }
+
         alert('Failed to transfer funds. Error: ' + error.message);
     }
 }
@@ -469,6 +495,7 @@ $(document).ready(async () => {
             } else {
                 await cancelSubscription(subscriptionId);
                 alert('Subscription cancelled and funds refunded.');
+                stopTimer()
             }
         } catch (error) {
             console.error('Error cancelling subscription:', error);

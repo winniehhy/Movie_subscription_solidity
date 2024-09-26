@@ -64,6 +64,7 @@ contract TransactionPayment {
 
     // Execute the subscription payment when the unlock time has passed
     function executeSubscription(bytes32 _subscriptionId) external {
+        require(_subscriptionId != bytes32(0), "Invalid subscription ID");
         Subscription storage sub = subscriptions[_subscriptionId];
         require(block.timestamp >= sub.unlockTime, "Unlock time not reached");
         require(!sub.cancelled, "Subscription has been cancelled");
