@@ -212,20 +212,23 @@ a.movie-item:hover {
 
 #video-section {
     display: flex;
-    margin-top: 60px;
+    flex-direction: column;
+    align-items: center;  /* Centers the content horizontally */
+    justify-content: center;
+    margin-top: 20px;
 }
 
-video {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
+#movie-video {
+    width: 100%;           /* Make video take the full width of its container */
+    max-width: 1200px;      /* Optional: set a maximum width for large screens */
+    height: auto;           /* Maintain aspect ratio */
+    margin-bottom: 20px;    /* Space between video and details */
 }
 
 .item-content-wrapper {
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    flex: 1; /* Allows the content to take remaining space */
+    text-align: center;     /* Center-align text content */
+    max-width: 800px;       /* Limit the width of the details section */
+    margin: 0 auto;         /* Center the details wrapper */
 }
 
 .item-content-title {
@@ -233,17 +236,11 @@ video {
     margin-bottom: 10px;
 }
 
-.plan-button {
-    background-color: var(--main-color);
-    border: none;
-    border-radius: 5px;
-    color: var(--text-color);
-    cursor: pointer;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
+.item-content-wrapper p {
+    margin: 5px 0;
+    font-size: 1.2rem;      /* Adjust font size for readability */
 }
+
 
 footer.section {
     margin-top: 80px;
