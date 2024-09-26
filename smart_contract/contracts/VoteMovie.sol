@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+interface ITransactionPaymentv2 {
+    function getSubscriptionStatus(address _user) external view returns (string memory);
+}
+
 contract MovieVoting {
+    ITransactionPaymentv2 public transactionPayment; // Declare as public
 
     struct Movie {
         string name;
@@ -33,8 +38,18 @@ contract MovieVoting {
         _;
     }
 
+    // Modifier to check if the user has an active subscription
+    modifier onlyActiveSubscribers() {
+        require(
+            keccak256(abi.encodePacked(transactionPayment.getSubscriptionStatus(msg.sender))) == keccak256(abi.encodePacked("Queued")),
+            "You must have an active subscription to vote."
+        );
+        _;
+    }
+
     // Function to add movie category
-    constructor(){
+    constructor(address _transactionPayment){
+         transactionPayment = ITransactionPaymentv2(_transactionPayment);
         addCategory("Best Movie in august 2024", 1722384000, 1725062400);
         addCategory("Best Comedy Movie in august 2024", 1722384000, 1725062400);
         addCategory("Best Horror Movie in august 2024", 1722384000, 1725062400);
@@ -89,7 +104,7 @@ contract MovieVoting {
     }
 
     // Function to submit a vote
-    function submitVote(string memory categoryName, string memory movieName) public votingOpen(categoryName) hasNotVoted(categoryName) {
+    function submitVote(string memory categoryName, string memory movieName) public votingOpen(categoryName) hasNotVoted(categoryName) onlyActiveSubscribers {
         Category storage category = categories[categoryName];
         category.movies[movieName].votes += 1;
         category.hasVoted[msg.sender] = true;

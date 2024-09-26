@@ -1,0 +1,3554 @@
+{
+  "contractName": "IUserManagementv2",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ContentManagement.sol\":\"IUserManagementv2\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ContentManagement.sol\":{\"keccak256\":\"0xfb09d9ec53dd5040ad7a8ce40470c4e7d7c28b16bce1629e7aa79c6a7c4c1e58\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fe9951b351191d8f0403e12e3f7ea4c26decdcd658aa44d1bd5516434a47d48d\",\"dweb:/ipfs/QmNrue8K9PpcamuHMTRk2xTzju1GhrN7R9MpjceynZZiC3\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\ninterface IUserManagementv2 {\r\n    function getOwner() external view returns (address);\r\n}\r\n\r\ncontract ContentManagement {\r\n    // Mapping of movie IDs to movie structs\r\n    mapping(uint256 => Movie) private movies;\r\n\r\n    // Event emitted when a new movie is created\r\n    event NewMovie(uint256 indexed movieId, string name, uint256 releaseDate, uint256 endDate, string description);\r\n\r\n    // Event emitted when a movie is released\r\n    event MovieReleased(uint256 indexed movieId);\r\n\r\n    // Struct to represent a movie\r\n    struct Movie {\r\n        uint256 id;\r\n        string name;\r\n        string rate; // e.g. \"R\", \"P12\"\r\n        uint256 releaseDate;\r\n        uint256 endDate;\r\n        string description;\r\n        bool isReleased;\r\n    }\r\n\r\n    // Movie ID counter, starting from 1\r\n    uint256 private movieIdCounter = 1;\r\n\r\n    // Declare the user management contract interface\r\n    IUserManagementv2 private userManagement;\r\n\r\n    // Constructor to initialize the UserManagement interface with its address\r\n    constructor(address _userManagementAddress) {\r\n        userManagement = IUserManagementv2(_userManagementAddress);\r\n    }\r\n\r\n    // Modifier to check if the caller is the owner\r\n    modifier onlyOwner() {\r\n        require(msg.sender == userManagement.getOwner(), \"Only the owner can add movies\");\r\n        _;\r\n    }\r\n\r\n    // Modifier to check if the movie exists\r\n    modifier movieExists(uint256 _id) {\r\n        require(movies[_id].id != 0, \"Movie does not exist\");\r\n        _;\r\n    }\r\n\r\n    // Modifier to check if the movie can be released\r\n    modifier canRelease(uint256 _id) {\r\n        require(movies[_id].releaseDate <= block.timestamp, \"Movie has not reached the release date\");\r\n        require(!movies[_id].isReleased, \"Movie has already been released\");\r\n        _;\r\n    }\r\n\r\n    // Create a new movie\r\n    function createMovie(\r\n        string memory _name,\r\n        string memory _rate,\r\n        uint256 _releaseDate,\r\n        uint256 _endDate,\r\n        string memory _description\r\n    ) public onlyOwner {\r\n        require(_releaseDate < _endDate, \"Release date must be before the end date\");\r\n\r\n        // Create a new movie struct\r\n        Movie memory newMovie = Movie({\r\n            id: movieIdCounter,\r\n            name: _name,\r\n            rate: _rate,\r\n            releaseDate: _releaseDate,\r\n            endDate: _endDate,\r\n            description: _description,\r\n            isReleased: false\r\n        });\r\n\r\n        // Add movie to the mapping\r\n        movies[movieIdCounter] = newMovie;\r\n\r\n        // Emit event for new movie creation\r\n        emit NewMovie(movieIdCounter, _name, _releaseDate, _endDate, _description);\r\n\r\n        // Increment movie ID counter\r\n        movieIdCounter++;\r\n    }\r\n\r\n    // Release a movie when the release date is reached\r\n    function releaseMovie(uint256 _id) public movieExists(_id) canRelease(_id) {\r\n        Movie storage movie = movies[_id];\r\n        movie.isReleased = true;\r\n\r\n        emit MovieReleased(_id);\r\n    }\r\n\r\n    // Check if a movie is available to watch\r\n    function isMovieAvailable(uint256 _id) public view movieExists(_id) returns (bool) {\r\n        Movie memory movie = movies[_id];\r\n        return movie.isReleased && movie.endDate >= block.timestamp;\r\n    }\r\n\r\n    // Get movie details\r\n    function getMovie(uint256 _id) public view movieExists(_id) returns (\r\n        string memory name,\r\n        string memory rate,\r\n        uint256 releaseDate,\r\n        uint256 endDate,\r\n        string memory description,\r\n        bool isReleased\r\n    ) {\r\n        Movie memory movie = movies[_id];\r\n        return (\r\n            movie.name,\r\n            movie.rate,\r\n            movie.releaseDate,\r\n            movie.endDate,\r\n            movie.description,\r\n            movie.isReleased\r\n        );\r\n    }\r\n\r\n    // Get total number of movies\r\n    function getMovieCount() public view returns (uint256) {\r\n        return movieIdCounter > 0 ? movieIdCounter - 1 : 0;\r\n    }\r\n}\r\n",
+  "sourcePath": "C:\\Users\\khord\\Documents\\Movie_subscription_solidity\\smart_contract\\contracts\\ContentManagement.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/ContentManagement.sol",
+    "exportedSymbols": {
+      "ContentManagement": [
+        284
+      ],
+      "IUserManagementv2": [
+        7
+      ]
+    },
+    "id": 285,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 7,
+        "linearizedBaseContracts": [
+          7
+        ],
+        "name": "IUserManagementv2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "893d20e8",
+            "id": 6,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getOwner",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "112:2:0"
+            },
+            "returnParameters": {
+              "id": 5,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6,
+                  "src": "138:7:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "138:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "137:9:0"
+            },
+            "scope": 7,
+            "src": "95:52:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 285,
+        "src": "60:90:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 284,
+        "linearizedBaseContracts": [
+          284
+        ],
+        "name": "ContentManagement",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 12,
+            "mutability": "mutable",
+            "name": "movies",
+            "nodeType": "VariableDeclaration",
+            "scope": 284,
+            "src": "234:40:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+              "typeString": "mapping(uint256 => struct ContentManagement.Movie)"
+            },
+            "typeName": {
+              "id": 11,
+              "keyType": {
+                "id": 8,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "242:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "234:25:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                "typeString": "mapping(uint256 => struct ContentManagement.Movie)"
+              },
+              "valueType": {
+                "id": 10,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 9,
+                  "name": "Movie",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 43,
+                  "src": "253:5:0"
+                },
+                "referencedDeclaration": 43,
+                "src": "253:5:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                  "typeString": "struct ContentManagement.Movie"
+                }
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "anonymous": false,
+            "id": 24,
+            "name": "NewMovie",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 23,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 14,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "movieId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24,
+                  "src": "348:23:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 13,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "348:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24,
+                  "src": "373:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 15,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "373:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 18,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "releaseDate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24,
+                  "src": "386:19:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 17,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "386:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 20,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "endDate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24,
+                  "src": "407:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 19,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "407:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 22,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 24,
+                  "src": "424:18:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 21,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "424:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "347:96:0"
+            },
+            "src": "333:111:0"
+          },
+          {
+            "anonymous": false,
+            "id": 28,
+            "name": "MovieReleased",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 27,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "movieId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 28,
+                  "src": "519:23:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 25,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "519:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "518:25:0"
+            },
+            "src": "499:45:0"
+          },
+          {
+            "canonicalName": "ContentManagement.Movie",
+            "id": 43,
+            "members": [
+              {
+                "constant": false,
+                "id": 30,
+                "mutability": "mutable",
+                "name": "id",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "612:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 29,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "612:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 32,
+                "mutability": "mutable",
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "633:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 31,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "633:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 34,
+                "mutability": "mutable",
+                "name": "rate",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "655:11:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 33,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "655:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 36,
+                "mutability": "mutable",
+                "name": "releaseDate",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "696:19:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 35,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "696:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 38,
+                "mutability": "mutable",
+                "name": "endDate",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "726:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 37,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "726:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 40,
+                "mutability": "mutable",
+                "name": "description",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "752:18:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 39,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "752:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 42,
+                "mutability": "mutable",
+                "name": "isReleased",
+                "nodeType": "VariableDeclaration",
+                "scope": 43,
+                "src": "781:15:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 41,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "781:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Movie",
+            "nodeType": "StructDefinition",
+            "scope": 284,
+            "src": "588:216:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 46,
+            "mutability": "mutable",
+            "name": "movieIdCounter",
+            "nodeType": "VariableDeclaration",
+            "scope": 284,
+            "src": "854:34:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 44,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "854:7:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "hexValue": "31",
+              "id": 45,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "887:1:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_1_by_1",
+                "typeString": "int_const 1"
+              },
+              "value": "1"
+            },
+            "visibility": "private"
+          },
+          {
+            "constant": false,
+            "id": 49,
+            "mutability": "mutable",
+            "name": "userManagement",
+            "nodeType": "VariableDeclaration",
+            "scope": 284,
+            "src": "952:40:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_IUserManagementv2_$7",
+              "typeString": "contract IUserManagementv2"
+            },
+            "typeName": {
+              "id": 48,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47,
+                "name": "IUserManagementv2",
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 7,
+                "src": "952:17:0"
+              },
+              "referencedDeclaration": 7,
+              "src": "952:17:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IUserManagementv2_$7",
+                "typeString": "contract IUserManagementv2"
+              }
+            },
+            "visibility": "private"
+          },
+          {
+            "body": {
+              "id": 60,
+              "nodeType": "Block",
+              "src": "1125:77:0",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 58,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 54,
+                      "name": "userManagement",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 49,
+                      "src": "1136:14:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IUserManagementv2_$7",
+                        "typeString": "contract IUserManagementv2"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "arguments": [
+                        {
+                          "id": 56,
+                          "name": "_userManagementAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 51,
+                          "src": "1171:22:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 55,
+                        "name": "IUserManagementv2",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7,
+                        "src": "1153:17:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_IUserManagementv2_$7_$",
+                          "typeString": "type(contract IUserManagementv2)"
+                        }
+                      },
+                      "id": 57,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "1153:41:0",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IUserManagementv2_$7",
+                        "typeString": "contract IUserManagementv2"
+                      }
+                    },
+                    "src": "1136:58:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IUserManagementv2_$7",
+                      "typeString": "contract IUserManagementv2"
+                    }
+                  },
+                  "id": 59,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1136:58:0"
+                }
+              ]
+            },
+            "id": 61,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 52,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 51,
+                  "mutability": "mutable",
+                  "name": "_userManagementAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 61,
+                  "src": "1093:30:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 50,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1093:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1092:32:0"
+            },
+            "returnParameters": {
+              "id": 53,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1125:0:0"
+            },
+            "scope": 284,
+            "src": "1081:121:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 74,
+              "nodeType": "Block",
+              "src": "1284:112:0",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 69,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "expression": {
+                            "id": 64,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967281,
+                            "src": "1303:3:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 65,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "src": "1303:10:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "expression": {
+                              "id": 66,
+                              "name": "userManagement",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 49,
+                              "src": "1317:14:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_IUserManagementv2_$7",
+                                "typeString": "contract IUserManagementv2"
+                              }
+                            },
+                            "id": 67,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "memberName": "getOwner",
+                            "nodeType": "MemberAccess",
+                            "referencedDeclaration": 6,
+                            "src": "1317:23:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_external_view$__$returns$_t_address_$",
+                              "typeString": "function () view external returns (address)"
+                            }
+                          },
+                          "id": 68,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "1317:25:0",
+                          "tryCall": false,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "1303:39:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "4f6e6c7920746865206f776e65722063616e20616464206d6f76696573",
+                        "id": 70,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1344:31:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_33b906f346d4ec1fe6d2f6c92051d4834d004ff0ce271fc153344fd548a85c20",
+                          "typeString": "literal_string \"Only the owner can add movies\""
+                        },
+                        "value": "Only the owner can add movies"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_33b906f346d4ec1fe6d2f6c92051d4834d004ff0ce271fc153344fd548a85c20",
+                          "typeString": "literal_string \"Only the owner can add movies\""
+                        }
+                      ],
+                      "id": 63,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "1295:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 71,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1295:81:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 72,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1295:81:0"
+                },
+                {
+                  "id": 73,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1387:1:0"
+                }
+              ]
+            },
+            "id": 75,
+            "name": "onlyOwner",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 62,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1281:2:0"
+            },
+            "src": "1263:133:0",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 90,
+              "nodeType": "Block",
+              "src": "1484:83:0",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 85,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "expression": {
+                            "baseExpression": {
+                              "id": 80,
+                              "name": "movies",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 12,
+                              "src": "1503:6:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                                "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                              }
+                            },
+                            "id": 82,
+                            "indexExpression": {
+                              "id": 81,
+                              "name": "_id",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 77,
+                              "src": "1510:3:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "1503:11:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Movie_$43_storage",
+                              "typeString": "struct ContentManagement.Movie storage ref"
+                            }
+                          },
+                          "id": 83,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "id",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 30,
+                          "src": "1503:14:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "hexValue": "30",
+                          "id": 84,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "1521:1:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        },
+                        "src": "1503:19:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "4d6f76696520646f6573206e6f74206578697374",
+                        "id": 86,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1524:22:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_ae91299906ca44866c615989e9c08a40452a325abe1e188fc77b94fea24ed310",
+                          "typeString": "literal_string \"Movie does not exist\""
+                        },
+                        "value": "Movie does not exist"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_ae91299906ca44866c615989e9c08a40452a325abe1e188fc77b94fea24ed310",
+                          "typeString": "literal_string \"Movie does not exist\""
+                        }
+                      ],
+                      "id": 79,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "1495:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 87,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1495:52:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 88,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1495:52:0"
+                },
+                {
+                  "id": 89,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1558:1:0"
+                }
+              ]
+            },
+            "id": 91,
+            "name": "movieExists",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 78,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 77,
+                  "mutability": "mutable",
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 91,
+                  "src": "1471:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 76,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1471:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1470:13:0"
+            },
+            "src": "1450:117:0",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 116,
+              "nodeType": "Block",
+              "src": "1663:202:0",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 102,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "expression": {
+                            "baseExpression": {
+                              "id": 96,
+                              "name": "movies",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 12,
+                              "src": "1682:6:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                                "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                              }
+                            },
+                            "id": 98,
+                            "indexExpression": {
+                              "id": 97,
+                              "name": "_id",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 93,
+                              "src": "1689:3:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "1682:11:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Movie_$43_storage",
+                              "typeString": "struct ContentManagement.Movie storage ref"
+                            }
+                          },
+                          "id": 99,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "releaseDate",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 36,
+                          "src": "1682:23:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "<=",
+                        "rightExpression": {
+                          "expression": {
+                            "id": 100,
+                            "name": "block",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 4294967292,
+                            "src": "1709:5:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_block",
+                              "typeString": "block"
+                            }
+                          },
+                          "id": 101,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "timestamp",
+                          "nodeType": "MemberAccess",
+                          "src": "1709:15:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "src": "1682:42:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "4d6f76696520686173206e6f742072656163686564207468652072656c656173652064617465",
+                        "id": 103,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1726:40:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_9653ecd482e754ff775bf646adc203adc489c09404b027fe0510549185445380",
+                          "typeString": "literal_string \"Movie has not reached the release date\""
+                        },
+                        "value": "Movie has not reached the release date"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_9653ecd482e754ff775bf646adc203adc489c09404b027fe0510549185445380",
+                          "typeString": "literal_string \"Movie has not reached the release date\""
+                        }
+                      ],
+                      "id": 95,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "1674:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 104,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1674:93:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 105,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1674:93:0"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 111,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "UnaryOperation",
+                        "operator": "!",
+                        "prefix": true,
+                        "src": "1786:23:0",
+                        "subExpression": {
+                          "expression": {
+                            "baseExpression": {
+                              "id": 107,
+                              "name": "movies",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 12,
+                              "src": "1787:6:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                                "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                              }
+                            },
+                            "id": 109,
+                            "indexExpression": {
+                              "id": 108,
+                              "name": "_id",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 93,
+                              "src": "1794:3:0",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "1787:11:0",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Movie_$43_storage",
+                              "typeString": "struct ContentManagement.Movie storage ref"
+                            }
+                          },
+                          "id": 110,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isReleased",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 42,
+                          "src": "1787:22:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "4d6f7669652068617320616c7265616479206265656e2072656c6561736564",
+                        "id": 112,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1811:33:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_c47a5dab714aee9cd87c63cf69d142f47cc56e04fcecf866041a48ef8df270f6",
+                          "typeString": "literal_string \"Movie has already been released\""
+                        },
+                        "value": "Movie has already been released"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_c47a5dab714aee9cd87c63cf69d142f47cc56e04fcecf866041a48ef8df270f6",
+                          "typeString": "literal_string \"Movie has already been released\""
+                        }
+                      ],
+                      "id": 106,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "1778:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 113,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1778:67:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 114,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1778:67:0"
+                },
+                {
+                  "id": 115,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "1856:1:0"
+                }
+              ]
+            },
+            "id": 117,
+            "name": "canRelease",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 94,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 93,
+                  "mutability": "mutable",
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "1650:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 92,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1650:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1649:13:0"
+            },
+            "src": "1630:235:0",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 169,
+              "nodeType": "Block",
+              "src": "2100:701:0",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 135,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "id": 133,
+                          "name": "_releaseDate",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 123,
+                          "src": "2119:12:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "<",
+                        "rightExpression": {
+                          "id": 134,
+                          "name": "_endDate",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 125,
+                          "src": "2134:8:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "src": "2119:23:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "hexValue": "52656c656173652064617465206d757374206265206265666f72652074686520656e642064617465",
+                        "id": 136,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2144:42:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_774d51903ca0e9e987b3b66496e68b8f1c67c1b7fdd459b3b5f6b6a66d314566",
+                          "typeString": "literal_string \"Release date must be before the end date\""
+                        },
+                        "value": "Release date must be before the end date"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_774d51903ca0e9e987b3b66496e68b8f1c67c1b7fdd459b3b5f6b6a66d314566",
+                          "typeString": "literal_string \"Release date must be before the end date\""
+                        }
+                      ],
+                      "id": 132,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4294967278,
+                        4294967278
+                      ],
+                      "referencedDeclaration": 4294967278,
+                      "src": "2111:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 137,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2111:76:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 138,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2111:76:0"
+                },
+                {
+                  "assignments": [
+                    141
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 141,
+                      "mutability": "mutable",
+                      "name": "newMovie",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 169,
+                      "src": "2238:21:0",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                        "typeString": "struct ContentManagement.Movie"
+                      },
+                      "typeName": {
+                        "id": 140,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 139,
+                          "name": "Movie",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 43,
+                          "src": "2238:5:0"
+                        },
+                        "referencedDeclaration": 43,
+                        "src": "2238:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                          "typeString": "struct ContentManagement.Movie"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 151,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 143,
+                        "name": "movieIdCounter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46,
+                        "src": "2287:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 144,
+                        "name": "_name",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 119,
+                        "src": "2322:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "id": 145,
+                        "name": "_rate",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 121,
+                        "src": "2348:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "id": 146,
+                        "name": "_releaseDate",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 123,
+                        "src": "2381:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 147,
+                        "name": "_endDate",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 125,
+                        "src": "2417:8:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 148,
+                        "name": "_description",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 127,
+                        "src": "2453:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "hexValue": "66616c7365",
+                        "id": 149,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "bool",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "2492:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "value": "false"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 142,
+                      "name": "Movie",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 43,
+                      "src": "2262:5:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_struct$_Movie_$43_storage_ptr_$",
+                        "typeString": "type(struct ContentManagement.Movie storage pointer)"
+                      }
+                    },
+                    "id": 150,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "structConstructorCall",
+                    "lValueRequested": false,
+                    "names": [
+                      "id",
+                      "name",
+                      "rate",
+                      "releaseDate",
+                      "endDate",
+                      "description",
+                      "isReleased"
+                    ],
+                    "nodeType": "FunctionCall",
+                    "src": "2262:247:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                      "typeString": "struct ContentManagement.Movie memory"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2238:271:0"
+                },
+                {
+                  "expression": {
+                    "id": 156,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "baseExpression": {
+                        "id": 152,
+                        "name": "movies",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 12,
+                        "src": "2559:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                          "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                        }
+                      },
+                      "id": 154,
+                      "indexExpression": {
+                        "id": 153,
+                        "name": "movieIdCounter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46,
+                        "src": "2566:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "2559:22:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Movie_$43_storage",
+                        "typeString": "struct ContentManagement.Movie storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 155,
+                      "name": "newMovie",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 141,
+                      "src": "2584:8:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                        "typeString": "struct ContentManagement.Movie memory"
+                      }
+                    },
+                    "src": "2559:33:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Movie_$43_storage",
+                      "typeString": "struct ContentManagement.Movie storage ref"
+                    }
+                  },
+                  "id": 157,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2559:33:0"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "id": 159,
+                        "name": "movieIdCounter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46,
+                        "src": "2665:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 160,
+                        "name": "_name",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 119,
+                        "src": "2681:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "id": 161,
+                        "name": "_releaseDate",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 123,
+                        "src": "2688:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 162,
+                        "name": "_endDate",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 125,
+                        "src": "2702:8:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "id": 163,
+                        "name": "_description",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 127,
+                        "src": "2712:12:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "id": 158,
+                      "name": "NewMovie",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 24,
+                      "src": "2656:8:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_string_memory_ptr_$_t_uint256_$_t_uint256_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (uint256,string memory,uint256,uint256,string memory)"
+                      }
+                    },
+                    "id": 164,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "2656:69:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 165,
+                  "nodeType": "EmitStatement",
+                  "src": "2651:74:0"
+                },
+                {
+                  "expression": {
+                    "id": 167,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "2777:16:0",
+                    "subExpression": {
+                      "id": 166,
+                      "name": "movieIdCounter",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 46,
+                      "src": "2777:14:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 168,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2777:16:0"
+                }
+              ]
+            },
+            "functionSelector": "c6e092f6",
+            "id": 170,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 130,
+                "modifierName": {
+                  "id": 129,
+                  "name": "onlyOwner",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 75,
+                  "src": "2090:9:0"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "2090:9:0"
+              }
+            ],
+            "name": "createMovie",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 128,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 119,
+                  "mutability": "mutable",
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 170,
+                  "src": "1931:19:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 118,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1931:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 121,
+                  "mutability": "mutable",
+                  "name": "_rate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 170,
+                  "src": "1961:19:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 120,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1961:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 123,
+                  "mutability": "mutable",
+                  "name": "_releaseDate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 170,
+                  "src": "1991:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 122,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1991:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 125,
+                  "mutability": "mutable",
+                  "name": "_endDate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 170,
+                  "src": "2022:16:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 124,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2022:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 127,
+                  "mutability": "mutable",
+                  "name": "_description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 170,
+                  "src": "2049:26:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 126,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2049:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1920:162:0"
+            },
+            "returnParameters": {
+              "id": 131,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2100:0:0"
+            },
+            "scope": 284,
+            "src": "1900:901:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 198,
+              "nodeType": "Block",
+              "src": "2941:122:0",
+              "statements": [
+                {
+                  "assignments": [
+                    183
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 183,
+                      "mutability": "mutable",
+                      "name": "movie",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 198,
+                      "src": "2952:19:0",
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                        "typeString": "struct ContentManagement.Movie"
+                      },
+                      "typeName": {
+                        "id": 182,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 181,
+                          "name": "Movie",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 43,
+                          "src": "2952:5:0"
+                        },
+                        "referencedDeclaration": 43,
+                        "src": "2952:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                          "typeString": "struct ContentManagement.Movie"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 187,
+                  "initialValue": {
+                    "baseExpression": {
+                      "id": 184,
+                      "name": "movies",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12,
+                      "src": "2974:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                        "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                      }
+                    },
+                    "id": 186,
+                    "indexExpression": {
+                      "id": 185,
+                      "name": "_id",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 172,
+                      "src": "2981:3:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "2974:11:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Movie_$43_storage",
+                      "typeString": "struct ContentManagement.Movie storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "2952:33:0"
+                },
+                {
+                  "expression": {
+                    "id": 192,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "expression": {
+                        "id": 188,
+                        "name": "movie",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 183,
+                        "src": "2996:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                          "typeString": "struct ContentManagement.Movie storage pointer"
+                        }
+                      },
+                      "id": 190,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "isReleased",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 42,
+                      "src": "2996:16:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "74727565",
+                      "id": 191,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "3015:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "2996:23:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 193,
+                  "nodeType": "ExpressionStatement",
+                  "src": "2996:23:0"
+                },
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "id": 195,
+                        "name": "_id",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 172,
+                        "src": "3051:3:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 194,
+                      "name": "MovieReleased",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 28,
+                      "src": "3037:13:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 196,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "3037:18:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 197,
+                  "nodeType": "EmitStatement",
+                  "src": "3032:23:0"
+                }
+              ]
+            },
+            "functionSelector": "13174f5e",
+            "id": 199,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 175,
+                    "name": "_id",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 172,
+                    "src": "2920:3:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                ],
+                "id": 176,
+                "modifierName": {
+                  "id": 174,
+                  "name": "movieExists",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 91,
+                  "src": "2908:11:0"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "2908:16:0"
+              },
+              {
+                "arguments": [
+                  {
+                    "id": 178,
+                    "name": "_id",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 172,
+                    "src": "2936:3:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                ],
+                "id": 179,
+                "modifierName": {
+                  "id": 177,
+                  "name": "canRelease",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 117,
+                  "src": "2925:10:0"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "2925:15:0"
+              }
+            ],
+            "name": "releaseMovie",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 173,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 172,
+                  "mutability": "mutable",
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 199,
+                  "src": "2888:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 171,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2888:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2887:13:0"
+            },
+            "returnParameters": {
+              "id": 180,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2941:0:0"
+            },
+            "scope": 284,
+            "src": "2866:197:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 225,
+              "nodeType": "Block",
+              "src": "3201:121:0",
+              "statements": [
+                {
+                  "assignments": [
+                    211
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 211,
+                      "mutability": "mutable",
+                      "name": "movie",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 225,
+                      "src": "3212:18:0",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                        "typeString": "struct ContentManagement.Movie"
+                      },
+                      "typeName": {
+                        "id": 210,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 209,
+                          "name": "Movie",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 43,
+                          "src": "3212:5:0"
+                        },
+                        "referencedDeclaration": 43,
+                        "src": "3212:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                          "typeString": "struct ContentManagement.Movie"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 215,
+                  "initialValue": {
+                    "baseExpression": {
+                      "id": 212,
+                      "name": "movies",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12,
+                      "src": "3233:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                        "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                      }
+                    },
+                    "id": 214,
+                    "indexExpression": {
+                      "id": 213,
+                      "name": "_id",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 201,
+                      "src": "3240:3:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "3233:11:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Movie_$43_storage",
+                      "typeString": "struct ContentManagement.Movie storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3212:32:0"
+                },
+                {
+                  "expression": {
+                    "commonType": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "id": 223,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "expression": {
+                        "id": 216,
+                        "name": "movie",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 211,
+                        "src": "3262:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                          "typeString": "struct ContentManagement.Movie memory"
+                        }
+                      },
+                      "id": 217,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "isReleased",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 42,
+                      "src": "3262:16:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "&&",
+                    "rightExpression": {
+                      "commonType": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "id": 222,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "expression": {
+                          "id": 218,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 211,
+                          "src": "3282:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 219,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "endDate",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 38,
+                        "src": "3282:13:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": ">=",
+                      "rightExpression": {
+                        "expression": {
+                          "id": 220,
+                          "name": "block",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 4294967292,
+                          "src": "3299:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_block",
+                            "typeString": "block"
+                          }
+                        },
+                        "id": 221,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "timestamp",
+                        "nodeType": "MemberAccess",
+                        "src": "3299:15:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "src": "3282:32:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "3262:52:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "functionReturnParameters": 208,
+                  "id": 224,
+                  "nodeType": "Return",
+                  "src": "3255:59:0"
+                }
+              ]
+            },
+            "functionSelector": "8488ed0e",
+            "id": 226,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 204,
+                    "name": "_id",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 201,
+                    "src": "3181:3:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                ],
+                "id": 205,
+                "modifierName": {
+                  "id": 203,
+                  "name": "movieExists",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 91,
+                  "src": "3169:11:0"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "3169:16:0"
+              }
+            ],
+            "name": "isMovieAvailable",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 202,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 201,
+                  "mutability": "mutable",
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 226,
+                  "src": "3144:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 200,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3144:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3143:13:0"
+            },
+            "returnParameters": {
+              "id": 208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 207,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 226,
+                  "src": "3195:4:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 206,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3195:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3194:6:0"
+            },
+            "scope": 284,
+            "src": "3118:204:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 267,
+              "nodeType": "Block",
+              "src": "3608:253:0",
+              "statements": [
+                {
+                  "assignments": [
+                    248
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 248,
+                      "mutability": "mutable",
+                      "name": "movie",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 267,
+                      "src": "3619:18:0",
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                        "typeString": "struct ContentManagement.Movie"
+                      },
+                      "typeName": {
+                        "id": 247,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 246,
+                          "name": "Movie",
+                          "nodeType": "IdentifierPath",
+                          "referencedDeclaration": 43,
+                          "src": "3619:5:0"
+                        },
+                        "referencedDeclaration": 43,
+                        "src": "3619:5:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Movie_$43_storage_ptr",
+                          "typeString": "struct ContentManagement.Movie"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 252,
+                  "initialValue": {
+                    "baseExpression": {
+                      "id": 249,
+                      "name": "movies",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 12,
+                      "src": "3640:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Movie_$43_storage_$",
+                        "typeString": "mapping(uint256 => struct ContentManagement.Movie storage ref)"
+                      }
+                    },
+                    "id": 251,
+                    "indexExpression": {
+                      "id": 250,
+                      "name": "_id",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 228,
+                      "src": "3647:3:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "3640:11:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Movie_$43_storage",
+                      "typeString": "struct ContentManagement.Movie storage ref"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "3619:32:0"
+                },
+                {
+                  "expression": {
+                    "components": [
+                      {
+                        "expression": {
+                          "id": 253,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 248,
+                          "src": "3684:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 254,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "name",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 32,
+                        "src": "3684:10:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 255,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 248,
+                          "src": "3709:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 256,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "rate",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 34,
+                        "src": "3709:10:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 257,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 248,
+                          "src": "3734:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 258,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "releaseDate",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 36,
+                        "src": "3734:17:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 259,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 248,
+                          "src": "3766:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 260,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "endDate",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 38,
+                        "src": "3766:13:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 261,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 248,
+                          "src": "3794:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 262,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "description",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 40,
+                        "src": "3794:17:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "id": 263,
+                          "name": "movie",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 248,
+                          "src": "3826:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_struct$_Movie_$43_memory_ptr",
+                            "typeString": "struct ContentManagement.Movie memory"
+                          }
+                        },
+                        "id": 264,
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "isReleased",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": 42,
+                        "src": "3826:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "id": 265,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "3669:184:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_uint256_$_t_uint256_$_t_string_memory_ptr_$_t_bool_$",
+                      "typeString": "tuple(string memory,string memory,uint256,uint256,string memory,bool)"
+                    }
+                  },
+                  "functionReturnParameters": 245,
+                  "id": 266,
+                  "nodeType": "Return",
+                  "src": "3662:191:0"
+                }
+              ]
+            },
+            "functionSelector": "179ffe76",
+            "id": 268,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": [
+                  {
+                    "id": 231,
+                    "name": "_id",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 228,
+                    "src": "3411:3:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                ],
+                "id": 232,
+                "modifierName": {
+                  "id": 230,
+                  "name": "movieExists",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 91,
+                  "src": "3399:11:0"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "3399:16:0"
+              }
+            ],
+            "name": "getMovie",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 229,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 228,
+                  "mutability": "mutable",
+                  "name": "_id",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3374:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 227,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3374:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3373:13:0"
+            },
+            "returnParameters": {
+              "id": 245,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 234,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3435:18:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 233,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3435:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 236,
+                  "mutability": "mutable",
+                  "name": "rate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3464:18:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 235,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3464:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 238,
+                  "mutability": "mutable",
+                  "name": "releaseDate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3493:19:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 237,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3493:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 240,
+                  "mutability": "mutable",
+                  "name": "endDate",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3523:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 239,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3523:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 242,
+                  "mutability": "mutable",
+                  "name": "description",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3549:25:0",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 241,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3549:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 244,
+                  "mutability": "mutable",
+                  "name": "isReleased",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 268,
+                  "src": "3585:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 243,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3585:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3424:183:0"
+            },
+            "scope": 284,
+            "src": "3356:505:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 282,
+              "nodeType": "Block",
+              "src": "3959:69:0",
+              "statements": [
+                {
+                  "expression": {
+                    "condition": {
+                      "commonType": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "id": 275,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "id": 273,
+                        "name": "movieIdCounter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46,
+                        "src": "3977:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": ">",
+                      "rightExpression": {
+                        "hexValue": "30",
+                        "id": 274,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "number",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "3994:1:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_rational_0_by_1",
+                          "typeString": "int_const 0"
+                        },
+                        "value": "0"
+                      },
+                      "src": "3977:18:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "falseExpression": {
+                      "hexValue": "30",
+                      "id": 279,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "4019:1:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "id": 280,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "Conditional",
+                    "src": "3977:43:0",
+                    "trueExpression": {
+                      "commonType": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "id": 278,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "id": 276,
+                        "name": "movieIdCounter",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 46,
+                        "src": "3998:14:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "-",
+                      "rightExpression": {
+                        "hexValue": "31",
+                        "id": 277,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "number",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "4015:1:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_rational_1_by_1",
+                          "typeString": "int_const 1"
+                        },
+                        "value": "1"
+                      },
+                      "src": "3998:18:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "functionReturnParameters": 272,
+                  "id": 281,
+                  "nodeType": "Return",
+                  "src": "3970:50:0"
+                }
+              ]
+            },
+            "functionSelector": "ea7f1231",
+            "id": 283,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMovieCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 269,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3926:2:0"
+            },
+            "returnParameters": {
+              "id": 272,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 271,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 283,
+                  "src": "3950:7:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 270,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3950:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3949:9:0"
+            },
+            "scope": 284,
+            "src": "3904:124:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 285,
+        "src": "154:3877:0"
+      }
+    ],
+    "src": "33:4000:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2024-09-26T05:19:33.238Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

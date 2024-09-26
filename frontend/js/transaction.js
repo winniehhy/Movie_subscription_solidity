@@ -1,8 +1,14 @@
-import contractData from '/../smart_contract/build/contracts/TransactionPayment.json';
+import contractData from '../../smart_contract/build/contracts/TransactionPayment.json';
+import userContractData from '../../smart_contract/build/contracts/UserManagement.json';
+
 //import contractData from '/../smart_contract/build/contracts/UserManager.json';
         const contractAddress = contractData.networks[5777]?.address;  // smart contract address
         const contractABI = contractData.abi; // smart contract's ABI
 
+        const userManageAddress = userContractData.networks[5777]?.address;  // smart contract address
+        const userManageABI = userContractData.abi; // smart contract's ABI
+
+        
 let web3;
 let userAddress;
 let transactionPayment;
@@ -57,6 +63,17 @@ async function initialize() {
     } else {
         alert('Please install MetaMask!');
     }
+}
+
+async function checkUserRegistration() {
+    try {
+        const isRegistered = await userManager.methods.isUserRegistered(userAddress).call();
+        console.log("User registration status:", isRegistered);
+        return isRegistered;
+    } catch (error) {
+        console.error("Error checking user registration:", error);
+        return false; // Return false in case of an error
+    }
 }
 
 // Function to set up smart contract event listeners
@@ -455,6 +472,7 @@ $(document).ready(async () => {
     $('#disconnectButton').click(() => {
         localStorage.removeItem('userAddress');
         alert('Wallet disconnected.');
+        
         location.reload(); // Reload the page to reflect the disconnected state
     });
 

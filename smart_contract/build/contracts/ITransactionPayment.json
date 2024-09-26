@@ -60,7 +60,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getCurrentSubscription\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"hasActiveSubscription\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/UserManagement.sol\":\"ITransactionPayment\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/UserManagement.sol\":{\"keccak256\":\"0x9f74939922d264c4f33def535b5d6ac3ed5412ec7b3052188a9671f24fec9622\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://4a13e4225fc392319cfe4178807cb085294f5b07882bfefd9552c47b36628b87\",\"dweb:/ipfs/QmUBPA88U6PegLoGkZ2nm3eZEYDL8wQDjb997ru6qz8HrJ\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getCurrentSubscription\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"hasActiveSubscription\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/UserManagement.sol\":\"ITransactionPayment\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/UserManagement.sol\":{\"keccak256\":\"0xd41c9fe826070d9f6e5a2d2239452454a745daa762ce064698765c17f412bd41\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c6f27477682d2bd49163a82d02f25a10d545331681d232ba9df90095fa49072f\",\"dweb:/ipfs/QmTSb758qZs48usPvsptB13ZkswTH7z587vEDi1wLWWMe5\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -93,6 +93,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
+        "src": "33:23:4"
         "src": "33:23:4"
       },
       {
@@ -139,6 +140,7 @@
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "128:7:4",
+                    "src": "128:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -148,6 +150,7 @@
                   "visibility": "internal"
                 }
               ],
+              "src": "127:14:4"
               "src": "127:14:4"
             },
             "returnParameters": {
@@ -173,6 +176,7 @@
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "165:4:4",
+                    "src": "165:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -181,6 +185,7 @@
                   "visibility": "internal"
                 }
               ],
+              "src": "164:6:4"
               "src": "164:6:4"
             },
             "scope": 806,
@@ -220,6 +225,7 @@
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "209:7:4",
+                    "src": "209:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -229,6 +235,7 @@
                   "visibility": "internal"
                 }
               ],
+              "src": "208:14:4"
               "src": "208:14:4"
             },
             "returnParameters": {
@@ -253,6 +260,7 @@
                     "id": 794,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
+                    "src": "246:7:4",
                     "src": "246:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
@@ -281,6 +289,7 @@
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "255:4:4",
+                    "src": "255:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -306,6 +315,7 @@
                     "id": 798,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
+                    "src": "261:4:4",
                     "src": "261:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
@@ -333,6 +343,7 @@
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "267:4:4",
+                    "src": "267:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -359,6 +370,7 @@
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "273:4:4",
+                    "src": "273:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -367,6 +379,7 @@
                   "visibility": "internal"
                 }
               ],
+              "src": "245:33:4"
               "src": "245:33:4"
             },
             "scope": 806,
@@ -411,6 +424,7 @@
               "id": 807,
               "name": "address",
               "nodeType": "ElementaryTypeName",
+              "src": "317:7:4",
               "src": "317:7:4",
               "stateMutability": "nonpayable",
               "typeDescriptions": {
@@ -477,6 +491,7 @@
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
                   "src": "421:6:4",
+                  "src": "421:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -503,6 +518,7 @@
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
                   "src": "447:6:4",
+                  "src": "447:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -528,6 +544,7 @@
                   "id": 816,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
+                  "src": "470:7:4",
                   "src": "470:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
@@ -556,6 +573,7 @@
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "500:4:4",
+                  "src": "500:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -581,6 +599,7 @@
                   "id": 820,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
+                  "src": "527:4:4",
                   "src": "527:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
@@ -618,12 +637,14 @@
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "570:7:4",
+                "src": "570:7:4",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
+              "src": "562:24:4",
               "src": "562:24:4",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_struct$_User_$822_storage_$",
@@ -670,12 +691,14 @@
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "614:6:4",
+                "src": "614:6:4",
                 "typeDescriptions": {
                   "typeIdentifier": "t_string_storage_ptr",
                   "typeString": "string"
                 }
               },
               "nodeType": "Mapping",
+              "src": "606:23:4",
               "src": "606:23:4",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_string_memory_ptr_$_t_bool_$",
@@ -685,6 +708,7 @@
                 "id": 829,
                 "name": "bool",
                 "nodeType": "ElementaryTypeName",
+                "src": "624:4:4",
                 "src": "624:4:4",
                 "typeDescriptions": {
                   "typeIdentifier": "t_bool",
@@ -715,12 +739,14 @@
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "704:6:4",
+                "src": "704:6:4",
                 "typeDescriptions": {
                   "typeIdentifier": "t_string_storage_ptr",
                   "typeString": "string"
                 }
               },
               "nodeType": "Mapping",
+              "src": "696:23:4",
               "src": "696:23:4",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_string_memory_ptr_$_t_bool_$",
@@ -730,6 +756,7 @@
                 "id": 833,
                 "name": "bool",
                 "nodeType": "ElementaryTypeName",
+                "src": "714:4:4",
                 "src": "714:4:4",
                 "typeDescriptions": {
                   "typeIdentifier": "t_bool",
@@ -4007,10 +4034,10 @@
                         "src": "3365:6:4",
                         "subdenomination": "days",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_rational_86400_by_1",
-                          "typeString": "int_const 86400"
+                          "typeIdentifier": "t_rational_30_by_1",
+                          "typeString": "int_const 30"
                         },
-                        "value": "1"
+                        "value": "30"
                       },
                       "src": "3347:24:4",
                       "typeDescriptions": {

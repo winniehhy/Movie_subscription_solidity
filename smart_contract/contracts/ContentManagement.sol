@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+interface IUserManagementv2 {
+    function getOwner() external view returns (address);
+}
+
 contract ContentManagement {
     // Mapping of movie IDs to movie structs
     mapping(uint256 => Movie) private movies;
@@ -22,20 +26,20 @@ contract ContentManagement {
         bool isReleased;
     }
 
-    // Only the owner can create a new movie
-    address private owner;
-
     // Movie ID counter, starting from 1
     uint256 private movieIdCounter = 1;
 
-    // Constructor to set the owner
-    constructor() {
-        owner = msg.sender;
+    // Declare the user management contract interface
+    IUserManagementv2 private userManagement;
+
+    // Constructor to initialize the UserManagement interface with its address
+    constructor(address _userManagementAddress) {
+        userManagement = IUserManagementv2(_userManagementAddress);
     }
 
     // Modifier to check if the caller is the owner
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can create a new movie");
+        require(msg.sender == userManagement.getOwner(), "Only the owner can add movies");
         _;
     }
 

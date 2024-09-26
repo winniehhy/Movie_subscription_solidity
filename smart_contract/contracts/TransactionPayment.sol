@@ -1,6 +1,15 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
+interface IUserManagement {
+    function isUserRegistered(address _user) external view returns (bool);
+}
+
 contract TransactionPayment {
+    // Declare the userManagement variable to store the UserManagement contract instance
+    IUserManagement public userManagement;
+
     struct Subscription {
         address payable subscriber;
         uint amount;
@@ -8,22 +17,57 @@ contract TransactionPayment {
         bool cancelled;
         bool executed;
     }
-    
+
+    // Constructor to initialize the user management contract address
+    constructor(address _userManagementAddress) {
+        userManagement = IUserManagement(_userManagementAddress); // Initialize the contract instance
+    }
+
     mapping(uint => Subscription) public subscriptions;
     mapping(address => uint) public userToSubscriptionId; // Tracks a single active subscription per user
 
     // Events
-    event SubscriptionQueued(uint indexed subscriptionId, address indexed subscriber, uint256 unlockTime);
+    event SubscriptionQueued(
+        uint indexed subscriptionId,
+        address indexed subscriber,
+        uint256 unlockTime
+    );
     event SubscriptionCancelled(uint indexed subscriptionId);
-    event SubscriptionExecuted(uint indexed subscriptionId, address indexed beneficiary, uint amount);
+    event SubscriptionExecuted(
+        uint indexed subscriptionId,
+        address indexed beneficiary,
+        uint amount
+    );
+
+    // Modifier to check if the user is registered
+    modifier onlyRegisteredUser() {
+        require(
+            userManagement.isUserRegistered(msg.sender),
+            "User must be registered"
+        );
+        _;
+    }
 
     // Queue a subscription payment
-    function queueSubscription(uint _unlockTime) external payable returns (uint) {
+    function queueSubscription(
+        uint _unlockTime
+    ) external payable returns (uint) {
         require(msg.value > 0, "No ETH sent for subscription");
-        require(_unlockTime > block.timestamp, "Unlock time must be in the future");
+        require(
+            _unlockTime > block.timestamp,
+            "Unlock time must be in the future"
+        );
+
+        // Check if the user is registered
+        require(
+            userManagement.isUserRegistered(msg.sender),
+            "User must be registered to buy a subscription"
+        );
 
         // Generate a 5-digit random subscription ID
-        uint subscriptionId = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % 100000;
+        uint subscriptionId = uint(
+            keccak256(abi.encodePacked(block.timestamp, msg.sender))
+        ) % 100000;
 
         // Ensure the subscription ID is unique
         while (subscriptions[subscriptionId].subscriber != address(0)) {
@@ -31,7 +75,10 @@ contract TransactionPayment {
         }
 
         // Ensure the user doesn't have another active subscription
-        require(userToSubscriptionId[msg.sender] == 0, "Active subscription already exists for user");
+        require(
+            userToSubscriptionId[msg.sender] == 0,
+            "Active subscription already exists for user"
+        );
 
         // Create the subscription record
         subscriptions[subscriptionId] = Subscription({
@@ -67,7 +114,10 @@ contract TransactionPayment {
     }
 
     // Execute the subscription payment when the unlock time has passed
-    function executeSubscription(uint _subscriptionId, address payable _beneficiary) external {
+    function executeSubscription(
+        uint _subscriptionId,
+        address payable _beneficiary
+    ) external onlyRegisteredUser {
         Subscription storage sub = subscriptions[_subscriptionId];
         require(block.timestamp >= sub.unlockTime, "Unlock time not reached");
         require(!sub.cancelled, "Subscription has been cancelled");
@@ -83,7 +133,9 @@ contract TransactionPayment {
     }
 
     // Check the status of the user's active subscription
-    function getSubscriptionStatus(address _user) external view returns (string memory) {
+    function getSubscriptionStatus(
+        address _user
+    ) external view returns (string memory) {
         uint subscriptionId = userToSubscriptionId[_user];
         require(subscriptionId != 0, "No active subscription for this user");
 
@@ -98,7 +150,9 @@ contract TransactionPayment {
     }
 
     // View details of the user's current subscription
-    function getCurrentSubscription(address _user) external view returns (Subscription memory) {
+    function getCurrentSubscription(
+        address _user
+    ) external view returns (Subscription memory) {
         uint subscriptionId = userToSubscriptionId[_user];
         require(subscriptionId != 0, "No active subscription for this user");
 
